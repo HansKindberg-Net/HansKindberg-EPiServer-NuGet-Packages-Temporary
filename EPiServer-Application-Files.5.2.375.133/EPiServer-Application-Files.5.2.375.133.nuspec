@@ -17,5 +17,6 @@
 	<files>
 		<file src="C:\Data\TEMP\Program Files\EPiServer\CMS\5.2.375.133\Application\**\*.*" exclude="C:\Data\TEMP\Program Files\EPiServer\CMS\5.2.375.133\Application\*.*" target="Application" />
 		<file src="**\*.*" exclude="obj\**\*.*;*.csproj*" />
+		<file src="..\Configuration-transformations\**\*.*" target="Configuration" />
 	</files>
 </package>

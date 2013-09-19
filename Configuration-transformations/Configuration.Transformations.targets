@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<!-- The built in transformation functionality for package/publish needs the Web.config, so we transform ..\packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config with Web.Common.config into Web.Template.config and then we copy Web.Template.config to Web.config after PipelineCollectFilesPhase. -->
+	<Import Project="Package.Version.targets" />
+	<PropertyGroup>
+		<PackageWebTemplateConfig>$(SolutionDir)packages\EPiServer-Application-Files.$(PackageVersion)\Configuration\Web.Template.config</PackageWebTemplateConfig>
+	</PropertyGroup>
+	<!-- The built in transformation functionality for package/publish needs the Web.config, so we transform ..\packages\EPiServer-Application-Files.X.X.X.X\Configuration\Web.Template.config with Web.Common.config into Web.Template.config and then we copy Web.Template.config to Web.config after PipelineCollectFilesPhase. -->
 	<Target
 		Name="CopyWebTemplateConfigToWebConfig"
 		AfterTargets="PipelineCollectFilesPhase"
@@ -18,24 +22,24 @@
 	</Target>
 	<Target Name="TransformPackageWebTemplateConfigWithWebCommonConfigToWebTemplateConfig">
 		<Message
-			Condition="Exists('$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config') AND !Exists('Web.Common.config')"
+			Condition="Exists('$(PackageWebTemplateConfig)') AND !Exists('Web.Common.config')"
 			Importance="high"
-			Text="Copying $(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config to Web.Template.config."
+			Text="Copying $(PackageWebTemplateConfig) to Web.Template.config."
 		/>
 		<Copy
-			Condition="Exists('$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config') AND !Exists('Web.Common.config')"
+			Condition="Exists('$(PackageWebTemplateConfig)') AND !Exists('Web.Common.config')"
 			DestinationFiles="Web.Template.config"
-			SourceFiles="$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config"
+			SourceFiles="$(PackageWebTemplateConfig)"
 		/>
 		<Message
-			Condition="Exists('$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config') AND Exists('Web.Common.config')"
+			Condition="Exists('$(PackageWebTemplateConfig)') AND Exists('Web.Common.config')"
 			Importance="high"
-			Text="Transforming $(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config with Web.Common.config to Web.Template.config."
+			Text="Transforming $(PackageWebTemplateConfig) with Web.Common.config to Web.Template.config."
 		/>
 		<TransformXml
-			Condition="Exists('$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config') AND Exists('Web.Common.config')"
+			Condition="Exists('$(PackageWebTemplateConfig)') AND Exists('Web.Common.config')"
 			Destination="Web.Template.config"
-			Source="$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config"
+			Source="$(PackageWebTemplateConfig)"
 			StackTrace="True"
 			Transform="Web.Common.config"
 		/>

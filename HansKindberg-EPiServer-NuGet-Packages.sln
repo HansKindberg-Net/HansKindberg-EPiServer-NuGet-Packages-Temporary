@@ -17,6 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Binaries.5.2.375.133", "EPiServer-Binaries.5.2.375.133\EPiServer-Binaries.5.2.375.133.csproj", "{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration-transformations", "Configuration-transformations", "{213C2456-EA17-4BC7-97F2-F5AFE4085E82}"
+	ProjectSection(SolutionItems) = preProject
+		Configuration-transformations\Configuration.Transformations.targets = Configuration-transformations\Configuration.Transformations.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

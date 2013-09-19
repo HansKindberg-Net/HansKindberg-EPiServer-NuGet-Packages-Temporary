@@ -36,7 +36,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Configuration\Configuration.Transformations.targets" />
+    <None Include="..\Configuration-transformations\Configuration.Transformations.targets">
+      <Link>Configuration\Configuration.Transformations.targets</Link>
+    </None>
+    <None Include="Configuration\Package.Version.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Configuration\log4net.Template.config" />
     <None Include="Configuration\Web.Template.config" />
     <None Include="EPiServer-Application-Files.5.2.375.133.nuspec" />
