@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Application-Files.5.2.375.133", "EPiServer-Application-Files.5.2.375.133\EPiServer-Application-Files.5.2.375.133.csproj", "{486EFE72-C4E0-4062-825D-1247C6E2E8D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1CE6538A-F69C-4E28-AD4B-7D70B5CA77C0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.config = .nuget\NuGet.config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6178B6C6-5FA4-47BA-B4FA-F1E20C0C6E30}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Binaries.5.2.375.133", "EPiServer-Binaries.5.2.375.133\EPiServer-Binaries.5.2.375.133.csproj", "{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{486EFE72-C4E0-4062-825D-1247C6E2E8D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{486EFE72-C4E0-4062-825D-1247C6E2E8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{486EFE72-C4E0-4062-825D-1247C6E2E8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{486EFE72-C4E0-4062-825D-1247C6E2E8D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

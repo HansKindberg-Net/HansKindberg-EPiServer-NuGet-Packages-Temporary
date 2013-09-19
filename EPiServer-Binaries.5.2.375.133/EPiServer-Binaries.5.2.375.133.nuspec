@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+	<metadata>
+		<authors>EPiServer AB</authors>
+		<copyright>\x00a9 2003-2010 by EPiServer AB. All rights reserved</copyright>
+		<dependencies>
+			<dependency id="log4net" version="[1.2.10]" />
+			<dependency id="Microsoft.Web.Services3" version="[3.0.0.0]" />
+		</dependencies>
+		<description>All the EPiServer binaries/assemblies</description>
+		<id>EPiServer-Binaries</id>
+		<licenseUrl>http://world.episerver.com/PageFiles/99654/EPiServer EULA.txt</licenseUrl>
+		<owners>EPiServer AB</owners>
+		<references>
+			<reference file="EPiServer.dll" />
+			<reference file="EPiServer.BaseLibrary.dll" />
+			<reference file="EPiServer.Configuration.dll" />
+		</references>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<title>EPiServer-Binaries</title>
+		<version>5.2.375.133</version>
+	</metadata>
+	<files>
+		<file src="C:\Data\TEMP\Program Files\EPiServer\CMS\5.2.375.133\bin\E*.dll" target="lib\net20" />
+	</files>
+</package>

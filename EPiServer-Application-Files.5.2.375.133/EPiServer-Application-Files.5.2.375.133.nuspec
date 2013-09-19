@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+	<metadata>
+		<authors>EPiServer AB</authors>
+		<copyright>\x00a9 2003-2010 by EPiServer AB. All rights reserved</copyright>
+		<dependencies>
+			<dependency id="EPiServer-Binaries" version="[5.2.375.133]" />
+		</dependencies>
+		<description>The EPiServer application files</description>
+		<id>EPiServer-Application-Files</id>
+		<licenseUrl>http://world.episerver.com/PageFiles/99654/EPiServer EULA.txt</licenseUrl>
+		<owners>EPiServer AB</owners>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<title>EPiServer-Application-Files</title>
+		<version>5.2.375.133</version>
+	</metadata>
+	<files>
+		<file src="C:\Data\TEMP\Program Files\EPiServer\CMS\5.2.375.133\Application\**\*.*" exclude="C:\Data\TEMP\Program Files\EPiServer\CMS\5.2.375.133\Application\*.*" target="Application" />
+		<file src="**\*.*" exclude="obj\**\*.*;*.csproj*" />
+	</files>
+</package>
