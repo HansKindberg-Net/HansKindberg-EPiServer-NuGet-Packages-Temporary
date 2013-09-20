@@ -18,9 +18,9 @@
 		</references>
 		<requireLicenseAcceptance>true</requireLicenseAcceptance>
 		<title>EPiServer-Binaries</title>
-		<version>5.2.375.133</version>
+		<version>5.2.375.236</version>
 	</metadata>
 	<files>
-		<file src="..\EPiServer\CMS\5.2.375.133\bin\E*.dll" target="lib\net20" />
+		<file src="..\EPiServer\CMS\5.2.375.236\bin\E*.dll" target="lib\net20" />
 	</files>
 </package>

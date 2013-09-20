@@ -4,7 +4,7 @@
 		<authors>EPiServer AB</authors>
 		<copyright>\x00a9 2003-2010 by EPiServer AB. All rights reserved</copyright>
 		<dependencies>
-			<dependency id="EPiServer-Binaries" version="[5.2.375.133]" />
+			<dependency id="EPiServer-Binaries" version="[5.2.375.236]" />
 		</dependencies>
 		<description>The EPiServer application files</description>
 		<id>EPiServer-Application-Files</id>
@@ -12,10 +12,10 @@
 		<owners>EPiServer AB</owners>
 		<requireLicenseAcceptance>true</requireLicenseAcceptance>
 		<title>EPiServer-Application-Files</title>
-		<version>5.2.375.133</version>
+		<version>5.2.375.236</version>
 	</metadata>
 	<files>
-		<file src="..\EPiServer\CMS\5.2.375.133\Application\**\*.*" exclude="..\EPiServer\CMS\5.2.375.133\Application\*.*" target="Application" />
+		<file src="..\EPiServer\CMS\5.2.375.236\Application\**\*.*" exclude="..\EPiServer\CMS\5.2.375.236\Application\*.*" target="Application" />
 		<file src="**\*.*" exclude="obj\**\*.*;*.csproj*" />
 		<file src="..\Configuration-transformations\**\*.*" target="Configuration" />
 	</files>

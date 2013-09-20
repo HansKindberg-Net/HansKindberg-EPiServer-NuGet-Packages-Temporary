@@ -1,6 +1,7 @@
 _ReSharper*/
 bin/
 debug/
+EPiServer/
 FakesAssemblies/
 obj/
 packages/*

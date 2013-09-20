@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration-transformatio
 		Configuration-transformations\Configuration.Transformations.targets = Configuration-transformations\Configuration.Transformations.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Application-Files.5.2.375.236", "EPiServer-Application-Files.5.2.375.236\EPiServer-Application-Files.5.2.375.236.csproj", "{08FD282C-A992-4215-B4CB-0FB0B09CBD55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Binaries.5.2.375.236", "EPiServer-Binaries.5.2.375.236\EPiServer-Binaries.5.2.375.236.csproj", "{6FE38226-263A-41B9-A224-FAAFE81E2BE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,14 @@ Global
 		{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08FD282C-A992-4215-B4CB-0FB0B09CBD55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08FD282C-A992-4215-B4CB-0FB0B09CBD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08FD282C-A992-4215-B4CB-0FB0B09CBD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08FD282C-A992-4215-B4CB-0FB0B09CBD55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FE38226-263A-41B9-A224-FAAFE81E2BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE38226-263A-41B9-A224-FAAFE81E2BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE38226-263A-41B9-A224-FAAFE81E2BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE38226-263A-41B9-A224-FAAFE81E2BE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
