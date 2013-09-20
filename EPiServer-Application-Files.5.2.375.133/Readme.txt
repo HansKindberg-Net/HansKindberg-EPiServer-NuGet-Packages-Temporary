@@ -8,6 +8,9 @@ Application
 The folder contains the EPiServer application files that normally is installed
 under %PROGRAMFILES%\EPiServer\CMS\x.x.x.x\Application.
 
+Configuration
+The folder contains files for configuration-transformations...(need more description here)
+
 Content
 Just a dummy-file so the package install. The file is removed by "tools\Install.ps1".
 A NuGet-package needs to contain content or lib to install as a project-level package.
