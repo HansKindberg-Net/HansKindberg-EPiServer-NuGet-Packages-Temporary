@@ -10,7 +10,7 @@ When adding a new package project:
 * Add the following lines to the post-build event:
 <pre>
 DEL "$(TargetPath)"
-"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -Properties Configuration=$(ConfigurationName)
+"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -Properties Configuration=$(ConfigurationName) -Version "X.X.X.X"
 </pre>
 
 To be able to build the packages you have to copy %PROGRAMFILES%\EPiServer to the solution root.
