@@ -6,6 +6,15 @@ FakesAssemblies/
 obj/
 packages/*
 release/
+
+
+
+
+temporary/
+
+
+
+
 testresults/
 *.suo
 *.user
