@@ -21,6 +21,8 @@
 		<version>$version$</version>
 	</metadata>
 	<files>
-		<file src="..\EPiServer\CMS\$version$\bin\E*.dll" target="lib\net20" />
+		<file src="..\Build\EPiServer-Binaries.targets" target="build" />
+		<file src="..\EPiServer\CMS\$version$\bin\**\*.*" exclude="..\EPiServer\CMS\$version$\bin\log4net.dll;..\EPiServer\CMS\$version$\bin\Microsoft.Web.Services3.dll" target="lib\net20" />
+		<file src="**\*.*" exclude="obj\**\*.*;*.csproj*" />
 	</files>
 </package>

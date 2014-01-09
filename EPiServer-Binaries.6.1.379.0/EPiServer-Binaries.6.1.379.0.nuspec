@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+	<metadata>
+		<authors>EPiServer AB</authors>
+		<copyright>\x00a9 2003-2010 by EPiServer AB. All rights reserved</copyright>
+		<dependencies>
+			<dependency id="log4net" version="[1.2.10]" />
+			<dependency id="Microsoft.Web.Services3" version="[3.0.0.0]" />
+		</dependencies>
+		<description>All the EPiServer binaries/assemblies</description>
+		<id>EPiServer-Binaries</id>
+		<licenseUrl>http://world.episerver.com/PageFiles/99654/EPiServer EULA.txt</licenseUrl>
+		<owners>EPiServer AB</owners>
+		<references>
+			<reference file="EPiServer.dll" />
+			<reference file="EPiServer.BaseLibrary.dll" />
+			<reference file="EPiServer.Configuration.dll" />
+			<reference file="EPiServer.Data.dll" />
+			<reference file="EPiServer.Framework.dll" />
+			<reference file="EPiServer.Shell.dll" />
+			<reference file="EPiServer.Web.WebControls.dll" />
+			<reference file="EPiServer.XForms.dll" />
+		</references>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<title>EPiServer-Binaries</title>
+		<version>$version$</version>
+	</metadata>
+	<files>
+		<file src="..\Build\EPiServer-Binaries.targets" target="build" />
+		<file src="..\EPiServer\CMS\$version$\bin\**\*.*" exclude="..\EPiServer\CMS\$version$\bin\log4net.dll;..\EPiServer\CMS\$version$\bin\Microsoft.Web.Services3.dll" target="lib\net20" />
+		<file src="..\EPiServer\Framework\6.2.267.1\bin\**\*.*" target="lib\net20" />
+		<file src="**\*.*" exclude="obj\**\*.*;*.csproj*" />
+	</files>
+</package>

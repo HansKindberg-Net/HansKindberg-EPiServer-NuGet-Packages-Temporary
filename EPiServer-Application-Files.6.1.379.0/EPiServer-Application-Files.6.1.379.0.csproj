@@ -14,7 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -34,4 +34,52 @@
     <PostBuildEvent>DEL "$(TargetPath)"
 "$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -Properties Configuration=$(ConfigurationName) -Version "6.1.379.0"</PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\build\EPiServer-Application-Files.targets">
+      <Link>build\EPiServer-Application-Files.targets</Link>
+    </None>
+    <None Include="build\Package.props" />
+    <None Include="Configuration\log4net.Template.config" />
+    <None Include="Configuration\Web.Template.config" />
+    <None Include="content\log4net.Common.config">
+      <DependentUpon>log4net.Template.config</DependentUpon>
+    </None>
+    <None Include="content\log4net.config" />
+    <None Include="content\log4net.Development.config">
+      <DependentUpon>log4net.Common.config</DependentUpon>
+    </None>
+    <None Include="content\log4net.Production.config">
+      <DependentUpon>log4net.Common.config</DependentUpon>
+    </None>
+    <None Include="content\log4net.Template.config">
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="content\log4net.Test.config">
+      <DependentUpon>log4net.Common.config</DependentUpon>
+    </None>
+    <None Include="content\Web.Common.config">
+      <DependentUpon>Web.Template.config</DependentUpon>
+    </None>
+    <None Include="content\Web.config" />
+    <None Include="content\Web.Development.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
+    <None Include="content\Web.Production.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
+    <None Include="content\Web.Template.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="content\Web.Test.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
+    <None Include="EPiServer-Application-Files.6.1.379.0.nuspec" />
+    <None Include="tools\Install.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="content\EPiServer-Application-Files-Content-Dummy.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Readme.txt" />
+  </ItemGroup>
 </Project>

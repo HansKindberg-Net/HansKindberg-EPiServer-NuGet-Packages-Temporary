@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Condition="Exists('Package.props')" Project="Package.props" />
+	<!-- The built in transformation functionality for package/publish needs the Web.config, so we transform ..\packages\EPiServer-Application-Files.X.X.X.X\Configuration\Web.Template.config with Web.Common.config into Web.Template.config and then we copy Web.Template.config to Web.config after PipelineCollectFilesPhase. -->
+	<Target
+		Name="CopyWebTemplateConfigToWebConfig"
+		AfterTargets="PipelineCollectFilesPhase"
+		DependsOnTargets="TransformPackageWebTemplateConfigWithWebCommonConfigToWebTemplateConfig"
+	>
+		<Message
+			Condition="Exists('%(WebConfigFiles.Identity).Template.config')"
+			Importance="high"
+			Text="Copying %(WebConfigFiles.Identity).Template.config to %(WebConfigFiles.Identity).config."
+		/>
+		<Copy
+			Condition="Exists('%(WebConfigFiles.Identity).Template.config')"
+			DestinationFiles="%(WebConfigFiles.Identity).config"
+			SourceFiles="%(WebConfigFiles.Identity).Template.config"
+		/>
+	</Target>
+	<Target Name="TransformPackageWebTemplateConfigWithWebCommonConfigToWebTemplateConfig">
+		<Message
+			Condition="Exists('%(PackageTemplateConfigFiles.Path)') AND !Exists('%(PackageTemplateConfigFiles.TransformWith)')"
+			Importance="high"
+			Text="Copying %(PackageTemplateConfigFiles.Path) to %(PackageTemplateConfigFiles.Identity)."
+		/>
+		<Copy
+			Condition="Exists('%(PackageTemplateConfigFiles.Path)') AND !Exists('%(PackageTemplateConfigFiles.TransformWith)')"
+			DestinationFiles="%(PackageTemplateConfigFiles.Identity)"
+			SourceFiles="%(PackageTemplateConfigFiles.Path)"
+		/>
+		<Message
+			Condition="Exists('%(PackageTemplateConfigFiles.Path)') AND Exists('%(PackageTemplateConfigFiles.TransformWith)')"
+			Importance="high"
+			Text="Transforming %(PackageTemplateConfigFiles.Path) with %(PackageTemplateConfigFiles.TransformWith) to %(PackageTemplateConfigFiles.Identity)."
+		/>
+		<TransformXml
+			Condition="Exists('%(PackageTemplateConfigFiles.Path)') AND Exists('%(PackageTemplateConfigFiles.TransformWith)')"
+			Destination="%(PackageTemplateConfigFiles.Identity)"
+			Source="%(PackageTemplateConfigFiles.Path)"
+			StackTrace="True"
+			Transform="%(PackageTemplateConfigFiles.TransformWith)"
+		/>
+	</Target>
+	<!-- Before running the application we transform -->
+	<Target
+		Name="ConfigTransform"
+		BeforeTargets="PrepareForRun"
+		DependsOnTargets="TransformPackageWebTemplateConfigWithWebCommonConfigToWebTemplateConfig"
+	>
+		<Message
+			Condition="Exists('%(ConfigFiles.Identity).Template.config') AND Exists('%(ConfigFiles.Identity).$(Configuration).config')"
+			Importance="high"
+			Text="Transforming %(ConfigFiles.Identity).Template.config with %(ConfigFiles.Identity).$(Configuration).config to %(ConfigFiles.Identity).config."
+		/>
+		<TransformXml
+			Condition="Exists('%(ConfigFiles.Identity).Template.config') AND Exists('%(ConfigFiles.Identity).$(Configuration).config')"
+			Destination="%(ConfigFiles.Identity).config"
+			Source="%(ConfigFiles.Identity).Template.config"
+			StackTrace="True"
+			Transform="%(ConfigFiles.Identity).$(Configuration).config"
+		/>
+		<Message
+			Condition="Exists('%(ConfigFiles.Identity).Template.config') AND !Exists('%(ConfigFiles.Identity).$(Configuration).config')"
+			Importance="high"
+			Text="Copying %(ConfigFiles.Identity).Template.config to %(ConfigFiles.Identity).config."
+		/>
+		<Copy
+			Condition="Exists('%(ConfigFiles.Identity).Template.config') AND !Exists('%(ConfigFiles.Identity).$(Configuration).config')"
+			DestinationFiles="%(ConfigFiles.Identity).config"
+			SourceFiles="%(ConfigFiles.Identity).Template.config"
+		/>
+	</Target>
+	<Target
+		Name="ExcludeConfigTransformFiles"
+		BeforeTargets="ExcludeFilesFromPackage"
+	>
+		<Message
+			Importance="high"
+			Text="ExcludeFromPackageFiles: @(ExcludeFromPackageFiles)"
+		/>
+		<ItemGroup>
+			<ExcludeFromPackageFiles Include="*.*.config" />
+		</ItemGroup>
+	</Target>
+</Project>

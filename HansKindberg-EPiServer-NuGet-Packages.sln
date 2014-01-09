@@ -10,17 +10,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1CE653
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6178B6C6-5FA4-47BA-B4FA-F1E20C0C6E30}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{6178B6C6-5FA4-47BA-B4FA-F1E20C0C6E30}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
+		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Binaries.5.2.375.133", "EPiServer-Binaries.5.2.375.133\EPiServer-Binaries.5.2.375.133.csproj", "{678711AE-0CDA-4B37-99AD-38C6F53A2DF6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration-transformations", "Configuration-transformations", "{213C2456-EA17-4BC7-97F2-F5AFE4085E82}"
-	ProjectSection(SolutionItems) = preProject
-		Configuration-transformations\Configuration.Transformations.targets = Configuration-transformations\Configuration.Transformations.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Application-Files.5.2.375.236", "EPiServer-Application-Files.5.2.375.236\EPiServer-Application-Files.5.2.375.236.csproj", "{08FD282C-A992-4215-B4CB-0FB0B09CBD55}"
 EndProject
@@ -33,6 +28,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Application-Files.6.1.379.0", "EPiServer-Application-Files.6.1.379.0\EPiServer-Application-Files.6.1.379.0.csproj", "{5085DCAB-9F8C-4515-9EE9-EE0D85EB44B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Binaries.6.1.379.0", "EPiServer-Binaries.6.1.379.0\EPiServer-Binaries.6.1.379.0.csproj", "{E0FC8E9F-B2EB-4088-8EBD-6DB75DA8D863}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D565FDA7-987E-48BB-B26D-77567C09D8F6}"
+	ProjectSection(SolutionItems) = preProject
+		Build\EPiServer-Application-Files.targets = Build\EPiServer-Application-Files.targets
+		Build\EPiServer-Binaries.targets = Build\EPiServer-Binaries.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,8 +12,11 @@ When adding a new package project:
 DEL "$(TargetPath)"
 "$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -Properties Configuration=$(ConfigurationName) -Version "X.X.X.X"
 </pre>
+* Change **Properties** (project) -> **Build** -> **Advanced...** -> **Debug Info:** to **none** for all configurations **Debug/Release**. This is to avoid [Project-name].pdb files in the output directory.
 
 To be able to build the packages you have to copy %PROGRAMFILES%\EPiServer to the solution root.
+
+Reminder: Maybe we should delete the Debug configuration.
 
 
 

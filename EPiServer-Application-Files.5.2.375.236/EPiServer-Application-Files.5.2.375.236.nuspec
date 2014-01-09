@@ -15,8 +15,8 @@
 		<version>$version$</version>
 	</metadata>
 	<files>
+		<file src="..\Build\EPiServer-Application-Files.targets" target="build" />
 		<file src="..\EPiServer\CMS\$version$\Application\**\*.*" exclude="..\EPiServer\CMS\$version$\Application\*.*" target="Application" />
 		<file src="**\*.*" exclude="obj\**\*.*;*.csproj*" />
-		<file src="..\Configuration-transformations\**\*.*" target="Configuration" />
 	</files>
 </package>

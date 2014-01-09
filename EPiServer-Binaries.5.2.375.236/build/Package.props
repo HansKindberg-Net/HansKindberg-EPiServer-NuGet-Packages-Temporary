@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<BinariesToCopy Include="$(SolutionDir)packages\EPiServer-Binaries.5.2.375.236\lib\net20\**\*.dll" />
+		<BinariesToCopy Include="$(SolutionDir)packages\log4net.1.2.10\lib\2.0\**\*.dll" />
+		<BinariesToCopy Include="$(SolutionDir)packages\Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll" />
+	</ItemGroup>
+</Project>

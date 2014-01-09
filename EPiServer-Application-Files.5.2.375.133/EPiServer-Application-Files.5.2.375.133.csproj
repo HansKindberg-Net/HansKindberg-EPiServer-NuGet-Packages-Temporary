@@ -31,13 +31,45 @@
 		<WarningLevel>4</WarningLevel>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="..\Configuration-transformations\Configuration.Transformations.targets">
-			<Link>Configuration\Configuration.Transformations.targets</Link>
+		<None Include="..\Build\EPiServer-Application-Files.targets">
+			<Link>build\EPiServer-Application-Files.targets</Link>
 		</None>
+		<None Include="build\Package.props" />
 		<None Include="Configuration\log4net.Template.config" />
-		<None Include="Configuration\PackageVersion.targets" />
 		<None Include="Configuration\Web.Template.config" />
 		<None Include="content\EPiServer-Application-Files-Content-Dummy.txt" />
+		<None Include="content\log4net.Common.config">
+			<DependentUpon>log4net.Template.config</DependentUpon>
+		</None>
+		<None Include="content\log4net.config" />
+		<None Include="content\log4net.Development.config">
+			<DependentUpon>log4net.Common.config</DependentUpon>
+		</None>
+		<None Include="content\log4net.Production.config">
+			<DependentUpon>log4net.Common.config</DependentUpon>
+		</None>
+		<None Include="content\log4net.Template.config">
+			<DependentUpon>log4net.config</DependentUpon>
+		</None>
+		<None Include="content\log4net.Test.config">
+			<DependentUpon>log4net.Common.config</DependentUpon>
+		</None>
+		<None Include="content\Web.Common.config">
+			<DependentUpon>Web.Template.config</DependentUpon>
+		</None>
+		<None Include="content\Web.config" />
+		<None Include="content\Web.Development.config">
+			<DependentUpon>Web.Common.config</DependentUpon>
+		</None>
+		<None Include="content\Web.Production.config">
+			<DependentUpon>Web.Common.config</DependentUpon>
+		</None>
+		<None Include="content\Web.Template.config">
+			<DependentUpon>Web.config</DependentUpon>
+		</None>
+		<None Include="content\Web.Test.config">
+			<DependentUpon>Web.Common.config</DependentUpon>
+		</None>
 		<None Include="tools\Install.ps1" />
 		<None Include="EPiServer-Application-Files.5.2.375.133.nuspec" />
 		<None Include="Readme.txt" />
