@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ItemGroup>
 		<PackageTemplateConfigFiles Include="log4net.Template.config">
-			<Path>$(SolutionDir)packages\EPiServer-Binaries.5.2.375.133\Configuration\log4net.Template.config</Path>
+			<Path>$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\log4net.Template.config</Path>
 			<TransformWith>log4net.Common.config</TransformWith>
 		</PackageTemplateConfigFiles>
 		<PackageTemplateConfigFiles Include="Web.Template.config">
-			<Path>$(SolutionDir)packages\EPiServer-Binaries.5.2.375.133\Configuration\Web.Template.config</Path>
+			<Path>$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config</Path>
 			<TransformWith>Web.Common.config</TransformWith>
 		</PackageTemplateConfigFiles>
 	</ItemGroup>
