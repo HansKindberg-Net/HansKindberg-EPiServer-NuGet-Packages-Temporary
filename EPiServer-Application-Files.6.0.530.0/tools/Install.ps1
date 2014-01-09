@@ -13,29 +13,54 @@ $log4netProductionConfig = $project.ProjectItems | Where-Object { $_.Properties.
 $log4netTemplateConfig = $project.ProjectItems | Where-Object { $_.Properties.Item("Filename").Value -eq "log4net.Template.config" }
 $log4netTestConfig = $project.ProjectItems | Where-Object { $_.Properties.Item("Filename").Value -eq "log4net.Test.config" }
 
-if(($log4netConfig -ne $null) -and ($log4netTemplateConfig -ne $null))
+if($log4netTemplateConfig -ne $null)
 {
-	$log4netConfig.ProjectItems.AddFromFile($log4netTemplateConfig.Properties.Item("FullPath").Value)
+	$log4netTemplateConfig.Properties.Item("ItemType").Value = "None"
+
+	if($log4netConfig -ne $null)
+	{
+		$log4netConfig.ProjectItems.AddFromFile($log4netTemplateConfig.Properties.Item("FullPath").Value)
+	}
 }
 
-if(($log4netTemplateConfig -ne $null) -and ($log4netCommonConfig -ne $null))
+if($log4netCommonConfig -ne $null)
 {
-	$log4netTemplateConfig.ProjectItems.AddFromFile($log4netCommonConfig.Properties.Item("FullPath").Value)
+	$log4netCommonConfig.Properties.Item("ItemType").Value = "None"
+
+	if($log4netTemplateConfig -ne $null)
+	{
+		$log4netTemplateConfig.ProjectItems.AddFromFile($log4netCommonConfig.Properties.Item("FullPath").Value)
+	}
 }
 
-if(($log4netCommonConfig -ne $null) -and ($log4netDevelopmentConfig -ne $null))
+if($log4netDevelopmentConfig -ne $null)
 {
-	$log4netCommonConfig.ProjectItems.AddFromFile($log4netDevelopmentConfig.Properties.Item("FullPath").Value)
+	$log4netDevelopmentConfig.Properties.Item("ItemType").Value = "None"
+
+	if($log4netCommonConfig -ne $null)
+	{
+		$log4netCommonConfig.ProjectItems.AddFromFile($log4netDevelopmentConfig.Properties.Item("FullPath").Value)
+	}
 }
 
-if(($log4netCommonConfig -ne $null) -and ($log4netProductionConfig -ne $null))
+if($log4netProductionConfig -ne $null)
 {
-	$log4netCommonConfig.ProjectItems.AddFromFile($log4netProductionConfig.Properties.Item("FullPath").Value)
+	$log4netProductionConfig.Properties.Item("ItemType").Value = "None"
+
+	if($log4netCommonConfig -ne $null)
+	{
+		$log4netCommonConfig.ProjectItems.AddFromFile($log4netProductionConfig.Properties.Item("FullPath").Value)
+	}
 }
 
-if(($log4netCommonConfig -ne $null) -and ($log4netTestConfig -ne $null))
+if($log4netTestConfig -ne $null)
 {
-	$log4netCommonConfig.ProjectItems.AddFromFile($log4netTestConfig.Properties.Item("FullPath").Value)
+	$log4netTestConfig.Properties.Item("ItemType").Value = "None"
+
+	if($log4netCommonConfig -ne $null)
+	{
+		$log4netCommonConfig.ProjectItems.AddFromFile($log4netTestConfig.Properties.Item("FullPath").Value)
+	}
 }
 
 # Web.config
@@ -46,27 +71,52 @@ $webProductionConfig = $project.ProjectItems | Where-Object { $_.Properties.Item
 $webTemplateConfig = $project.ProjectItems | Where-Object { $_.Properties.Item("Filename").Value -eq "Web.Template.config" }
 $webTestConfig = $project.ProjectItems | Where-Object { $_.Properties.Item("Filename").Value -eq "Web.Test.config" }
 
-if(($webConfig -ne $null) -and ($webTemplateConfig -ne $null))
+if($webTemplateConfig -ne $null)
 {
-	$webConfig.ProjectItems.AddFromFile($webTemplateConfig.Properties.Item("FullPath").Value)
+	$webTemplateConfig.Properties.Item("ItemType").Value = "None"
+
+	if($webConfig -ne $null)
+	{
+		$webConfig.ProjectItems.AddFromFile($webTemplateConfig.Properties.Item("FullPath").Value)
+	}
 }
 
-if(($webTemplateConfig -ne $null) -and ($webCommonConfig -ne $null))
+if($webCommonConfig -ne $null)
 {
-	$webTemplateConfig.ProjectItems.AddFromFile($webCommonConfig.Properties.Item("FullPath").Value)
+	$webCommonConfig.Properties.Item("ItemType").Value = "None"
+
+	if($webTemplateConfig -ne $null)
+	{
+		$webTemplateConfig.ProjectItems.AddFromFile($webCommonConfig.Properties.Item("FullPath").Value)
+	}
 }
 
-if(($webCommonConfig -ne $null) -and ($webDevelopmentConfig -ne $null))
+if($webDevelopmentConfig -ne $null)
 {
-	$webCommonConfig.ProjectItems.AddFromFile($webDevelopmentConfig.Properties.Item("FullPath").Value)
+	$webDevelopmentConfig.Properties.Item("ItemType").Value = "None"
+
+	if($webCommonConfig -ne $null)
+	{
+		$webCommonConfig.ProjectItems.AddFromFile($webDevelopmentConfig.Properties.Item("FullPath").Value)
+	}
 }
 
-if(($webCommonConfig -ne $null) -and ($webProductionConfig -ne $null))
+if($webProductionConfig -ne $null)
 {
-	$webCommonConfig.ProjectItems.AddFromFile($webProductionConfig.Properties.Item("FullPath").Value)
+	$webProductionConfig.Properties.Item("ItemType").Value = "None"
+
+	if($webCommonConfig -ne $null)
+	{
+		$webCommonConfig.ProjectItems.AddFromFile($webProductionConfig.Properties.Item("FullPath").Value)
+	}
 }
 
-if(($webCommonConfig -ne $null) -and ($webTestConfig -ne $null))
+if($webTestConfig -ne $null)
 {
-	$webCommonConfig.ProjectItems.AddFromFile($webTestConfig.Properties.Item("FullPath").Value)
+	$webTestConfig.Properties.Item("ItemType").Value = "None"
+
+	if($webCommonConfig -ne $null)
+	{
+		$webCommonConfig.ProjectItems.AddFromFile($webTestConfig.Properties.Item("FullPath").Value)
+	}
 }
