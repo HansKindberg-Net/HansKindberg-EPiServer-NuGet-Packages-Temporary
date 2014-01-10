@@ -1,74 +1,93 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Condition="Exists('Package.props')" Project="Package.props" />
+	<PropertyGroup>
+		<WebConfigOnly>False</WebConfigOnly>
+	</PropertyGroup>
+	<Target Name="SetWebConfigOnlyToTrue">
+		<PropertyGroup>
+			<WebConfigOnly>True</WebConfigOnly>
+		</PropertyGroup>
+	</Target>
+	<Target Name="SetWebConfigOnlyToFalse">
+		<PropertyGroup>
+			<WebConfigOnly>False</WebConfigOnly>
+		</PropertyGroup>
+	</Target>
 	<!-- The built in transformation functionality for package/publish needs the Web.config, so we transform ..\packages\EPiServer-Application-Files.X.X.X.X\Configuration\Web.Template.config with Web.Common.config into Web.Template.config and then we copy Web.Template.config to Web.config after PipelineCollectFilesPhase. -->
 	<Target
 		Name="CopyWebTemplateConfigToWebConfig"
 		AfterTargets="PipelineCollectFilesPhase"
-		DependsOnTargets="TransformPackageWebTemplateConfigWithWebCommonConfigToWebTemplateConfig"
+		DependsOnTargets="SetWebConfigOnlyToTrue;TransformPackageTemplateConfigWithCommonConfigToTemplateConfig;SetWebConfigOnlyToFalse"
 	>
 		<Message
-			Condition="Exists('%(WebConfigFiles.Identity).Template.config')"
+			Condition="%(ConfigFile.IsWebConfig) != '' AND %(ConfigFile.IsWebConfig) AND Exists(%(ConfigFile.SourceConfig))"
 			Importance="high"
-			Text="Copying %(WebConfigFiles.Identity).Template.config to %(WebConfigFiles.Identity).config."
+			Text="Copying %(ConfigFile.SourceConfig) to %(ConfigFile.Identity)."
 		/>
 		<Copy
-			Condition="Exists('%(WebConfigFiles.Identity).Template.config')"
-			DestinationFiles="%(WebConfigFiles.Identity).config"
-			SourceFiles="%(WebConfigFiles.Identity).Template.config"
+			Condition="%(ConfigFile.IsWebConfig) != '' AND %(ConfigFile.IsWebConfig) AND Exists(%(ConfigFile.SourceConfig))"
+			DestinationFiles="%(ConfigFile.Identity)"
+			SourceFiles="%(ConfigFile.SourceConfig)"
 		/>
 	</Target>
-	<Target Name="TransformPackageWebTemplateConfigWithWebCommonConfigToWebTemplateConfig">
+	<Target Name="TransformPackageTemplateConfigWithCommonConfigToTemplateConfig">
+		<ItemGroup>
+			<PackageTemplateConfigFile Include="@(ConfigFile)" Condition="%(ConfigFile.IsPackageTemplate) != '' AND %(ConfigFile.IsPackageTemplate) AND (!$(WebConfigOnly) OR (%(ConfigFile.IsPackageWebTemplate) != '' AND %(ConfigFile.IsPackageWebTemplate))) AND Exists(%(ConfigFile.Identity))" />
+		</ItemGroup>
 		<Message
-			Condition="Exists('%(PackageTemplateConfigFiles.Path)') AND !Exists('%(PackageTemplateConfigFiles.TransformWith)')"
+			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
 			Importance="high"
-			Text="Copying %(PackageTemplateConfigFiles.Path) to %(PackageTemplateConfigFiles.Identity)."
+			Text="Copying %(PackageTemplateConfigFile.Identity) to %(PackageTemplateConfigFile.DestinationConfig)."
 		/>
 		<Copy
-			Condition="Exists('%(PackageTemplateConfigFiles.Path)') AND !Exists('%(PackageTemplateConfigFiles.TransformWith)')"
-			DestinationFiles="%(PackageTemplateConfigFiles.Identity)"
-			SourceFiles="%(PackageTemplateConfigFiles.Path)"
+			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			DestinationFiles="%(PackageTemplateConfigFile.DestinationConfig)"
+			SourceFiles="%(PackageTemplateConfigFile.Identity)"
 		/>
 		<Message
-			Condition="Exists('%(PackageTemplateConfigFiles.Path)') AND Exists('%(PackageTemplateConfigFiles.TransformWith)')"
+			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
 			Importance="high"
-			Text="Transforming %(PackageTemplateConfigFiles.Path) with %(PackageTemplateConfigFiles.TransformWith) to %(PackageTemplateConfigFiles.Identity)."
+			Text="Transforming %(PackageTemplateConfigFile.Identity) with %(PackageTemplateConfigFile.TransformConfig) to %(PackageTemplateConfigFile.DestinationConfig)."
 		/>
 		<TransformXml
-			Condition="Exists('%(PackageTemplateConfigFiles.Path)') AND Exists('%(PackageTemplateConfigFiles.TransformWith)')"
-			Destination="%(PackageTemplateConfigFiles.Identity)"
-			Source="%(PackageTemplateConfigFiles.Path)"
+			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			Destination="%(PackageTemplateConfigFile.DestinationConfig)"
+			Source="%(PackageTemplateConfigFile.Identity)"
 			StackTrace="True"
-			Transform="%(PackageTemplateConfigFiles.TransformWith)"
+			Transform="%(PackageTemplateConfigFile.TransformConfig)"
 		/>
 	</Target>
 	<!-- Before running the application we transform -->
 	<Target
 		Name="ConfigTransform"
 		BeforeTargets="PrepareForRun"
-		DependsOnTargets="TransformPackageWebTemplateConfigWithWebCommonConfigToWebTemplateConfig"
+		DependsOnTargets="TransformPackageTemplateConfigWithCommonConfigToTemplateConfig"
 	>
+		<ItemGroup>
+			<ProjectConfigFile Include="@(ConfigFile)" Condition="%(ConfigFile.IsProjectConfig) != '' AND %(ConfigFile.IsProjectConfig) AND Exists(%(ConfigFile.SourceConfig))" />
+		</ItemGroup>
 		<Message
-			Condition="Exists('%(ConfigFiles.Identity).Template.config') AND Exists('%(ConfigFiles.Identity).$(Configuration).config')"
+			Condition="Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
 			Importance="high"
-			Text="Transforming %(ConfigFiles.Identity).Template.config with %(ConfigFiles.Identity).$(Configuration).config to %(ConfigFiles.Identity).config."
+			Text="Transforming %(ProjectConfigFile.SourceConfig) with %(ProjectConfigFile.Prefix).$(Configuration).config to %(ProjectConfigFile.Identity)."
 		/>
 		<TransformXml
-			Condition="Exists('%(ConfigFiles.Identity).Template.config') AND Exists('%(ConfigFiles.Identity).$(Configuration).config')"
-			Destination="%(ConfigFiles.Identity).config"
-			Source="%(ConfigFiles.Identity).Template.config"
+			Condition="Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
+			Destination="%(ProjectConfigFile.Identity)"
+			Source="%(ProjectConfigFile.SourceConfig)"
 			StackTrace="True"
-			Transform="%(ConfigFiles.Identity).$(Configuration).config"
+			Transform="%(ProjectConfigFile.Prefix).$(Configuration).config"
 		/>
 		<Message
-			Condition="Exists('%(ConfigFiles.Identity).Template.config') AND !Exists('%(ConfigFiles.Identity).$(Configuration).config')"
+			Condition="!Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
 			Importance="high"
-			Text="Copying %(ConfigFiles.Identity).Template.config to %(ConfigFiles.Identity).config."
+			Text="Copying %(ProjectConfigFile.SourceConfig) to %(ProjectConfigFile.Identity)."
 		/>
 		<Copy
-			Condition="Exists('%(ConfigFiles.Identity).Template.config') AND !Exists('%(ConfigFiles.Identity).$(Configuration).config')"
-			DestinationFiles="%(ConfigFiles.Identity).config"
-			SourceFiles="%(ConfigFiles.Identity).Template.config"
+			Condition="!Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
+			DestinationFiles="%(ProjectConfigFile.Identity)"
+			SourceFiles="%(ProjectConfigFile.SourceConfig)"
 		/>
 	</Target>
 	<Target
