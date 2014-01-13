@@ -1,27 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<BackupConfigPath>obj\ConfigTransform\backup\</BackupConfigPath>
+		<PackageVersion>6.0.530.0</PackageVersion>
+		<PackageConfigurationPath>$(SolutionDir)packages\EPiServer-Application-Files.$(PackageVersion)\Configuration</PackageConfigurationPath>
+	</PropertyGroup>
 	<ItemGroup>
-		<ConfigFile Include="$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\log4net.Template.config">
+		<PackageTemplateConfigFile Include="$(PackageConfigurationPath)\log4net.Template.config">
 			<DestinationConfig>log4net.Template.config</DestinationConfig>
-			<IsPackageTemplate>True</IsPackageTemplate>
 			<TransformConfig>log4net.Common.config</TransformConfig>
-		</ConfigFile>
-		<ConfigFile Include="$(SolutionDir)packages\EPiServer-Application-Files.5.2.375.133\Configuration\Web.Template.config">
+		</PackageTemplateConfigFile>
+		<PackageTemplateConfigFile Include="$(PackageConfigurationPath)\Web.Template.config">
 			<DestinationConfig>Web.Template.config</DestinationConfig>
-			<IsPackageTemplate>True</IsPackageTemplate>
-			<IsPackageWebTemplate>True</IsPackageWebTemplate>
 			<TransformConfig>Web.Common.config</TransformConfig>
-		</ConfigFile>
-		<ConfigFile Include="log4net.config">
-			<IsProjectConfig>True</IsProjectConfig>
-			<Prefix>log4net</Prefix>
+		</PackageTemplateConfigFile>
+		<ProjectConfigFile Include="log4net.config">
 			<SourceConfig>log4net.Template.config</SourceConfig>
-		</ConfigFile>
-		<ConfigFile Include="Web.config">
-			<IsProjectConfig>True</IsProjectConfig>
-			<IsWebConfig>True</IsWebConfig>
-			<Prefix>Web</Prefix>
+			<TransformConfig>log4net.$(Configuration).config</TransformConfig>
+		</ProjectConfigFile>
+		<ProjectConfigFile Include="Web.config">
 			<SourceConfig>Web.Template.config</SourceConfig>
-		</ConfigFile>
+			<TransformConfig>Web.$(Configuration).config</TransformConfig>
+		</ProjectConfigFile>
 	</ItemGroup>
 </Project>
