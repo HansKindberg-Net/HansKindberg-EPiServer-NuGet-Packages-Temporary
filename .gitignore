@@ -21,6 +21,7 @@ testresults/
 *.user
 .nuget/NuGet.exe
 
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Log/*
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Views/Web.config
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Views/Web.Template.config
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/log4net.config
