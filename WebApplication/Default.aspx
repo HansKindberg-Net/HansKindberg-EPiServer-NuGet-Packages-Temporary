@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="Default.aspx.cs" Inherits="WebApplication.Default" %><!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="Default.aspx.cs" Inherits="WebApplication.Default" %>
+<%@ Import Namespace="EPiServer.Configuration" %><!DOCTYPE html>
 <html>
 	<head>
 		<title>Default</title>

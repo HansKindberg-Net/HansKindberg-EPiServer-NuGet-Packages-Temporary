@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="Default.aspx.cs" Inherits="WebApplication.Views.Default" %><!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="Default.aspx.cs" Inherits="WebApplication.Views.Default" %>
+<%@ Import Namespace="EPiServer.Configuration" %><!DOCTYPE html>
 <html>
 	<head>
 		<title>Views/Default</title>
