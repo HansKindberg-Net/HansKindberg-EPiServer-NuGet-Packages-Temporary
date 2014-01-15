@@ -24,7 +24,7 @@
 		<Message
 			Condition="Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)')"
 			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'CoreRestorePreviousHansKindbergXmlTransform': Restoring '$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)' to '%(HansKindbergXmlTransformSource.Identity)'."
+			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform': Restoring '$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)' to '%(HansKindbergXmlTransformSource.Identity)'."
 		/>
 		<Copy
 			Condition="Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)')"
@@ -34,7 +34,7 @@
 		<Message
 			Condition="!Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
 			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'CoreRestorePreviousHansKindbergXmlTransform': Deleting '%(HansKindbergXmlTransformSource.Identity)'."
+			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform': Deleting '%(HansKindbergXmlTransformSource.Identity)'."
 		/>
 		<Delete
 			Condition="!Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
@@ -75,180 +75,4 @@
 			Transform="%(EPiServerApplicationFilesConfigurationTemplate.Transform)"
 		/>
 	</Target>
-
-	<!--
-	<PropertyGroup>
-		<MessageImportance>high</MessageImportance>
-	</PropertyGroup>
-	<Target
-		Name="BackupCurrentConfigFiles"
-		BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
-	>
-		<Message
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'BackupCurrentConfigFiles'."
-		/>
-		<Message
-			Condition="Exists($(BackupConfigPath))"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'BackupCurrentConfigFiles': clearing '$(BackupConfigPath)'."
-		/>
-		<Delete
-			Condition="Exists($(BackupConfigPath))"
-			Files="$(BackupConfigPath)**\*.*"
-		/>
-		<Message
-			Condition="Exists(%(ProjectConfigFile.Identity))"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'BackupCurrentConfigFiles': backing up '%(ProjectConfigFile.Identity)' to '$(BackupConfigPath)%(ProjectConfigFile.Identity)'."
-		/>
-		<Message
-			Condition="Exists(%(ProjectConfigFile.SourceConfig))"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'BackupCurrentConfigFiles': backing up '%(ProjectConfigFile.SourceConfig)' to '$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)'."
-		/>
-		<Copy
-			Condition="Exists(%(ProjectConfigFile.Identity))"
-			DestinationFiles="$(BackupConfigPath)%(ProjectConfigFile.Identity)"
-			SourceFiles="%(ProjectConfigFile.Identity)"
-		/>
-		<Copy
-			Condition="Exists(%(ProjectConfigFile.SourceConfig))"
-			DestinationFiles="$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)"
-			SourceFiles="%(ProjectConfigFile.SourceConfig)"
-		/>
-	</Target>
-	<Target
-		Name="CleanConfigFiles"
-		AfterTargets="AfterClean"
-		DependsOnTargets="PopulateProjectSourceConfig"
-	>
-		<Message
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'CleanConfigFiles': Copying %(ProjectConfigFile.SourceConfig) to %(ProjectConfigFile.Identity)."
-		/>
-		<Copy
-			DestinationFiles="%(ProjectConfigFile.Identity)"
-			SourceFiles="%(ProjectConfigFile.SourceConfig)"
-		/>
-	</Target>
-	<Target
-		Name="ExcludeConfigTransformFiles"
-		BeforeTargets="ExcludeFilesFromPackage"
-	>
-		<Message
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="ExcludeFromPackageFiles: @(ExcludeFromPackageFiles)"
-		/>
-		<ItemGroup>
-			<ExcludeFromPackageFiles Include="*.*.config" />
-		</ItemGroup>
-	</Target>
-	<Target
-		Name="PopulateProjectConfig"
-		DependsOnTargets="PopulateProjectSourceConfig"
-	>
-		<Message
-			Condition="Exists(%(ProjectConfigFile.TransformConfig))"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'PopulateProjectConfig': Transforming %(ProjectConfigFile.SourceConfig) with %(ProjectConfigFile.TransformConfig) to %(ProjectConfigFile.Identity)."
-		/>
-		<TransformXml
-			Condition="Exists(%(ProjectConfigFile.TransformConfig))"
-			Destination="%(ProjectConfigFile.Identity)"
-			Source="%(ProjectConfigFile.SourceConfig)"
-			StackTrace="True"
-			Transform="%(ProjectConfigFile.TransformConfig)"
-		/>
-		<Message
-			Condition="!Exists(%(ProjectConfigFile.TransformConfig))"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'PopulateProjectConfig': Copying %(ProjectConfigFile.SourceConfig) to %(ProjectConfigFile.Identity)."
-		/>
-		<Copy
-			Condition="!Exists(%(ProjectConfigFile.TransformConfig))"
-			DestinationFiles="%(ProjectConfigFile.Identity)"
-			SourceFiles="%(ProjectConfigFile.SourceConfig)"
-		/>
-	</Target>
-	<Target
-		Name="PopulateProjectSourceConfig"
-	>
-		<Message
-			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'PopulateProjectSourceConfig': Copying %(PackageTemplateConfigFile.Identity) to %(PackageTemplateConfigFile.DestinationConfig)."
-		/>
-		<Copy
-			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
-			DestinationFiles="%(PackageTemplateConfigFile.DestinationConfig)"
-			SourceFiles="%(PackageTemplateConfigFile.Identity)"
-		/>
-		<Message
-			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'PopulateProjectSourceConfig': Transforming %(PackageTemplateConfigFile.Identity) with %(PackageTemplateConfigFile.TransformConfig) to %(PackageTemplateConfigFile.DestinationConfig)."
-		/>
-		<TransformXml
-			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
-			Destination="%(PackageTemplateConfigFile.DestinationConfig)"
-			Source="%(PackageTemplateConfigFile.Identity)"
-			StackTrace="True"
-			Transform="%(PackageTemplateConfigFile.TransformConfig)"
-		/>
-	</Target>
-	<Target
-		Name="RestorePreviousConfigFiles"
-		AfterTargets="GatherAllFilesToPublish"
-	>
-		<Message
-			Condition="Exists('$(BackupConfigPath)%(ProjectConfigFile.Identity)')"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'RestorePreviousConfigFiles': restoring '$(BackupConfigPath)%(ProjectConfigFile.Identity)' to '%(ProjectConfigFile.Identity)'."
-		/>
-		<Message
-			Condition="!Exists('$(BackupConfigPath)%(ProjectConfigFile.Identity)')"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'RestorePreviousConfigFiles': deleting '%(ProjectConfigFile.Identity)'."
-		/>
-		<Message
-			Condition="Exists('$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)')"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'RestorePreviousConfigFiles': restoring '$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)' to '%(ProjectConfigFile.SourceConfig)'."
-		/>
-		<Message
-			Condition="!Exists('$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)')"
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'RestorePreviousConfigFiles': deleting '%(ProjectConfigFile.SourceConfig)'."
-		/>
-		<Copy
-			Condition="Exists('$(BackupConfigPath)%(ProjectConfigFile.Identity)')"
-			DestinationFiles="%(ProjectConfigFile.Identity)"
-			SourceFiles="$(BackupConfigPath)%(ProjectConfigFile.Identity)"
-		/>
-		<Delete
-			Condition="!Exists('$(BackupConfigPath)%(ProjectConfigFile.Identity)')"
-			Files="%(ProjectConfigFile.Identity)"
-		/>
-		<Copy
-			Condition="Exists('$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)')"
-			DestinationFiles="%(ProjectConfigFile.SourceConfig)"
-			SourceFiles="$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)"
-		/>
-		<Delete
-			Condition="!Exists('$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)')"
-			Files="%(ProjectConfigFile.SourceConfig)"
-		/>
-	</Target>
-	<Target
-		Name="TransformConfigFiles"
-		AfterTargets="AfterBuild"
-		DependsOnTargets="PopulateProjectConfig"
-	>
-		<Message
-			Importance="$(EPiServerApplicationFilesMessageImportance)"
-			Text="Target 'TransformConfigFiles'."
-		/>
-	</Target>
-	-->
 </Project>
