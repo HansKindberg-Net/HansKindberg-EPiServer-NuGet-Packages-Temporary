@@ -32,15 +32,23 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>DEL "$(TargetPath)"
-"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -Properties Configuration=$(ConfigurationName) -Version "6.1.379.0"</PostBuildEvent>
+SET Id=EPiServer-Binaries
+SET Version=6.1.379.0
+SET FrameworkVersion=6.2.267.1
+"$(SolutionDir).nuget\NuGet.exe" pack "$(SolutionDir)NuGet-specifications\%25Id%25.nuspec" -Properties Author="EPiServer AB";Configuration=$(ConfigurationName);Id=%25Id%25;Version=%25Version%25;FrameworkVersion=%25FrameworkVersion%25</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\Build\EPiServer-Binaries.targets">
+    <None Include="..\build\EPiServer-Binaries.targets">
       <Link>build\EPiServer-Binaries.targets</Link>
     </None>
-    <None Include="build\Package.props" />
-    <None Include="EPiServer-Binaries.6.1.379.0.nuspec">
-      <SubType>Designer</SubType>
+    <None Include="..\NuGet-specifications\EPiServer-Binaries.nuspec">
+      <Link>EPiServer-Binaries.nuspec</Link>
     </None>
+    <None Include="build\EPiServer-Binaries.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Package-ReadMe\EPiServer-Binaries\ReadMe.txt">
+      <Link>ReadMe.txt</Link>
+    </Content>
   </ItemGroup>
 </Project>

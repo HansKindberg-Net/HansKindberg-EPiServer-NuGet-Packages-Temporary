@@ -29,16 +29,25 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\Build\EPiServer-Binaries.targets">
-      <Link>build\EPiServer-Binaries.targets</Link>
-    </None>
-    <None Include="build\Package.props" />
-    <None Include="EPiServer-Binaries.5.2.375.236.nuspec" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>DEL "$(TargetPath)"
-"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -Properties Configuration=$(ConfigurationName) -Version "5.2.375.236"</PostBuildEvent>
+SET Id=EPiServer-Binaries
+SET Version=5.2.375.236
+"$(SolutionDir).nuget\NuGet.exe" pack "$(SolutionDir)NuGet-specifications\5\%25Id%25.nuspec" -Properties Author="EPiServer AB";Configuration=$(ConfigurationName);Id=%25Id%25;Version=%25Version%25</PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\build\EPiServer-Binaries.targets">
+      <Link>build\EPiServer-Binaries.targets</Link>
+    </None>
+    <None Include="..\NuGet-specifications\5\EPiServer-Binaries.nuspec">
+      <Link>EPiServer-Binaries.nuspec</Link>
+    </None>
+    <None Include="build\EPiServer-Binaries.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Package-ReadMe\EPiServer-Binaries\ReadMe.txt">
+      <Link>ReadMe.txt</Link>
+    </Content>
+  </ItemGroup>
 </Project>

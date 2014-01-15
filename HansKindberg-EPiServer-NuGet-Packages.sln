@@ -35,6 +35,46 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D565FDA7
 		Build\EPiServer-Binaries.targets = Build\EPiServer-Binaries.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Application-Files.7.0.586.1", "EPiServer-Application-Files.7.0.586.1\EPiServer-Application-Files.7.0.586.1.csproj", "{367B520A-2BF9-45E5-83C8-0195ED978291}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Binaries.7.0.586.1", "EPiServer-Binaries.7.0.586.1\EPiServer-Binaries.7.0.586.1.csproj", "{B68E6731-C9D5-469C-AF8B-E80557147D04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Application-Files.7.5.394.2", "EPiServer-Application-Files.7.5.394.2\EPiServer-Application-Files.7.5.394.2.csproj", "{4CA80325-5AEB-49C0-A8F0-819A0601D5B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Binaries.7.5.394.2", "EPiServer-Binaries.7.5.394.2\EPiServer-Binaries.7.5.394.2.csproj", "{2FE5EE75-6422-44F5-8791-A58F7724E85B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{E35D87DB-FD15-42CA-99A6-9F8EF288E204}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet-specifications", "NuGet-specifications", "{5F71B346-D80D-400C-94EC-5CDCD29E7E3C}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet-specifications\EPiServer-Application-Files.nuspec = NuGet-specifications\EPiServer-Application-Files.nuspec
+		NuGet-specifications\EPiServer-Binaries.nuspec = NuGet-specifications\EPiServer-Binaries.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Package-ReadMe", "Package-ReadMe", "{0F8E19C2-D1E9-427B-846D-5469372C5400}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPiServer-Binaries", "EPiServer-Binaries", "{50DC2FEA-39C6-460F-A570-1CE50C89C6CA}"
+	ProjectSection(SolutionItems) = preProject
+		Package-ReadMe\EPiServer-Binaries\ReadMe.txt = Package-ReadMe\EPiServer-Binaries\ReadMe.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPiServer-Application-Files", "EPiServer-Application-Files", "{191E82DB-D24C-4C3B-8068-9C8272654B9E}"
+	ProjectSection(SolutionItems) = preProject
+		Package-ReadMe\EPiServer-Application-Files\ReadMe.txt = Package-ReadMe\EPiServer-Application-Files\ReadMe.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5", "5", "{CB589FEF-5A44-4C46-8338-D7E1ACCFF41F}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet-specifications\5\EPiServer-Binaries.nuspec = NuGet-specifications\5\EPiServer-Binaries.nuspec
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication", "HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication\HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication.csproj", "{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{817DBF5C-4F0D-4555-87FC-ABF8EF7E46C7}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\Deploy-ReadMe.txt = Deploy\Deploy-ReadMe.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,8 +113,37 @@ Global
 		{E0FC8E9F-B2EB-4088-8EBD-6DB75DA8D863}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0FC8E9F-B2EB-4088-8EBD-6DB75DA8D863}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0FC8E9F-B2EB-4088-8EBD-6DB75DA8D863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{367B520A-2BF9-45E5-83C8-0195ED978291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{367B520A-2BF9-45E5-83C8-0195ED978291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{367B520A-2BF9-45E5-83C8-0195ED978291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{367B520A-2BF9-45E5-83C8-0195ED978291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68E6731-C9D5-469C-AF8B-E80557147D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68E6731-C9D5-469C-AF8B-E80557147D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68E6731-C9D5-469C-AF8B-E80557147D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68E6731-C9D5-469C-AF8B-E80557147D04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CA80325-5AEB-49C0-A8F0-819A0601D5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA80325-5AEB-49C0-A8F0-819A0601D5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA80325-5AEB-49C0-A8F0-819A0601D5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA80325-5AEB-49C0-A8F0-819A0601D5B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FE5EE75-6422-44F5-8791-A58F7724E85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FE5EE75-6422-44F5-8791-A58F7724E85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FE5EE75-6422-44F5-8791-A58F7724E85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FE5EE75-6422-44F5-8791-A58F7724E85B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E35D87DB-FD15-42CA-99A6-9F8EF288E204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E35D87DB-FD15-42CA-99A6-9F8EF288E204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E35D87DB-FD15-42CA-99A6-9F8EF288E204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E35D87DB-FD15-42CA-99A6-9F8EF288E204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CB589FEF-5A44-4C46-8338-D7E1ACCFF41F} = {5F71B346-D80D-400C-94EC-5CDCD29E7E3C}
+		{50DC2FEA-39C6-460F-A570-1CE50C89C6CA} = {0F8E19C2-D1E9-427B-846D-5469372C5400}
+		{191E82DB-D24C-4C3B-8068-9C8272654B9E} = {0F8E19C2-D1E9-427B-846D-5469372C5400}
 	EndGlobalSection
 EndGlobal

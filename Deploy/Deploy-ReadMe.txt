@@ -1,0 +1,1 @@
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication publish is targeted to this folder.

@@ -1,19 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Condition="Exists('Package.props')" Project="Package.props" />
+	<PropertyGroup>
+		<CopyEPiServerBinariesToBinDependsOn>
+			BeforeCopyEPiServerBinariesToBin;
+			CoreCopyEPiServerBinariesToBin;
+			AfterCopyEPiServerBinariesToBin
+		</CopyEPiServerBinariesToBinDependsOn>
+		<CoreCopyEPiServerBinariesToBinDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCopyEPiServerBinariesToBin" />
+	<Target Name="BeforeCopyEPiServerBinariesToBin" />
 	<Target
-		Name="CopyBinaries"
+		Name="CopyEPiServerBinariesToBin"
 		AfterTargets="AfterBuild"
-		Condition="@(BinariesToCopy) != '' AND Exists('bin')"
+		DependsOnTargets="$(CopyEPiServerBinariesToBinDependsOn)"
+	/>
+	<Target
+		Name="CoreCopyEPiServerBinariesToBin"
+		Condition="@(EPiServerBinariesToCopyToBin) != '' AND Exists('bin')"
+		DependsOnTargets="$(CoreCopyEPiServerBinariesToBinDependsOn)"
 	>
 		<Message
-			Importance="high"
-			Text="Copying EPiServer-binaries to bin."
+			Importance="$(EPiServerBinariesMessageImportance)"
+			Text="Target 'CoreCopyEPiServerBinariesToBin': Copying EPiServer-binaries to bin - '@(EPiServerBinariesToCopyToBin)'."
 		/>
 		<Copy
-			DestinationFiles="@(BinariesToCopy->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
+			DestinationFiles="@(EPiServerBinariesToCopyToBin->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
 			SkipUnchangedFiles="true"
-			SourceFiles="@(BinariesToCopy)"
+			SourceFiles="@(EPiServerBinariesToCopyToBin)"
 		/>
 	</Target>
 </Project>

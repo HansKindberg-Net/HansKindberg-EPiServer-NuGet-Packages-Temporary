@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup Condition="$(EPiServerBinariesToCopyToBin) == ''">
+		<EPiServerBinariesToCopyToBin Include="$(SolutionDir)packages\EPiServer-Binaries.$(EPiServerVersion)\lib\net20\**\*.dll" />
+		<EPiServerBinariesToCopyToBin Include="$(SolutionDir)packages\log4net.1.2.10\lib\2.0\**\*.dll" />
+		<EPiServerBinariesToCopyToBin Include="$(SolutionDir)packages\Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll" />
+	</ItemGroup>
+	<PropertyGroup>
+		<EPiServerVersion Condition="$(EPiServerVersion) == ''">5.2.375.133</EPiServerVersion>
+		<EPiServerBinariesMessageImportance Condition="$(EPiServerBinariesMessageImportance) == ''">high</EPiServerBinariesMessageImportance>
+	</PropertyGroup>
+</Project>

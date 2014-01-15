@@ -1,6 +1,7 @@
 _ReSharper*/
 bin/
 debug/
+Deploy/
 EPiServer/
 FakesAssemblies/
 obj/
@@ -20,4 +21,19 @@ testresults/
 *.user
 .nuget/NuGet.exe
 
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Views/Web.config
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Views/Web.Template.config
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/log4net.config
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/log4net.Template.config
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Web.config
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Web.Template.config
+
+WebApplication/Views/Web.config
+WebApplication/Views/Web.Template.config
+WebApplication/log4net.config
+WebApplication/log4net.Template.config
+WebApplication/Web.config
+WebApplication/Web.Template.config
+
+!Deploy/Deploy-ReadMe.txt
 !packages/repositories.config
