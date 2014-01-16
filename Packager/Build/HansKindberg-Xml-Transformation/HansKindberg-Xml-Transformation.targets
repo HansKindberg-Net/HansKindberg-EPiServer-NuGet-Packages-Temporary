@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<BackupCurrentHansKindbergXmlTransformDependsOn>
+			BeforeBackupCurrentHansKindbergXmlTransform;
+			CoreBackupCurrentHansKindbergXmlTransform;
+			AfterBackupCurrentHansKindbergXmlTransform
+		</BackupCurrentHansKindbergXmlTransformDependsOn>
+		<CoreBackupCurrentHansKindbergXmlTransformDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterBackupCurrentHansKindbergXmlTransform" />
+	<Target
+		Name="BackupCurrentHansKindbergXmlTransform"
+		BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
+		DependsOnTargets="$(BackupCurrentHansKindbergXmlTransformDependsOn)"
+	/>
+	<Target Name="BeforeBackupCurrentHansKindbergXmlTransform" />
+	<Target
+		Name="CoreBackupCurrentHansKindbergXmlTransform"
+		DependsOnTargets="$(CoreBackupCurrentHansKindbergXmlTransformDependsOn)"
+	>
+		<Message
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreBackupCurrentHansKindbergXmlTransform'."
+		/>
+		<Message
+			Condition="Exists($(HansKindbergXmlTransformBackupPath))"
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreBackupCurrentHansKindbergXmlTransform': Clearing '$(HansKindbergXmlTransformBackupPath)'."
+		/>
+		<Delete
+			Condition="Exists($(HansKindbergXmlTransformBackupPath))"
+			Files="$(HansKindbergXmlTransformBackupPath)**\*.*"
+		/>
+		<Message
+			Condition="Exists(%(HansKindbergXmlTransformSource.Destination))"
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreBackupCurrentHansKindbergXmlTransform': Backing up '%(HansKindbergXmlTransformSource.Destination)' to '$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Destination)'."
+		/>
+		<Copy
+			Condition="Exists(%(HansKindbergXmlTransformSource.Destination))"
+			DestinationFiles="$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Destination)"
+			SourceFiles="%(HansKindbergXmlTransformSource.Destination)"
+		/>
+	</Target>
+	<PropertyGroup>
+		<CleanHansKindbergXmlTransformDependsOn>
+			BeforeCleanHansKindbergXmlTransform;
+			PopulateHansKindbergXmlTransformSource;
+			CoreCleanHansKindbergXmlTransform;
+			AfterCleanHansKindbergXmlTransform
+		</CleanHansKindbergXmlTransformDependsOn>
+		<CoreCleanHansKindbergXmlTransformDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCleanHansKindbergXmlTransform" />
+	<Target Name="BeforeCleanHansKindbergXmlTransform" />
+	<Target
+		Name="CleanHansKindbergXmlTransform"
+		AfterTargets="AfterClean"
+		DependsOnTargets="$(CleanHansKindbergXmlTransformDependsOn)"
+	/>
+	<Target
+		Name="CoreCleanHansKindbergXmlTransform"
+		DependsOnTargets="$(CoreCleanHansKindbergXmlTransformDependsOn)"
+	>
+		<Message
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreCleanHansKindbergXmlTransform'."
+		/>
+		<Message
+			Condition="Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreCleanHansKindbergXmlTransform': Copying %(HansKindbergXmlTransformSource.Identity) to %(HansKindbergXmlTransformSource.Destination)."
+		/>
+		<Copy
+			Condition="Exists(%(HansKindbergXmlTransformSource.Identity))"
+			DestinationFiles="%(HansKindbergXmlTransformSource.Destination)"
+			SourceFiles="%(HansKindbergXmlTransformSource.Identity)"
+		/>
+	</Target>
+	<PropertyGroup>
+		<ExcludeHansKindbergXmlTransformFilesFromPackageDependsOn>
+			BeforeExcludeHansKindbergXmlTransformFilesFromPackage;
+			CoreExcludeHansKindbergXmlTransformFilesFromPackage;
+			AfterExcludeHansKindbergXmlTransformFilesFromPackage
+		</ExcludeHansKindbergXmlTransformFilesFromPackageDependsOn>
+		<CoreExcludeHansKindbergXmlTransformFilesFromPackageDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterExcludeHansKindbergXmlTransformFilesFromPackage" />
+	<Target Name="BeforeExcludeHansKindbergXmlTransformFilesFromPackage" />
+	<Target
+		Name="CoreExcludeHansKindbergXmlTransformFilesFromPackage"
+		DependsOnTargets="$(CoreExcludeHansKindbergXmlTransformFilesFromPackageDependsOn)"
+	>
+		<Message
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreExcludeHansKindbergXmlTransformFilesFromPackage': Before ExcludeFromPackageFiles = '@(ExcludeFromPackageFiles)'"
+		/>
+		<ItemGroup>
+			<ExcludeFromPackageFiles Include="**\*.*.config" />
+		</ItemGroup>
+		<Message
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreExcludeHansKindbergXmlTransformFilesFromPackage': After ExcludeFromPackageFiles = '@(ExcludeFromPackageFiles)'"
+		/>
+	</Target>
+	<Target
+		Name="ExcludeHansKindbergXmlTransformFilesFromPackage"
+		BeforeTargets="ExcludeFilesFromPackage"
+		DependsOnTargets="$(ExcludeHansKindbergXmlTransformFilesFromPackageDependsOn)"
+	/>
+	<PropertyGroup>
+		<PopulateHansKindbergXmlTransformDestinationDependsOn>
+			BeforePopulateHansKindbergXmlTransformDestination;
+			PopulateHansKindbergXmlTransformSource;
+			CorePopulateHansKindbergXmlTransformDestination;
+			AfterPopulateHansKindbergXmlTransformDestination
+		</PopulateHansKindbergXmlTransformDestinationDependsOn>
+		<CorePopulateHansKindbergXmlTransformDestinationDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterPopulateHansKindbergXmlTransformDestination" />
+	<Target Name="BeforePopulateHansKindbergXmlTransformDestination" />
+	<Target
+		Name="CorePopulateHansKindbergXmlTransformDestination"
+		DependsOnTargets="$(CorePopulateHansKindbergXmlTransformDestinationDependsOn)"
+	>
+		<Message
+			Condition="Exists(%(HansKindbergXmlTransformSource.Transform)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CorePopulateHansKindbergXmlTransformDestination': Transforming %(HansKindbergXmlTransformSource.Identity) with %(HansKindbergXmlTransformSource.Transform) to %(HansKindbergXmlTransformSource.Destination)."
+		/>
+		<TransformXml
+			Condition="Exists(%(HansKindbergXmlTransformSource.Transform)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Destination="%(HansKindbergXmlTransformSource.Destination)"
+			Source="%(HansKindbergXmlTransformSource.Identity)"
+			StackTrace="True"
+			Transform="%(HansKindbergXmlTransformSource.Transform)"
+		/>
+		<Message
+			Condition="!Exists(%(HansKindbergXmlTransformSource.Transform)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CorePopulateHansKindbergXmlTransformDestination': Copying %(HansKindbergXmlTransformSource.Identity) to %(HansKindbergXmlTransformSource.Destination)."
+		/>
+		<Copy
+			Condition="!Exists(%(HansKindbergXmlTransformSource.Transform)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			DestinationFiles="%(HansKindbergXmlTransformSource.Destination)"
+			SourceFiles="%(HansKindbergXmlTransformSource.Identity)"
+		/>
+	</Target>
+	<Target
+		Name="PopulateHansKindbergXmlTransformDestination"
+		AfterTargets="AfterBuild"
+		DependsOnTargets="$(PopulateHansKindbergXmlTransformDestinationDependsOn)"
+	/>
+	<PropertyGroup>
+		<PopulateHansKindbergXmlTransformSourceDependsOn />
+	</PropertyGroup>
+	<Target
+		Name="PopulateHansKindbergXmlTransformSource"
+		DependsOnTargets="$(PopulateHansKindbergXmlTransformSourceDependsOn)"
+	/>
+	<PropertyGroup>
+		<RestorePreviousHansKindbergXmlTransformDependsOn>
+			BeforeRestorePreviousHansKindbergXmlTransform;
+			CoreRestorePreviousHansKindbergXmlTransform;
+			AfterRestorePreviousHansKindbergXmlTransform
+		</RestorePreviousHansKindbergXmlTransformDependsOn>
+		<CoreRestorePreviousHansKindbergXmlTransformDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterRestorePreviousHansKindbergXmlTransform" />
+	<Target Name="BeforeRestorePreviousHansKindbergXmlTransform" />
+	<Target
+		Name="CoreRestorePreviousHansKindbergXmlTransform"
+		DependsOnTargets="$(CoreRestorePreviousHansKindbergXmlTransformDependsOn)"
+	>
+		<Message
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreRestorePreviousHansKindbergXmlTransform'."
+		/>
+		<Message
+			Condition="Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Destination)')"
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreRestorePreviousHansKindbergXmlTransform': Restoring '$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Destination)' to '%(HansKindbergXmlTransformSource.Destination)'."
+		/>
+		<Copy
+			Condition="Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Destination)')"
+			DestinationFiles="%(HansKindbergXmlTransformSource.Destination)"
+			SourceFiles="$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Destination)"
+		/>
+		<Message
+			Condition="!Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Destination)') AND Exists(%(HansKindbergXmlTransformSource.Destination))"
+			Importance="$(HansKindbergXmlTransformMessageImportance)"
+			Text="Target 'CoreRestorePreviousHansKindbergXmlTransform': Deleting '%(HansKindbergXmlTransformSource.Destination)'."
+		/>
+		<Delete
+			Condition="!Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Destination)') AND Exists(%(HansKindbergXmlTransformSource.Destination))"
+			Files="%(HansKindbergXmlTransformSource.Destination)"
+		/>
+	</Target>
+	<Target
+		Name="RestorePreviousHansKindbergXmlTransform"
+		AfterTargets="GatherAllFilesToPublish"
+		DependsOnTargets="$(RestorePreviousHansKindbergXmlTransformDependsOn)"
+	/>
+</Project>

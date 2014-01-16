@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<TemporaryDirectory>$(TargetDir)Temporary\</TemporaryDirectory>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AfterBuildDependsOn>
+			CreateNuspec;
+			CreatePackageProjects;
+			Cleanup
+		</AfterBuildDependsOn>
+	</PropertyGroup>
+	<Target
+		Name="AfterBuild"
+		DependsOnTargets="$(AfterBuildDependsOn)"
+	/>
+	<Target Name="RemoveTemporaryDirectory">
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'RemoveTemporaryDirectory'."
+		/>
+		<Message
+			Condition="Exists($(TemporaryDirectory))"
+			Importance="$(MessageImportance)"
+			Text="Target 'RemoveTemporaryDirectory': Remove directory '$(TemporaryDirectory)."
+		/>
+		<!--
+		<RemoveDir
+			Condition="Exists($(TemporaryDirctory))"
+			Directories="$(TemporaryDirectory)"
+		/>
+		-->
+	</Target>
+	<PropertyGroup>
+		<CleanupDependsOn>
+			BeforeCleanup;
+			CoreCleanup;
+			RemoveTemporaryDirectory;
+			AfterCleanup
+		</CleanupDependsOn>
+		<CoreCleanupDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCleanup" />
+	<Target Name="BeforeCleanup" />
+	<Target
+		Name="CoreCleanup"
+		DependsOnTargets="$(CoreCleanupDependsOn)"
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCleanup'."
+		/>
+		<Message
+			Condition="Exists($(TargetPath))"
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCleanup': Deleting '$(TargetPath)'."
+		/>
+		<Delete
+			Condition="Exists($(TargetPath))"
+			Files="$(TargetPath)"
+		/>
+	</Target>
+	<Target
+		Name="Cleanup"
+		DependsOnTargets="$(CleanupDependsOn)"
+	/>
+	<PropertyGroup>
+		<CreatePackageProjectsDependsOn>
+			BeforeCreatePackageProjects;
+			CoreCreatePackageProjects;
+			AfterCreatePackageProjects
+		</CreatePackageProjectsDependsOn>
+		<CoreCreatePackageProjectsDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCreatePackageProjects" />
+	<Target Name="BeforeCreatePackageProjects" />
+	<Target
+		Name="CoreCreatePackageProjects"
+		DependsOnTargets="$(CoreCreatePackageProjectsDependsOn)"
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCreatePackageProjects'. $(TargetDir) - '$(TemporaryDirectory)'"
+		/>
+		<MSBuild
+			Projects="$(BuildPackageProject)"
+			Properties="PackageVersion=%(BuildPackageVersion.Identity);ApplicationFilesPackageVersion=%(BuildPackageVersion.ApplicationFilesPackageVersion);BinariesPackageVersion=%(BuildPackageVersion.BinariesPackageVersion);EPiServerBinariesToCopyToBin=%(BuildPackageVersion.EPiServerBinariesToCopyToBin);PackageMessageImportance=$(PackageMessageImportance);TargetDir=$(TargetDir);TemporaryDirectory=$(TemporaryDirectory)"
+			Targets="CreatePropertyFiles"
+		/>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCreatePackageProjects': Transforming 'Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets' with 'Build\Packages\Build-Transform.targets' to '$(TemporaryDirectory)Build.targets'"
+		/>
+		<TransformXml
+			Destination="$(TemporaryDirectory)Build.targets"
+			Source="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets"
+			Transform="Build\Packages\Build-Transform.targets"
+		/>
+	</Target>
+	<Target
+		Name="CreatePackageProjects"
+		DependsOnTargets="$(CreatePackageProjectsDependsOn)"
+	/>
+	<PropertyGroup>
+		<CreateNuspecDependsOn>
+			BeforeCreateNuspec;
+			CoreCreateNuspec;
+			AfterCreateNuspec
+		</CreateNuspecDependsOn>
+		<CoreCreateNuspecDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCreateNuspec" />
+	<Target Name="BeforeCreateNuspec" />
+	<Target
+		Name="CoreCreateNuspec"
+		DependsOnTargets="$(CoreCreateNuspecDependsOn)"
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCreateNuspec'."
+		/>
+		<TransformXml
+			Destination="$(TargetDir)Test.nuspec"
+			Source=".nuspec\Templates\HansKindberg-EPiServer-NuGet-Packages.nuspec"
+			Transform=".nuspec\Templates\EPiServer-Transform.nuspec"
+		/>
+	</Target>
+	<Target
+		Name="CreateNuspec"
+		DependsOnTargets="$(CreateNuspecDependsOn)"
+	/>
+</Project>

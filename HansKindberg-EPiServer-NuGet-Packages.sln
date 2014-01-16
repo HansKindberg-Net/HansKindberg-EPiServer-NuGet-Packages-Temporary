@@ -75,6 +75,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{817DBF
 		Deploy\Deploy-ReadMe.txt = Deploy\Deploy-ReadMe.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packager", "Packager\Packager.csproj", "{885B28AC-CD2C-4B9F-B987-AC9DDEA87CA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{885B28AC-CD2C-4B9F-B987-AC9DDEA87CA5}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{885B28AC-CD2C-4B9F-B987-AC9DDEA87CA5}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{885B28AC-CD2C-4B9F-B987-AC9DDEA87CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{885B28AC-CD2C-4B9F-B987-AC9DDEA87CA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

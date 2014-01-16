@@ -1,10 +1,12 @@
 _ReSharper*/
+.build/
 bin/
 debug/
 Deploy/
 EPiServer/
 FakesAssemblies/
 obj/
+Package-output/
 packages/*
 release/
 

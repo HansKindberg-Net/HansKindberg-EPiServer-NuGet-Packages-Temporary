@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<PropertyGroup xdt:Transform="Insert">
+		<!--
+			***************************************************************
+			
+			Previous elements are from HansKindberg-Xml-Transformation.
+			
+			Next elements are from HansKindberg-EPiServer-NuGet-Packages.
+			
+			***************************************************************
+		-->
+	</PropertyGroup>
+	<PropertyGroup xdt:Transform="Insert">
+		<CopyEPiServerBinariesToBinDependsOn>
+			BeforeCopyEPiServerBinariesToBin;
+			CoreCopyEPiServerBinariesToBin;
+			AfterCopyEPiServerBinariesToBin
+		</CopyEPiServerBinariesToBinDependsOn>
+		<CoreCopyEPiServerBinariesToBinDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCopyEPiServerBinariesToBin" xdt:Transform="Insert" />
+	<Target Name="BeforeCopyEPiServerBinariesToBin" xdt:Transform="Insert" />
+	<Target
+		Name="CopyEPiServerBinariesToBin"
+		AfterTargets="AfterBuild"
+		DependsOnTargets="$(CopyEPiServerBinariesToBinDependsOn)"
+		xdt:Transform="Insert"
+	/>
+	<Target
+		Name="CoreCopyEPiServerBinariesToBin"
+		Condition="@(EPiServerBinariesToCopyToBin) != '' AND Exists('bin')"
+		DependsOnTargets="$(CoreCopyEPiServerBinariesToBinDependsOn)"
+		xdt:Transform="Insert"
+	>
+		<Message
+			Importance="$(EPiServerBinariesMessageImportance)"
+			Text="Target 'CoreCopyEPiServerBinariesToBin': Copying EPiServer-binaries to bin - '@(EPiServerBinariesToCopyToBin)'."
+		/>
+		<Copy
+			DestinationFiles="@(EPiServerBinariesToCopyToBin->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
+			SkipUnchangedFiles="true"
+			SourceFiles="@(EPiServerBinariesToCopyToBin)"
+		/>
+	</Target>
+	<Target Name="AfterBackupCurrentHansKindbergXmlTransform" xdt:Transform="Insert">
+		<Message
+			Importance="$(EPiServerApplicationFilesMessageImportance)"
+			Text="Target 'AfterBackupCurrentHansKindbergXmlTransform'"
+		/>
+		<Message
+			Condition="Exists($(HansKindbergXmlTransformBackupPath)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Importance="$(EPiServerApplicationFilesMessageImportance)"
+			Text="Target 'AfterBackupCurrentHansKindbergXmlTransform': Backing up '%(HansKindbergXmlTransformSource.Identity)' to '$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)'."
+		/>
+		<Copy
+			Condition="Exists($(HansKindbergXmlTransformBackupPath)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			DestinationFiles="$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)"
+			SourceFiles="%(HansKindbergXmlTransformSource.Identity)"
+		/>
+	</Target>
+	<Target Name="AfterRestorePreviousHansKindbergXmlTransform" xdt:Transform="Insert">
+		<Message
+			Importance="$(EPiServerApplicationFilesMessageImportance)"
+			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform'"
+		/>
+		<Message
+			Condition="Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)')"
+			Importance="$(EPiServerApplicationFilesMessageImportance)"
+			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform': Restoring '$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)' to '%(HansKindbergXmlTransformSource.Identity)'."
+		/>
+		<Copy
+			Condition="Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)')"
+			DestinationFiles="%(HansKindbergXmlTransformSource.Identity)"
+			SourceFiles="$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)"
+		/>
+		<Message
+			Condition="!Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Importance="$(EPiServerApplicationFilesMessageImportance)"
+			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform': Deleting '%(HansKindbergXmlTransformSource.Identity)'."
+		/>
+		<Delete
+			Condition="!Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Files="%(HansKindbergXmlTransformSource.Identity)"
+		/>
+	</Target>
+	<PropertyGroup xdt:Transform="Insert">
+		<PopulateHansKindbergXmlTransformSourceDependsOn>
+			$(PopulateHansKindbergXmlTransformSourceDependsOn);
+			PopulateFromConfigurationTemplate;
+		</PopulateHansKindbergXmlTransformSourceDependsOn>
+	</PropertyGroup>
+	<Target Name="PopulateFromConfigurationTemplate" xdt:Transform="Insert">
+		<Message
+			Importance="$(EPiServerApplicationFilesMessageImportance)"
+			Text="Target 'PopulateFromConfigurationTemplate'"
+		/>
+		<Message
+			Condition="!Exists(%(ConfigurationTemplate.Transform))"
+			Importance="$(EPiServerApplicationFilesMessageImportance)"
+			Text="Target 'PopulateFromConfigurationTemplate': Copying '%(ConfigurationTemplate.Identity)' to '%(ConfigurationTemplate.Destination)'."
+		/>
+		<Copy
+			Condition="!Exists(%(ConfigurationTemplate.Transform))"
+			DestinationFiles="%(ConfigurationTemplate.Destination)"
+			SourceFiles="%(ConfigurationTemplate.Identity)"
+		/>
+		<Message
+			Condition="Exists(%(ConfigurationTemplate.Transform))"
+			Importance="$(EPiServerApplicationFilesMessageImportance)"
+			Text="Target 'PopulateFromConfigurationTemplate': Transforming '%(ConfigurationTemplate.Identity)' with '%(ConfigurationTemplate.Transform)' to '%(ConfigurationTemplate.Destination)'."
+		/>
+		<TransformXml
+			Condition="Exists(%(ConfigurationTemplate.Transform))"
+			Destination="%(ConfigurationTemplate.Destination)"
+			Source="%(ConfigurationTemplate.Identity)"
+			StackTrace="True"
+			Transform="%(ConfigurationTemplate.Transform)"
+		/>
+	</Target>
+</Project>

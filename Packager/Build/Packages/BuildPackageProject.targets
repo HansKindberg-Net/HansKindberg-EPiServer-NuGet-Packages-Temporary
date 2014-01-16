@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="BuildPackageProject.props" />
+	<Target Name="CreatePropertyFiles">
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'BuildPackageProject.CreatePropertyFiles'."
+		/>
+		<PropertyGroup>
+			<BuildPrefix>Build</BuildPrefix>
+			<BuildTransformPrefix>Build-Transform</BuildTransformPrefix>
+		</PropertyGroup>
+		<ItemGroup>
+			<Token Include="ApplicationFilesPackageVersion">
+				<ReplacementValue>$(ApplicationFilesPackageVersion)</ReplacementValue>
+				<ReplacementValue Condition="$(ApplicationFilesPackageVersion) == ''">$(PackageVersion)</ReplacementValue>
+			</Token>
+			<Token Include="BinariesPackageVersion">
+				<ReplacementValue>$(BinariesPackageVersion)</ReplacementValue>
+				<ReplacementValue Condition="$(BinariesPackageVersion) == ''">$(PackageVersion)</ReplacementValue>
+			</Token>
+			<Token Include="EPiServerBinariesToCopyToBin">
+				<ReplacementValue>$(EPiServerBinariesToCopyToBin)</ReplacementValue>
+			</Token>
+			<Token Include="MessageImportance">
+				<ReplacementValue>$(PackageMessageImportance)</ReplacementValue>
+				<ReplacementValue Condition="$(PackageMessageImportance) == ''">$(MessageImportance)</ReplacementValue>
+			</Token>
+		</ItemGroup>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'BuildPackageProject.CreatePropertyFiles': Creating file '$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props'"
+		/>
+		<Copy
+			DestinationFiles="$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props"
+			SourceFiles="$(BuildTransformPrefix).props"
+		/>
+		<TemplateFile Template="$(BuildTransformPrefix).props" OutputFileName="$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props" Tokens="@(Token)" />
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'BuildPackageProject.CreatePropertyFiles': Transforming '..\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props' with '$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props' to '$(TemporaryDirectory)$(BuildPrefix).$(PackageVersion).props'"
+		/>
+		<TransformXml
+			Destination="$(TemporaryDirectory)$(BuildPrefix).$(PackageVersion).props"
+			Source="..\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props"
+			Transform="$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props"
+		/>
+	</Target>
+</Project>
