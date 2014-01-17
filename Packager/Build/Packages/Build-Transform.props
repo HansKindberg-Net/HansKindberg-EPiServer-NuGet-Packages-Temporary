@@ -23,7 +23,7 @@
 		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackageDirectory)$(BinariesPackageName).$(BinariesPackageVersion)\</BinariesPackageDirectory>
 		<BinariesPackageName Condition="$(BinariesPackageName) == ''">${BinariesPackageName}</BinariesPackageName>
 		<BinariesPackageVersion Condition="$(BinariesPackageVersion) == ''">${BinariesPackageVersion}</BinariesPackageVersion>
-		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(BinariesPackageDirectory)Configuration\</ConfigurationDirectory>
+		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(ApplicationFilesPackageDirectory)Configuration\</ConfigurationDirectory>
 		<MessageImportance Condition="$(MessageImportance) == ''">${MessageImportance}</MessageImportance>
 		<NuGetPackageDirectory Condition="$(NuGetPackageDirectory) == ''">$(SolutionDir)${NuGetPackageDirectoryName}\</NuGetPackageDirectory>		
 	</PropertyGroup>
