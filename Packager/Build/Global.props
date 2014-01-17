@@ -4,6 +4,7 @@
 		<ApplicationFilesPackageName>HansKindberg-EPiServer-Application-Files</ApplicationFilesPackageName>
 		<BinariesPackageName>HansKindberg-EPiServer-Binaries</BinariesPackageName>
 		<BuildPackageName>HansKindberg-EPiServer-Build</BuildPackageName>
+		<EPiServerPath>$(SolutionDir)EPiServer\</EPiServerPath>
 		<MessageImportance Condition="$(MessageImporance) == ''">high</MessageImportance>
 		<MSBuildCommunityTasksLibrary>$(SolutionDir)packages\MSBuildTasks.1.4.0.65\tools\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLibrary>
 		<PackageMessageImportance Condition="$(PackageMessageImportance) == ''">$(MessageImportance)</PackageMessageImportance>
@@ -11,5 +12,6 @@
 		<VSToolsPath Condition="$(VSToolsPath) == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
 	</PropertyGroup>
 	<UsingTask TaskName="Microsoft.Web.Publishing.Tasks.TransformXml" AssemblyFile="$(VSToolsPath)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.NuGet.NuGetPack" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />
 	<UsingTask TaskName="MSBuild.Community.Tasks.TemplateFile" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />
 </Project>

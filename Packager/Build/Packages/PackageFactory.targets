@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="BuildPackageProject.props" />
+	<Import Project="PackageFactory.props" />
 	<Target Name="CreatePropertyFiles">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BuildPackageProject.CreatePropertyFiles'."
+			Text="Target 'PackageFactory.CreatePropertyFiles'."
 		/>
 		<PropertyGroup>
 			<BuildPrefix>Build</BuildPrefix>
@@ -29,7 +29,7 @@
 		</ItemGroup>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BuildPackageProject.CreatePropertyFiles': Creating file '$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props'"
+			Text="Target 'PackageFactory.CreatePropertyFiles': Creating file '$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props'"
 		/>
 		<Copy
 			DestinationFiles="$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props"
@@ -38,7 +38,7 @@
 		<TemplateFile Template="$(BuildTransformPrefix).props" OutputFileName="$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props" Tokens="@(Token)" />
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BuildPackageProject.CreatePropertyFiles': Transforming '..\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props' with '$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props' to '$(TemporaryDirectory)$(BuildPrefix).$(PackageVersion).props'"
+			Text="Target 'PackageFactory.CreatePropertyFiles': Transforming '..\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props' with '$(TemporaryDirectory)$(BuildTransformPrefix).$(PackageVersion).props' to '$(TemporaryDirectory)$(BuildPrefix).$(PackageVersion).props'"
 		/>
 		<TransformXml
 			Destination="$(TemporaryDirectory)$(BuildPrefix).$(PackageVersion).props"

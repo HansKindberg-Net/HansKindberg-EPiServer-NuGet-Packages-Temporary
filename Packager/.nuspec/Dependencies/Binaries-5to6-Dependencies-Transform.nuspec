@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<metadata>
+		<dependencies xdt:Transform="Replace">
+			<dependency id="log4net" version="[1.2.10]" />
+			<dependency id="Microsoft.Web.Services3" version="[3.0.0.0]" />
+		</dependencies>
+	</metadata>
+</package>

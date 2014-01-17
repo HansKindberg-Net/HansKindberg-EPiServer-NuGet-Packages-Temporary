@@ -16,7 +16,8 @@
 	<PropertyGroup xdt:Transform="Insert">
 		<ApplicationFilesPackageVersion Condition="$(ApplicationFilesPackageVersion) == ''">${ApplicationFilesPackageVersion}</ApplicationFilesPackageVersion>
 		<BinariesPackageVersion Condition="$(BinariesPackageVersion) == ''">${BinariesPackageVersion}</BinariesPackageVersion>
-		<ConfigurationPath Condition="$(ConfigurationPath) == ''">$(SolutionDir)packages\EPiServer-Application-Files.$(ApplicationFilesPackageVersion)\Configuration\</ConfigurationPath>
+		<ConfigurationPath Condition="$(ConfigurationPath) == ''">$(NuGetPackageDirectory)${ApplicationFilesPackageName}.${ApplicationFilesPackageVersion}\Configuration\</ConfigurationPath>
 		<MessageImportance Condition="$(MessageImportance) == ''">${MessageImportance}</MessageImportance>
+		<NuGetPackageDirectory Condition="$(NuGetPackageDirectory) == ''">${NuGetPackageDirectory}</NuGetPackageDirectory>
 	</PropertyGroup>
 </Project>
