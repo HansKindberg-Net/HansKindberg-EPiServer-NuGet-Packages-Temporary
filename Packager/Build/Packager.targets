@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="Tasks\ReplaceToken.targets" />
 	<PropertyGroup>
 		<TemporaryDirectory>$(TargetDir)Temporary\</TemporaryDirectory>
 	</PropertyGroup>
 	<PropertyGroup>
 		<AfterBuildDependsOn>
+			ClearTargetDirectory;
 			CreateNuspec;
-			CreatePropertyFiles;
+			CreateBuildFiles;
 			CreateNuGetPackages;
 			Cleanup
 		</AfterBuildDependsOn>
@@ -48,6 +50,23 @@
 		Name="Cleanup"
 		DependsOnTargets="$(CleanupDependsOn)"
 	/>
+	<Target Name="ClearTargetDirectory">
+		<!--
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'ClearTargetDirectory'."
+		/>
+		<Message
+			Condition="Exists($(TargetDir))"
+			Importance="$(MessageImportance)"
+			Text="Target 'ClearTargetDirectory': Clear directory '$(TargetDir)'."
+		/>
+		<DeleteTree
+			Directories="$(TargetDir)**\*.*)"
+			Recursive="true"
+		/>
+		-->
+	</Target>
 	<PropertyGroup>
 		<CreateApplicationFilesNuspecDependsOn>
 			BeforeCreateApplicationFilesNuspec;
@@ -63,54 +82,54 @@
 		DependsOnTargets="$(CoreCreateApplicationFilesNuspecDependsOn)"
 	>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateApplicationFilesNuspec': Creating '$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec' for 'Application-Files' package '%(ApplicationFilesPackageVersion.Identity)'."
 		/>
 		<Message
-			Condition="!Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
+			Condition="!Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCreateApplicationFilesNuspec': The 'Application-Files' package '%(ApplicationFilesPackageVersion.Identity)' will not be created. The folder '$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)' does not exist."
+			Text="Target 'CoreCreateApplicationFilesNuspec': The 'Application-Files' package '%(ApplicationFilesPackageVersion.Identity)' will not be created. The folder '$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)' does not exist."
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateApplicationFilesNuspec': Copying '.nuspec\HansKindberg-EPiServer-NuGet-Packages.nuspec' to '$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec'."
 		/>
 		<Copy
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
 			DestinationFiles="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
 			SourceFiles=".nuspec\HansKindberg-EPiServer-NuGet-Packages.nuspec"
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateApplicationFilesNuspec': Transforming '$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec' with '.nuspec\EPiServer-Transform.nuspec' to '$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec'."
 		/>
 		<TransformXml
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
 			Destination="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
 			Source="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
 			Transform=".nuspec\EPiServer-Transform.nuspec"
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateApplicationFilesNuspec': Transforming '$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec' with '.nuspec\Application-Files-Transform.nuspec' to '$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec'."
 		/>
 		<TransformXml
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)')"
 			Destination="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
 			Source="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
 			Transform=".nuspec\Application-Files-Transform.nuspec"
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)') AND %(ApplicationFilesPackageVersion.NuspecFilesTransform) != ''"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)') AND %(ApplicationFilesPackageVersion.NuspecFilesTransform) != ''"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateApplicationFilesNuspec': Transforming '$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec' with '%(ApplicationFilesPackageVersion.NuspecFilesTransform)' to '$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec'."
 		/>
 		<TransformXml
-			Condition="Exists('$(EPiServerPath)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)') AND %(ApplicationFilesPackageVersion.NuspecFilesTransform) != ''"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(ApplicationFilesPackageVersion.EPiServerVersion)') AND %(ApplicationFilesPackageVersion.NuspecFilesTransform) != ''"
 			Destination="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
 			Source="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
 			Transform="%(ApplicationFilesPackageVersion.NuspecFilesTransform)"
@@ -135,81 +154,81 @@
 		DependsOnTargets="$(CoreCreateBinariesNuspecDependsOn)"
 	>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateBinariesNuspec': Creating '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec' for 'Binaries' package '%(BinariesPackageVersion.Identity)'."
 		/>
 		<Message
-			Condition="!Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)')"
+			Condition="!Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)')"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCreateBinariesNuspec': The 'Binaries' package '%(BinariesPackageVersion.Identity)' will not be created. The folder '$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)' does not exist."
+			Text="Target 'CoreCreateBinariesNuspec': The 'Binaries' package '%(BinariesPackageVersion.Identity)' will not be created. The folder '$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)' does not exist."
 		/>
 		<Message
-			Condition="%(BinariesPackageVersion.EPiServerFrameworkVersion) != '' AND !Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')"
+			Condition="%(BinariesPackageVersion.EPiServerFrameworkVersion) != '' AND !Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCreateBinariesNuspec': The 'Binaries' package '%(BinariesPackageVersion.Identity)' will not be created. The folder '$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)' does not exist."
+			Text="Target 'CoreCreateBinariesNuspec': The 'Binaries' package '%(BinariesPackageVersion.Identity)' will not be created. The folder '$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)' does not exist."
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateBinariesNuspec': Copying '.nuspec\HansKindberg-EPiServer-NuGet-Packages.nuspec' to '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec'."
 		/>
 		<Copy
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
 			DestinationFiles="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			SourceFiles=".nuspec\HansKindberg-EPiServer-NuGet-Packages.nuspec"
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateBinariesNuspec': Transforming '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec' with '.nuspec\EPiServer-Transform.nuspec' to '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec'."
 		/>
 		<TransformXml
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
 			Destination="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Source="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Transform=".nuspec\EPiServer-Transform.nuspec"
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateBinariesNuspec': Transforming '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec' with '.nuspec\Binaries-Transform.nuspec' to '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec'."
 		/>
 		<TransformXml
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)'))"
 			Destination="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Source="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Transform=".nuspec\Binaries-Transform.nuspec"
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecDependenciesTransform) != ''"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecDependenciesTransform) != ''"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateBinariesNuspec': Transforming '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec' with '%(BinariesPackageVersion.NuspecDependenciesTransform)' to '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec'."
 		/>
 		<TransformXml
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecDependenciesTransform) != ''"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecDependenciesTransform) != ''"
 			Destination="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Source="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Transform="%(BinariesPackageVersion.NuspecDependenciesTransform)"
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecFilesTransform) != ''"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecFilesTransform) != ''"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateBinariesNuspec': Transforming '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec' with '%(BinariesPackageVersion.NuspecFilesTransform)' to '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec'."
 		/>
 		<TransformXml
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecFilesTransform) != ''"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecFilesTransform) != ''"
 			Destination="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Source="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Transform="%(BinariesPackageVersion.NuspecFilesTransform)"
 		/>
 		<Message
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecReferencesTransform) != ''"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecReferencesTransform) != ''"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateBinariesNuspec': Transforming '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec' with '%(BinariesPackageVersion.NuspecReferencesTransform)' to '$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec'."
 		/>
 		<TransformXml
-			Condition="Exists('$(EPiServerPath)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerPath)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecReferencesTransform) != ''"
+			Condition="Exists('$(EPiServerDirectory)CMS\%(BinariesPackageVersion.EPiServerVersion)') AND (%(BinariesPackageVersion.EPiServerFrameworkVersion) == '' OR Exists('$(EPiServerDirectory)Framework\%(BinariesPackageVersion.EPiServerFrameworkVersion)')) AND %(BinariesPackageVersion.NuspecReferencesTransform) != ''"
 			Destination="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Source="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
 			Transform="%(BinariesPackageVersion.NuspecReferencesTransform)"
@@ -218,6 +237,103 @@
 	<Target
 		Name="CreateBinariesNuspec"
 		DependsOnTargets="$(CreateBinariesNuspecDependsOn)"
+	/>
+	<PropertyGroup>
+		<CreateBuildFilesDependsOn>
+			BeforeCreateBuildFiles;
+			CoreCreateBuildFiles;
+			AfterCreateBuildFiles
+		</CreateBuildFilesDependsOn>
+		<CoreCreateBuildFilesDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCreateBuildFiles" />
+	<Target Name="BeforeCreateBuildFiles" />
+	<Target
+		Name="CoreCreateBuildFiles"
+		DependsOnTargets="$(CoreCreateBuildFilesDependsOn)"
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCreateBuildFiles'."
+		/>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CreateBuildFiles': Creating file '$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props'"
+		/>
+		<Copy
+			DestinationFiles="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			SourceFiles="Build\Packages\Build-Transform.props"
+		/>
+		<ReplaceToken
+			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Replacement="$(ApplicationFilesPackageName)"
+			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Token="${ApplicationFilesPackageName}"
+		/>
+		<ReplaceToken
+			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Replacement="%(BuildPackageVersion.ApplicationFilesPackageVersion)"
+			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Token="${ApplicationFilesPackageVersion}"
+		/>
+		<ReplaceToken
+			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Replacement="$(BinariesPackageName)"
+			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Token="${BinariesPackageName}"
+		/>
+		<ReplaceToken
+			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Replacement="%(BuildPackageVersion.BinariesPackageVersion)"
+			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Token="${BinariesPackageVersion}"
+		/>
+		<ReplaceToken
+			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Replacement="%(BuildPackageVersion.EPiServerBinariesToCopyToBin)"
+			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Token="${EPiServerBinariesToCopyToBin}"
+		/>
+		<ReplaceToken
+			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Replacement="$(PackageMessageImportance)"
+			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Token="${MessageImportance}"
+		/>
+		<ReplaceToken
+			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Replacement="$(NuGetPackageDirectoryName)"
+			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Token="${NuGetPackageDirectoryName}"
+		/>
+		<ReplaceToken
+			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Replacement="%(BuildPackageVersion.ReferencedBinariesToCopyToBin)"
+			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+			Token="${ReferencedBinariesToCopyToBin}"
+		/>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CreateBuildFiles': Transforming 'Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props' with '$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props' to '$(TemporaryDirectory)$(BuildPackageName).%(BuildPackageVersion.Identity).props'"
+		/>
+		<TransformXml
+			Destination="$(TemporaryDirectory)$(BuildPackageName).%(BuildPackageVersion.Identity).props"
+			Source="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props"
+			Transform="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
+		/>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCreateBuildFiles': Transforming 'Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets' with 'Build\Packages\Build-Transform.targets' to '$(TemporaryDirectory)$(BuildPackageName).targets'"
+		/>
+		<TransformXml
+			Destination="$(TemporaryDirectory)$(BuildPackageName).targets"
+			Source="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets"
+			Transform="Build\Packages\Build-Transform.targets"
+		/>
+	</Target>
+	<Target
+		Name="CreateBuildFiles"
+		DependsOnTargets="$(CreateBuildFilesDependsOn)"
 	/>
 	<PropertyGroup>
 		<CreateBuildNuspecDependsOn>
@@ -259,17 +375,6 @@
 		Name="CreateBuildNuspec"
 		DependsOnTargets="$(CreateBuildNuspecDependsOn)"
 	/>
-
-
-
-
-
-
-
-
-
-
-
 	<PropertyGroup>
 		<CreateNuGetPackagesDependsOn>
 			BeforeCreateNuGetPackages;
@@ -289,96 +394,57 @@
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateNuGetPackages': Packing '$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity)'."
 		/>
-
 		<Message
 			Condition="Exists('$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec')"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCreateNuGetPackages': Executes task 'NuGetPack' with properties = 'Id=$(ApplicationFilesPackageName);Version=%(ApplicationFilesPackageVersion.Identity);BinariesId=$(BinariesPackageName);BinariesVersion=%(ApplicationFilesPackageVersion.BinariesVersion);ConfigurationVersion=%(ApplicationFilesPackageVersion.ConfigurationVersion);EPiServerVersion=%(ApplicationFilesPackageVersion.EPiServerVersion);EPiServerPath=$(EPiServerPath);ProjectDirectory=$(ProjectDir);TemporaryDirectory=$(TemporaryDirectory)'."
+			Text="Target 'CoreCreateNuGetPackages': Executes task 'NuGetPack' with properties = 'Id=$(ApplicationFilesPackageName);Version=%(ApplicationFilesPackageVersion.Identity);BinariesPackageId=$(BinariesPackageName);BinariesPackageVersion=%(ApplicationFilesPackageVersion.BinariesPackageVersion);ConfigurationVersion=%(ApplicationFilesPackageVersion.ConfigurationVersion);EPiServerDirectory=$(EPiServerDirectory);EPiServerVersion=%(ApplicationFilesPackageVersion.EPiServerVersion);ProjectDirectory=$(ProjectDir);TemporaryDirectory=$(TemporaryDirectory)'."
 		/>
 		<NuGetPack
 			Condition="Exists('$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec')"
 			File="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
 			OutputDirectory="$(TargetDir)"
-			Properties="Id=$(ApplicationFilesPackageName);Version=%(ApplicationFilesPackageVersion.Identity);BinariesId=$(BinariesPackageName);BinariesVersion=%(ApplicationFilesPackageVersion.BinariesVersion);ConfigurationVersion=%(ApplicationFilesPackageVersion.ConfigurationVersion);EPiServerVersion=%(ApplicationFilesPackageVersion.EPiServerVersion);EPiServerPath=$(EPiServerPath);ProjectDirectory=$(ProjectDir);TemporaryDirectory=$(TemporaryDirectory)"
+			Properties="Id=$(ApplicationFilesPackageName);Version=%(ApplicationFilesPackageVersion.Identity);BinariesPackageId=$(BinariesPackageName);BinariesPackageVersion=%(ApplicationFilesPackageVersion.BinariesPackageVersion);ConfigurationVersion=%(ApplicationFilesPackageVersion.ConfigurationVersion);EPiServerDirectory=$(EPiServerDirectory);EPiServerVersion=%(ApplicationFilesPackageVersion.EPiServerVersion);ProjectDirectory=$(ProjectDir);TemporaryDirectory=$(TemporaryDirectory)"
 			ToolPath="$(SolutionDir).nuget"
 		/>
-
-		
-		<!--
-		<Message
-			Condition="Exists('$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec') AND %(ApplicationFilesPackageVersion.BinariesVersion) == ''"
-			Importance="$(MessageImportance)"
-			Text="Target 'CoreCreateNuGetPackages': Properties - 'Id=$(ApplicationFilesPackageName);Version=%(ApplicationFilesPackageVersion.Identity);BinariesId=$(BinariesPackageName);BinariesVersion=%(ApplicationFilesPackageVersion.Identity);EPiServerPath=$(EPiServerPath);TemporaryDirectory=$(TemporaryDirectory)'."
-		/>
-		<NuGetPack
-			Condition="Exists('$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec') AND %(ApplicationFilesPackageVersion.BinariesVersion) == ''"
-			File="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
-			Properties="Id=$(ApplicationFilesPackageName);Version=%(ApplicationFilesPackageVersion.Identity);BinariesId=$(BinariesPackageName);BinariesVersion=%(ApplicationFilesPackageVersion.Identity);EPiServerPath=$(EPiServerPath);EPiServerVersion=%(ApplicationFilesPackageVersion.EPiServerVersion);TemporaryDirectory=$(TemporaryDirectory)"
-			ToolPath="$(SolutionDir).nuget"
-		/>
-		<Message
-			Condition="Exists('$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec') AND %(ApplicationFilesPackageVersion.BinariesVersion) != ''"
-			Importance="$(MessageImportance)"
-			Text="Target 'CoreCreateNuGetPackages': Properties - 'Id=$(ApplicationFilesPackageName);Version=%(ApplicationFilesPackageVersion.Identity);BinariesId=$(BinariesPackageName);BinariesVersion=%(ApplicationFilesPackageVersion.BinariesVersion);EPiServerPath=$(EPiServerPath);TemporaryDirectory=$(TemporaryDirectory)'."
-		/>
-		<NuGetPack
-			Condition="Exists('$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec') AND %(ApplicationFilesPackageVersion.BinariesVersion) != ''"
-			File="$(TemporaryDirectory)$(ApplicationFilesPackageName).%(ApplicationFilesPackageVersion.Identity).nuspec"
-			Properties="Id=$(ApplicationFilesPackageName);Version=%(ApplicationFilesPackageVersion.Identity);BinariesId=$(BinariesPackageName);BinariesVersion=%(ApplicationFilesPackageVersion.BinariesVersion);EPiServerPath=$(EPiServerPath);EPiServerVersion=%(ApplicationFilesPackageVersion.EPiServerVersion);TemporaryDirectory=$(TemporaryDirectory)"
-			ToolPath="$(SolutionDir).nuget"
-		/>
-		-->
-		
-		
-
 		<Message
 			Condition="Exists('$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec')"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateNuGetPackages': Packing '$(BinariesPackageName).%(BinariesPackageVersion.Identity)'."
 		/>
-
-
+		<Message
+			Condition="Exists('$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec')"
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCreateNuGetPackages': Executes task 'NuGetPack' with properties = 'Id=$(BinariesPackageName);Version=%(BinariesPackageVersion.Identity);EPiServerDirectory=$(EPiServerDirectory);EPiServerFrameworkVersion=%(BinariesPackageVersion.EPiServerFrameworkVersion);EPiServerVersion=%(BinariesPackageVersion.EPiServerVersion);ProjectDirectory=$(ProjectDir)'."
+		/>
+		<NuGetPack
+			Condition="Exists('$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec')"
+			File="$(TemporaryDirectory)$(BinariesPackageName).%(BinariesPackageVersion.Identity).nuspec"
+			OutputDirectory="$(TargetDir)"
+			Properties="Id=$(BinariesPackageName);Version=%(BinariesPackageVersion.Identity);EPiServerDirectory=$(EPiServerDirectory);EPiServerFrameworkVersion=%(BinariesPackageVersion.EPiServerFrameworkVersion);EPiServerVersion=%(BinariesPackageVersion.EPiServerVersion);ProjectDirectory=$(ProjectDir)"
+			ToolPath="$(SolutionDir).nuget"
+		/>
 		<Message
 			Condition="Exists('$(TemporaryDirectory)$(BuildPackageName).%(BuildPackageVersion.Identity).nuspec')"
 			Importance="$(MessageImportance)"
 			Text="Target 'CoreCreateNuGetPackages': Packing '$(BuildPackageName).%(BuildPackageVersion.Identity)'."
 		/>
-
-		<!--
-		$Id$
-		$Version$
-		
-				$BinariesId$
-		$BinariesVersion$
-		$EPiServerPath$
-		$EPiServerVersion$
-		$TemporaryDirectory$
-
-		-->
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		<Message
+			Condition="Exists('$(TemporaryDirectory)$(BuildPackageName).%(BuildPackageVersion.Identity).nuspec')"
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCreateNuGetPackages': Executes task 'NuGetPack' with properties = 'Id=$(BuildPackageName);Version=%(BuildPackageVersion.Identity);ApplicationFilesPackageId=$(ApplicationFilesPackageName);ApplicationFilesPackageVersion=%(BuildPackageVersion.ApplicationFilesPackageVersion);EPiServerVersion=%(BuildPackageVersion.EPiServerVersion);ProjectDirectory=$(ProjectDir);TemporaryDirectory=$(TemporaryDirectory)'."
+		/>
+		<NuGetPack
+			Condition="Exists('$(TemporaryDirectory)$(BuildPackageName).%(BuildPackageVersion.Identity).nuspec')"
+			File="$(TemporaryDirectory)$(BuildPackageName).%(BuildPackageVersion.Identity).nuspec"
+			OutputDirectory="$(TargetDir)"
+			Properties="Id=$(BuildPackageName);Version=%(BuildPackageVersion.Identity);ApplicationFilesPackageId=$(ApplicationFilesPackageName);ApplicationFilesPackageVersion=%(BuildPackageVersion.ApplicationFilesPackageVersion);EPiServerVersion=%(BuildPackageVersion.EPiServerVersion);ProjectDirectory=$(ProjectDir);TemporaryDirectory=$(TemporaryDirectory)"
+			ToolPath="$(SolutionDir).nuget"
+		/>
 	</Target>
 	<Target
 		Name="CreateNuGetPackages"
 		DependsOnTargets="$(CreateNuGetPackagesDependsOn)"
 	/>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<PropertyGroup>
 		<CreateNuspecDependsOn>
 			BeforeCreateNuspec;
@@ -394,43 +460,6 @@
 		Name="CreateNuspec"
 		DependsOnTargets="$(CreateNuspecDependsOn)"
 	/>
-	<PropertyGroup>
-		<CreatePropertyFilesDependsOn>
-			BeforeCreatePropertyFiles;
-			CoreCreatePropertyFiles;
-			AfterCreatePropertyFiles
-		</CreatePropertyFilesDependsOn>
-		<CoreCreatePropertyFilesDependsOn />
-	</PropertyGroup>
-	<Target Name="AfterCreatePropertyFiles" />
-	<Target Name="BeforeCreatePropertyFiles" />
-	<Target
-		Name="CoreCreatePropertyFiles"
-		DependsOnTargets="$(CoreCreatePropertyFilesDependsOn)"
-	>
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Target 'CoreCreatePropertyFiles'."
-		/>
-		<MSBuild
-			Projects="$(PackageFactory)"
-			Properties="PackageVersion=%(BuildPackageVersion.Identity);ApplicationFilesPackageVersion=%(BuildPackageVersion.ApplicationFilesPackageVersion);BinariesPackageVersion=%(BuildPackageVersion.BinariesPackageVersion);EPiServerBinariesToCopyToBin=%(BuildPackageVersion.EPiServerBinariesToCopyToBin);PackageMessageImportance=$(PackageMessageImportance);TargetDir=$(TargetDir);TemporaryDirectory=$(TemporaryDirectory)"
-			Targets="CreatePropertyFiles"
-		/>
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Target 'CoreCreatePropertyFiles': Transforming 'Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets' with 'Build\Packages\Build-Transform.targets' to '$(TemporaryDirectory)Build.targets'"
-		/>
-		<TransformXml
-			Destination="$(TemporaryDirectory)Build.targets"
-			Source="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets"
-			Transform="Build\Packages\Build-Transform.targets"
-		/>
-	</Target>
-	<Target
-		Name="CreatePropertyFiles"
-		DependsOnTargets="$(CreatePropertyFilesDependsOn)"
-	/>
 	<Target Name="RemoveTemporaryDirectory">
 		<Message
 			Importance="$(MessageImportance)"
@@ -441,11 +470,9 @@
 			Importance="$(MessageImportance)"
 			Text="Target 'RemoveTemporaryDirectory': Remove directory '$(TemporaryDirectory)."
 		/>
-		<!--
 		<RemoveDir
-			Condition="Exists($(TemporaryDirctory))"
+			Condition="Exists($(TemporaryDirectory))"
 			Directories="$(TemporaryDirectory)"
 		/>
-		-->
 	</Target>
 </Project>

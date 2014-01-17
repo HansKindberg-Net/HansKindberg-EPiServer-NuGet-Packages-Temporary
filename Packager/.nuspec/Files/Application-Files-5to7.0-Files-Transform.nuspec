@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
 	<files xdt:Transform="Replace">
-		<file src="$EPiServerPath$\CMS\$EPiServerVersion$\Application\**\*.*" target="Application" />
+		<file src="$EPiServerDirectory$\CMS\$EPiServerVersion$\Application\**\*.*" target="Application" />
 		<file src="$ProjectDirectory$\Configuration\$ConfigurationVersion$\**\*.*" target="Configuration" />
 		<file src="$ProjectDirectory$ReadMe\Application-Files.ReadMe.txt" target="ReadMe.txt" />
 	</files>

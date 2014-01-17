@@ -36,10 +36,16 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".nuspec\Application-Files-Transform.nuspec" />
-    <None Include=".nuspec\Binaries-Transform.nuspec" />
+    <None Include=".nuspec\Application-Files-Transform.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include=".nuspec\Binaries-Transform.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include=".nuspec\Build-Transform.nuspec" />
-    <None Include=".nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec" />
+    <None Include=".nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include=".nuspec\EPiServer-Transform.nuspec" />
     <None Include=".nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec" />
     <None Include=".nuspec\Files\Binaries-5-Files-Transform.nuspec" />
@@ -47,11 +53,8 @@
     <None Include=".nuspec\HansKindberg-EPiServer-NuGet-Packages.nuspec" />
     <None Include=".nuspec\References\Binaries-5-References-Transform.nuspec" />
     <None Include=".nuspec\References\Binaries-6-References-Transform.nuspec" />
-    <None Include="Build\Global.props" />
     <None Include="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props" />
     <None Include="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets" />
-    <None Include="Build\Packages\PackageFactory.props" />
-    <None Include="Build\Packages\PackageFactory.targets" />
     <None Include="Build\Packager.props">
       <SubType>Designer</SubType>
     </None>
@@ -60,6 +63,7 @@
     </None>
     <None Include="Build\Packages\Build-Transform.props" />
     <None Include="Build\Packages\Build-Transform.targets" />
+    <None Include="Build\Tasks\ReplaceToken.targets" />
     <None Include="Configuration\5.2.1.0\log4net.Template.config" />
     <None Include="Configuration\5.2.1.0\Web.Template.config" />
     <None Include="packages.config" />

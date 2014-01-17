@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask
+		TaskName="ReplaceToken"
+		TaskFactory="CodeTaskFactory"
+		AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
+	>
+		<ParameterGroup>
+			<SourceFilePath ParameterType="System.String" Required="true" />
+			<DestinationFilePath ParameterType="System.String" Required="true" />
+			<Token ParameterType="System.String" Required="true" />
+			<Replacement ParameterType="System.String" Required="false" />
+		</ParameterGroup>
+		<Task>
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+					string content = File.ReadAllText(SourceFilePath);
+					content = content.Replace(Token, Replacement);
+					File.WriteAllText(DestinationFilePath, content);
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+</Project>

@@ -2,9 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
 	<metadata>
 		<dependencies xdt:Transform="Replace">
-			<dependency id="$BinariesId$" version="[$BinariesVersion$]" />
+			<dependency id="$BinariesPackageId$" version="[$BinariesPackageVersion$]" />
 		</dependencies>
-		<description xdt:Transform="Replace">The EPiServer application files.</description>
+		<description xdt:Transform="Replace">The EPiServer $EPiServerVersion$ application files.</description>
 		<references xdt:Transform="Remove" />
 		<releaseNotes xdt:Transform="Remove" />
 		<summary xdt:Transform="Remove" />

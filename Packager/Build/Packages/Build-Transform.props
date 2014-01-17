@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
 	<ItemGroup Condition="@(ConfigurationTemplate) == ''" xdt:Transform="Insert">
-		<ConfigurationTemplate Include="$(ConfigurationPath)log4net.Template.config">
+		<ConfigurationTemplate Include="$(ConfigurationDirectory)log4net.Template.config">
 			<Destination>log4net.Template.config</Destination>
 			<Transform>log4net.Common.config</Transform>
 		</ConfigurationTemplate>
-		<ConfigurationTemplate Include="$(ConfigurationPath)\Web.Template.config">
+		<ConfigurationTemplate Include="$(ConfigurationDirectory)\Web.Template.config">
 			<Destination>Web.Template.config</Destination>
 			<Transform>Web.Common.config</Transform>
 		</ConfigurationTemplate>
@@ -13,11 +13,18 @@
 	<ItemGroup Condition="$(EPiServerBinariesToCopyToBin) == ''" xdt:Transform="Insert">
 		<EPiServerBinariesToCopyToBin Include="${EPiServerBinariesToCopyToBin}" />
 	</ItemGroup>
+	<ItemGroup Condition="$(ReferencedBinariesToCopyToBin) == ''" xdt:Transform="Insert">
+		<ReferencedBinariesToCopyToBin Include="${ReferencedBinariesToCopyToBin}" />
+	</ItemGroup>
 	<PropertyGroup xdt:Transform="Insert">
+		<ApplicationFilesPackageDirectory Condition="$(ApplicationFilesPackageDirectory) == ''">$(NuGetPackageDirectory)$(ApplicationFilesPackageName).$(ApplicationFilesPackageVersion)\</ApplicationFilesPackageDirectory>
+		<ApplicationFilesPackageName Condition="$(ApplicationFilesPackageName) == ''">${ApplicationFilesPackageName}</ApplicationFilesPackageName>
 		<ApplicationFilesPackageVersion Condition="$(ApplicationFilesPackageVersion) == ''">${ApplicationFilesPackageVersion}</ApplicationFilesPackageVersion>
+		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackageDirectory)$(BinariesPackageName).$(BinariesPackageVersion)\</BinariesPackageDirectory>
+		<BinariesPackageName Condition="$(BinariesPackageName) == ''">${BinariesPackageName}</BinariesPackageName>
 		<BinariesPackageVersion Condition="$(BinariesPackageVersion) == ''">${BinariesPackageVersion}</BinariesPackageVersion>
-		<ConfigurationPath Condition="$(ConfigurationPath) == ''">$(NuGetPackageDirectory)${ApplicationFilesPackageName}.${ApplicationFilesPackageVersion}\Configuration\</ConfigurationPath>
+		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(BinariesPackageDirectory)Configuration\</ConfigurationDirectory>
 		<MessageImportance Condition="$(MessageImportance) == ''">${MessageImportance}</MessageImportance>
-		<NuGetPackageDirectory Condition="$(NuGetPackageDirectory) == ''">${NuGetPackageDirectory}</NuGetPackageDirectory>
+		<NuGetPackageDirectory Condition="$(NuGetPackageDirectory) == ''">$(SolutionDir)${NuGetPackageDirectoryName}\</NuGetPackageDirectory>		
 	</PropertyGroup>
 </Project>
