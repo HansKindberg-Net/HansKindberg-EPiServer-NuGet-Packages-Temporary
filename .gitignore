@@ -1,5 +1,5 @@
 _ReSharper*/
-.build/
+.build/*
 bin/
 debug/
 Deploy/

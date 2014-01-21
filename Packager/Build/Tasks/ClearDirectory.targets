@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask
+		TaskName="ClearDirectory"
+		TaskFactory="CodeTaskFactory"
+		AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
+	>
+		<ParameterGroup>
+			<DirectoryPath ParameterType="System.String" Required="true" />
+			<LogImportance ParameterType="System.String" Required="false" />
+			<TargetName ParameterType="System.String" Required="false" />
+		</ParameterGroup>
+		<Task>
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+					MessageImportance messageImportance = MessageImportance.Normal;
+					
+					if(!string.IsNullOrEmpty(this.LogImportance))
+					{
+						try
+						{
+							messageImportance = (MessageImportance)Enum.Parse(typeof(MessageImportance), this.LogImportance, true);
+						}
+						catch (ArgumentException)
+						{
+							throw new FormatException(string.Format("\"{0}\" is an invalid value for the \"LogImportance\" parameter. Valid values are: High, Normal and Low.", this.LogImportance));
+						}
+					}
+						
+					string messagePrefix = !string.IsNullOrEmpty(this.TargetName) ? "Target '" + this.TargetName + "': " : string.Empty;
+						
+					this.Log.LogMessage(messageImportance, "{0}", new object[] { messagePrefix + "Clearing directory '" + this.DirectoryPath + "'." });
+						
+					foreach(string directoryPath in Directory.GetDirectories(this.DirectoryPath))
+					{
+						this.Log.LogMessage(messageImportance, "{0}", new object[] { messagePrefix + "Deleting directory '" + directoryPath + "'." });
+						Directory.Delete(directoryPath, true);
+					}
+					
+					foreach(string filePath in Directory.GetFiles(this.DirectoryPath))
+					{
+						this.Log.LogMessage(messageImportance, "{0}", new object[] { messagePrefix + "Deleting file '" + filePath + "'." });
+						File.Delete(filePath);
+					}
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+</Project>

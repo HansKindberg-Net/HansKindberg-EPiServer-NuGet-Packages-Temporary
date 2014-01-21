@@ -6,127 +6,129 @@
 			<BinariesPackageVersion>5.2.1.0</BinariesPackageVersion>
 			<ConfigurationVersion>5.2.1.0</ConfigurationVersion>
 			<EPiServerVersion>5.2.375.133</EPiServerVersion>
-			<NuspecFilesTransform>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecFilesTransform>
+			<NuspecTransformers>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecTransformers>
 		</ApplicationFilesPackageVersion>
 		<ApplicationFilesPackageVersion Include="5.2.2.0">
 			<BinariesPackageVersion>5.2.2.0</BinariesPackageVersion>
 			<ConfigurationVersion>5.2.2.0</ConfigurationVersion>
 			<EPiServerVersion>5.2.375.236</EPiServerVersion>
-			<NuspecFilesTransform>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecFilesTransform>
+			<NuspecTransformers>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecTransformers>
 		</ApplicationFilesPackageVersion>
 		<ApplicationFilesPackageVersion Include="6.0.0.0">
 			<BinariesPackageVersion>6.0.0.0</BinariesPackageVersion>
 			<ConfigurationVersion>6.0.0.0</ConfigurationVersion>
 			<EPiServerVersion>6.0.530.0</EPiServerVersion>
-			<NuspecFilesTransform>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecFilesTransform>
+			<NuspecTransformers>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecTransformers>
 		</ApplicationFilesPackageVersion>
 		<ApplicationFilesPackageVersion Include="6.1.0.0">
 			<BinariesPackageVersion>6.1.0.0</BinariesPackageVersion>
 			<ConfigurationVersion>6.1.0.0</ConfigurationVersion>
 			<EPiServerVersion>6.1.379.0</EPiServerVersion>
-			<NuspecFilesTransform>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecFilesTransform>
+			<NuspecTransformers>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecTransformers>
 		</ApplicationFilesPackageVersion>
 		<ApplicationFilesPackageVersion Include="7.0.0.0">
 			<BinariesPackageVersion>7.0.0.0</BinariesPackageVersion>
 			<ConfigurationVersion>7.0.0.0</ConfigurationVersion>
 			<EPiServerVersion>7.0.586.1</EPiServerVersion>
-			<NuspecFilesTransform>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecFilesTransform>
+			<NuspecTransformers>.nuspec\Files\Application-Files-5to7.0-Files-Transform.nuspec</NuspecTransformers>
 		</ApplicationFilesPackageVersion>
 		<ApplicationFilesPackageVersion Include="7.5.0.0">
 			<BinariesPackageVersion>7.5.0.0</BinariesPackageVersion>
 			<ConfigurationVersion>7.5.0.0</ConfigurationVersion>
 			<EPiServerVersion>7.5.394.2</EPiServerVersion>
-			<NuspecFilesTransform />
+			<NuspecTransformers />
 		</ApplicationFilesPackageVersion>
 	</ItemGroup>
 	<ItemGroup Condition="@(BinariesPackageVersion) == ''">
 		<BinariesPackageVersion Include="5.2.1.0">
 			<EPiServerVersion>5.2.375.133</EPiServerVersion>
-			<NuspecDependenciesTransform>.nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec</NuspecDependenciesTransform>
-			<NuspecFilesTransform>.nuspec\Files\Binaries-5-Files-Transform.nuspec</NuspecFilesTransform>
-			<NuspecReferencesTransform>.nuspec\References\Binaries-5-References-Transform.nuspec</NuspecReferencesTransform>
+			<NuspecTransformers>.nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec</NuspecTransformers>
+			<NuspecTransformers>.nuspec\Files\Binaries-5-Files-Transform.nuspec</NuspecTransformers>
+			<NuspecTransformers>.nuspec\References\Binaries-5-References-Transform.nuspec</NuspecTransformers>
 		</BinariesPackageVersion>
 		<BinariesPackageVersion Include="5.2.2.0">
 			<EPiServerVersion>5.2.375.236</EPiServerVersion>
-			<NuspecDependenciesTransform>.nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec</NuspecDependenciesTransform>
-			<NuspecFilesTransform>.nuspec\Files\Binaries-5-Files-Transform.nuspec</NuspecFilesTransform>
-			<NuspecReferencesTransform>.nuspec\References\Binaries-5-References-Transform.nuspec</NuspecReferencesTransform>
+			<NuspecTransformers>.nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec</NuspecTransformers>
+			<NuspecTransformers>.nuspec\Files\Binaries-5-Files-Transform.nuspec</NuspecTransformers>
+			<NuspecTransformers>.nuspec\References\Binaries-5-References-Transform.nuspec</NuspecTransformers>
 		</BinariesPackageVersion>
 		<BinariesPackageVersion Include="6.0.0.0">
 			<EPiServerVersion>6.0.530.0</EPiServerVersion>
 			<EPiServerFrameworkVersion>6.0.318.113</EPiServerFrameworkVersion>
-			<NuspecDependenciesTransform>.nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec</NuspecDependenciesTransform>
-			<NuspecFilesTransform>.nuspec\Files\Binaries-6-Files-Transform.nuspec</NuspecFilesTransform>
-			<NuspecReferencesTransform>.nuspec\References\Binaries-6-References-Transform.nuspec</NuspecReferencesTransform>
+			<NuspecTransformers>.nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec</NuspecTransformers>
+			<NuspecTransformers>.nuspec\Files\Binaries-6-Files-Transform.nuspec</NuspecTransformers>
+			<NuspecTransformers>.nuspec\References\Binaries-6-References-Transform.nuspec</NuspecTransformers>
 		</BinariesPackageVersion>
 		<BinariesPackageVersion Include="6.1.0.0">
 			<EPiServerVersion>6.1.379.0</EPiServerVersion>
 			<EPiServerFrameworkVersion>6.2.267.1</EPiServerFrameworkVersion>
-			<NuspecDependenciesTransform>.nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec</NuspecDependenciesTransform>
-			<NuspecFilesTransform>.nuspec\Files\Binaries-6-Files-Transform.nuspec</NuspecFilesTransform>
-			<NuspecReferencesTransform>.nuspec\References\Binaries-6-References-Transform.nuspec</NuspecReferencesTransform>
+			<NuspecTransformers>.nuspec\Dependencies\Binaries-5to6-Dependencies-Transform.nuspec</NuspecTransformers>
+			<NuspecTransformers>.nuspec\Files\Binaries-6-Files-Transform.nuspec</NuspecTransformers>
+			<NuspecTransformers>.nuspec\References\Binaries-6-References-Transform.nuspec</NuspecTransformers>
 		</BinariesPackageVersion>
 		<BinariesPackageVersion Include="7.0.0.0">
 			<EPiServerVersion>7.0.586.1</EPiServerVersion>
 			<EPiServerFrameworkVersion></EPiServerFrameworkVersion>
-			<NuspecDependenciesTransform></NuspecDependenciesTransform>
-			<NuspecFilesTransform></NuspecFilesTransform>
-			<NuspecReferencesTransform></NuspecReferencesTransform>
+			<NuspecTransformers></NuspecTransformers>
+			<NuspecTransformers></NuspecTransformers>
+			<NuspecTransformers></NuspecTransformers>
 		</BinariesPackageVersion>
 		<BinariesPackageVersion Include="7.5.0.0">
 			<EPiServerVersion>7.5.394.2</EPiServerVersion>
 			<EPiServerFrameworkVersion></EPiServerFrameworkVersion>
-			<NuspecDependenciesTransform></NuspecDependenciesTransform>
-			<NuspecFilesTransform></NuspecFilesTransform>
-			<NuspecReferencesTransform></NuspecReferencesTransform>
+			<NuspecTransformers></NuspecTransformers>
+			<NuspecTransformers></NuspecTransformers>
+			<NuspecTransformers></NuspecTransformers>
 		</BinariesPackageVersion>
 	</ItemGroup>
 	<ItemGroup Condition="@(BuildPackageVersion) == ''">
 		<BuildPackageVersion Include="5.2.1.0">
 			<ApplicationFilesPackageVersion>5.2.1.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>5.2.1.0</BinariesPackageVersion>
-			<EPiServerBinariesToCopyToBin>lib\net20\**\*.dll</EPiServerBinariesToCopyToBin>
+			<PackageBinariesDirectories>lib\net20\**\*.dll</PackageBinariesDirectories>
 			<EPiServerVersion>5.2.375.133</EPiServerVersion>
-			<ReferencedBinariesToCopyToBin>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesToCopyToBin>
+			<ReferencedBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="5.2.2.0">
 			<ApplicationFilesPackageVersion>5.2.2.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>5.2.2.0</BinariesPackageVersion>
 			<EPiServerVersion>5.2.375.236</EPiServerVersion>
-			<ReferencedBinariesToCopyToBin>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesToCopyToBin>
+			<ReferencedBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="6.0.0.0">
 			<ApplicationFilesPackageVersion>6.0.0.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>6.0.0.0</BinariesPackageVersion>
 			<EPiServerVersion>6.0.530.0</EPiServerVersion>
-			<ReferencedBinariesToCopyToBin>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesToCopyToBin>
+			<ReferencedBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="6.1.0.0">
 			<ApplicationFilesPackageVersion>6.1.0.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>6.1.0.0</BinariesPackageVersion>
 			<EPiServerVersion>6.1.379.0</EPiServerVersion>
-			<ReferencedBinariesToCopyToBin>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesToCopyToBin>
+			<ReferencedBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="7.0.0.0">
 			<ApplicationFilesPackageVersion>7.0.0.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>7.0.0.0</BinariesPackageVersion>
 			<EPiServerVersion>7.0.586.1</EPiServerVersion>
-			<ReferencedBinariesToCopyToBin></ReferencedBinariesToCopyToBin>
+			<ReferencedBinariesDirectories></ReferencedBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="7.5.0.0">
 			<ApplicationFilesPackageVersion>7.5.0.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>7.5.0.0</BinariesPackageVersion>
 			<EPiServerVersion>7.5.394.2</EPiServerVersion>
-			<ReferencedBinariesToCopyToBin></ReferencedBinariesToCopyToBin>
+			<ReferencedBinariesDirectories></ReferencedBinariesDirectories>
 		</BuildPackageVersion>
 	</ItemGroup>
 	<PropertyGroup>
+		<ApplicationFilesNuspecTransformers>.nuspec\EPiServer-Transform.nuspec;.nuspec\Application-Files-Transform.nuspec</ApplicationFilesNuspecTransformers>		
 		<ApplicationFilesPackageName>HansKindberg-EPiServer-Application-Files</ApplicationFilesPackageName>
 		<BinariesPackageName>HansKindberg-EPiServer-Binaries</BinariesPackageName>
 		<BuildPackageName>HansKindberg-EPiServer-Build</BuildPackageName>
 		<EPiServerDirectory>$(SolutionDir)EPiServer\</EPiServerDirectory>
+		<HansKindbergEPiServerMSBuildTasksLibrary Condition="$(HansKindbergEPiServerMSBuildTasksLibrary) == ''">$(SolutionDir)HansKindberg.EPiServer.MSBuild\bin\$(Configuration)\HansKindberg.EPiServer.MSBuild.dll</HansKindbergEPiServerMSBuildTasksLibrary>
 		<MessageImportance Condition="$(MessageImporance) == ''">high</MessageImportance>
-		<MSBuildCommunityTasksLibrary>$(SolutionDir)packages\MSBuildTasks.1.4.0.65\tools\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLibrary>
+		<MSBuildCommunityTasksLibrary Condition="$(MSBuildCommunityTasksLibrary) == ''">$(SolutionDir)packages\MSBuildTasks.1.4.0.65\tools\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLibrary>
 		<NugetPackageDirectoryName Condition="$(NugetPackageDirectoryName) == ''">packages</NugetPackageDirectoryName>
 		<PackageMessageImportance Condition="$(PackageMessageImportance) == ''">$(MessageImportance)</PackageMessageImportance>
 		<TemporaryDirectory>$(TargetDir)Temporary\</TemporaryDirectory>
@@ -136,4 +138,5 @@
 	<UsingTask TaskName="MSBuild.Community.Tasks.DeleteTree" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />
 	<UsingTask TaskName="MSBuild.Community.Tasks.NuGet.NuGetPack" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />
 	<UsingTask TaskName="MSBuild.Community.Tasks.TemplateFile" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />
+	<UsingTask TaskName="HansKindberg.EPiServer.MSBuild.Tasks.CreateNuGetSpecification" AssemblyFile="$(HansKindbergEPiServerMSBuildTasksLibrary)" />
 </Project>

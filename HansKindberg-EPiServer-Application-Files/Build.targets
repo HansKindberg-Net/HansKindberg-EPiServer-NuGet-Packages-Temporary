@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="BeforeBuild">
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Clearing target directory ('$(TargetDir)')."
+		/>
+		<ItemGroup>
+			<File Include="$(TargetDir)**\*.*" />
+		</ItemGroup>
+		<Delete Files="@(File)" />
+		<DeleteTree
+			Condition="Exists($(TargetDir))"
+			Directories="$(TargetDir)**"
+			Recursive="true"
+		/>
+	</Target>
+	<PropertyGroup>
+		<AfterBuildDependsOn>
+			CreatePackage
+		</AfterBuildDependsOn>
+	</PropertyGroup>
+	<Target
+		Name="AfterBuild"
+		DependsOnTargets="$(AfterBuildDependsOn)"
+	>
+		<Message
+			Condition="!Exists($(EPiServerCmsVersionDirectory))"
+			Importance="$(MessageImportance)"
+			Text="The package was not built. The directory '$(EPiServerCmsVersionDirectory)' does not exist."
+		/>
+		<Message
+			Condition="Exists($(TargetPath))"
+			Importance="$(MessageImportance)"
+			Text="Deleting '$(TargetPath)'"
+		/>
+		<Delete
+			Condition="Exists($(TargetPath))"
+			Files="$(TargetPath)"
+		/>
+	</Target>
+	<Target
+		Name="CreatePackage"
+		Condition="Exists($(EPiServerCmsVersionDirectory))"
+	>
+		<GetAssemblyIdentity
+			AssemblyFiles="$(TargetPath)"
+		>
+			<Output
+				TaskParameter="Assemblies"
+				ItemName="AssemblyIdentity"
+			/>
+		</GetAssemblyIdentity>
+		<PropertyGroup>
+			<PackageDirectory Condition="$(PackageDirectory) == ''">$(SolutionDir)packages\%(AssemblyIdentity.Name).%(AssemblyIdentity.Version)\</PackageDirectory>
+		</PropertyGroup>
+		<ItemGroup Condition="Exists($(PackageDirectory))">
+			<CurrentPackageFile Include="$(PackageDirectory)**\*.*" />
+		</ItemGroup>
+		<Delete
+			Condition="Exists($(PackageDirectory))"
+			Files="@(CurrentPackageFile)"
+		/>
+		<DeleteTree
+			Condition="Exists($(PackageDirectory))"
+			Directories="$(PackageDirectory)**"
+			Recursive="true"
+		/>
+		<MakeDir
+			Condition="!Exists($(PackageDirectory))"
+			Directories="$(PackageDirectory)"
+		/>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Copying package to '$(PackageDirectory)'."
+		/>
+		<ItemGroup>
+			<ApplicationFile Include="$(EPiServerCmsVersionDirectory)Application\**\*.*" />
+		</ItemGroup>
+		<Copy
+			DestinationFiles="@(ApplicationFile->'$(PackageDirectory)Application\%(RecursiveDir)%(Filename)%(Extension)')"
+			SourceFiles="@(ApplicationFile)"
+		/>
+		<ItemGroup>
+			<ConfigurationFile Include="$(ProjectDir)Configuration\**\*.*" />
+		</ItemGroup>
+		<Copy
+			DestinationFiles="@(ConfigurationFile->'$(PackageDirectory)Configuration\%(RecursiveDir)%(Filename)%(Extension)')"
+			SourceFiles="@(ConfigurationFile)"
+		/>
+		<Copy
+			DestinationFolder="$(PackageDirectory)"
+			SourceFiles="$(ProjectDir)ReadMe.txt"
+		/>
+		<Message
+			Condition="$(Configuration) == 'Release'"
+			Importance="$(MessageImportance)"
+			Text="Creating NuGet package."
+		/>
+		<Exec
+			Condition="$(Configuration) == 'Release'"
+			Command='"$(SolutionDir).nuget\NuGet.exe" pack $(ProjectPath) -Exclude "$(TargetDir)**\*.*" -OutputDirectory $(TargetDir) -Properties Configuration=$(ConfigurationName);EPiServerVersion=$(EPiServerVersion) -Verbosity $(NuGetVerbosity)'
+		/>
+	</Target>
+</Project>

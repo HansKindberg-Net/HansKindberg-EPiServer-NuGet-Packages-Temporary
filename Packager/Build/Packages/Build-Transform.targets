@@ -29,29 +29,29 @@
 	/>
 	<Target
 		Name="CoreCopyBinariesToBin"
-		Condition="Exists('bin') AND (@(EPiServerBinariesToCopyToBin) != '' OR @(ReferencedBinariesToCopyToBin) != '')"
+		Condition="Exists('bin') AND (@(PackageBinariesDirectories) != '' OR @(ReferencedBinariesDirectories) != '')"
 		DependsOnTargets="$(CoreCopyBinariesToBinDependsOn)"
 		xdt:Transform="Insert"
 	>
 		<Message
-			Condition="%(EPiServerBinariesToCopyToBin) != ''"
+			Condition="%(PackageBinariesDirectories) != ''"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToBin': Copying EPiServer-binaries to bin - '%(EPiServerBinariesToCopyToBin)'."
+			Text="Target 'CoreCopyBinariesToBin': Copying EPiServer-binaries to bin - '%(PackageBinariesDirectories)'."
 		/>
 		<Copy
-			DestinationFiles="@($(BinariesPackageDirectory)%(EPiServerBinariesToCopyToBin)->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
+			DestinationFiles="@($(BinariesPackageDirectory)%(PackageBinariesDirectories)->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
 			SkipUnchangedFiles="true"
-			SourceFiles="@($(BinariesPackageDirectory)%(EPiServerBinariesToCopyToBin))"
+			SourceFiles="@($(BinariesPackageDirectory)%(PackageBinariesDirectories))"
 		/>
 		<Message
-			Condition="%(ReferencedBinariesToCopyToBin) != ''"
+			Condition="%(ReferencedBinariesDirectories) != ''"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToBin': Copying referenced binaries to bin - '%(ReferencedBinariesToCopyToBin)'."
+			Text="Target 'CoreCopyBinariesToBin': Copying referenced binaries to bin - '%(ReferencedBinariesDirectories)'."
 		/>
 		<Copy
-			DestinationFiles="@($(NuGetPackageDirectory)%(ReferencedBinariesToCopyToBin)->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
+			DestinationFiles="@($(NuGetPackageDirectory)%(ReferencedBinariesDirectories)->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
 			SkipUnchangedFiles="true"
-			SourceFiles="@($(NuGetPackageDirectory)%(ReferencedBinariesToCopyToBin))"
+			SourceFiles="@($(NuGetPackageDirectory)%(ReferencedBinariesDirectories))"
 		/>
 	</Target>
 	<Target Name="AfterBackupCurrentHansKindbergXmlTransform" xdt:Transform="Insert">

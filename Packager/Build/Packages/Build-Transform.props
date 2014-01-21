@@ -1,5 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<PropertyGroup xdt:Transform="Insert">
+		<ApplicationFilesPackageName Condition="$(ApplicationFilesPackageName) == ''">${ApplicationFilesPackageName}</ApplicationFilesPackageName>
+		<ApplicationFilesPackageVersion Condition="$(ApplicationFilesPackageVersion) == ''">${ApplicationFilesPackageVersion}</ApplicationFilesPackageVersion>
+		<BinariesPackageName Condition="$(BinariesPackageName) == ''">${BinariesPackageName}</BinariesPackageName>
+		<BinariesPackageVersion Condition="$(BinariesPackageVersion) == ''">${BinariesPackageVersion}</BinariesPackageVersion>
+		<MessageImportance Condition="$(MessageImportance) == ''">${MessageImportance}</MessageImportance>
+	</PropertyGroup>
+	<PropertyGroup xdt:Transform="Insert">
+		<NuGetPackageDirectory Condition="$(NuGetPackageDirectory) == ''">$(SolutionDir)${NuGetPackageDirectoryName}\</NuGetPackageDirectory>
+		<ApplicationFilesPackageDirectory Condition="$(ApplicationFilesPackageDirectory) == ''">$(NuGetPackageDirectory)$(ApplicationFilesPackageName).$(ApplicationFilesPackageVersion)\</ApplicationFilesPackageDirectory>
+		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackageDirectory)$(BinariesPackageName).$(BinariesPackageVersion)\</BinariesPackageDirectory>
+		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(ApplicationFilesPackageDirectory)Configuration\</ConfigurationDirectory>
+	</PropertyGroup>
 	<ItemGroup Condition="@(ConfigurationTemplate) == ''" xdt:Transform="Insert">
 		<ConfigurationTemplate Include="$(ConfigurationDirectory)log4net.Template.config">
 			<Destination>log4net.Template.config</Destination>
@@ -10,21 +23,10 @@
 			<Transform>Web.Common.config</Transform>
 		</ConfigurationTemplate>
 	</ItemGroup>
-	<ItemGroup Condition="$(EPiServerBinariesToCopyToBin) == ''" xdt:Transform="Insert">
-		<EPiServerBinariesToCopyToBin Include="${EPiServerBinariesToCopyToBin}" />
+	<ItemGroup Condition="$(PackageBinariesDirectories) == ''" xdt:Transform="Insert">
+		<PackageBinariesDirectories Include="${PackageBinariesDirectories}" />
 	</ItemGroup>
-	<ItemGroup Condition="$(ReferencedBinariesToCopyToBin) == ''" xdt:Transform="Insert">
-		<ReferencedBinariesToCopyToBin Include="${ReferencedBinariesToCopyToBin}" />
+	<ItemGroup Condition="$(ReferencedBinariesDirectories) == ''" xdt:Transform="Insert">
+		<ReferencedBinariesDirectories Include="${ReferencedBinariesDirectories}" />
 	</ItemGroup>
-	<PropertyGroup xdt:Transform="Insert">
-		<ApplicationFilesPackageDirectory Condition="$(ApplicationFilesPackageDirectory) == ''">$(NuGetPackageDirectory)$(ApplicationFilesPackageName).$(ApplicationFilesPackageVersion)\</ApplicationFilesPackageDirectory>
-		<ApplicationFilesPackageName Condition="$(ApplicationFilesPackageName) == ''">${ApplicationFilesPackageName}</ApplicationFilesPackageName>
-		<ApplicationFilesPackageVersion Condition="$(ApplicationFilesPackageVersion) == ''">${ApplicationFilesPackageVersion}</ApplicationFilesPackageVersion>
-		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackageDirectory)$(BinariesPackageName).$(BinariesPackageVersion)\</BinariesPackageDirectory>
-		<BinariesPackageName Condition="$(BinariesPackageName) == ''">${BinariesPackageName}</BinariesPackageName>
-		<BinariesPackageVersion Condition="$(BinariesPackageVersion) == ''">${BinariesPackageVersion}</BinariesPackageVersion>
-		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(ApplicationFilesPackageDirectory)Configuration\</ConfigurationDirectory>
-		<MessageImportance Condition="$(MessageImportance) == ''">${MessageImportance}</MessageImportance>
-		<NuGetPackageDirectory Condition="$(NuGetPackageDirectory) == ''">$(SolutionDir)${NuGetPackageDirectoryName}\</NuGetPackageDirectory>		
-	</PropertyGroup>
 </Project>

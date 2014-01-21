@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask
+		TaskName="RemoveDirectory"
+		TaskFactory="CodeTaskFactory"
+		AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
+	>
+		<ParameterGroup>
+			<DirectoryPath ParameterType="System.String" Required="true" />
+			<LogImportance ParameterType="System.String" Required="false" />
+			<TargetName ParameterType="System.String" Required="false" />
+		</ParameterGroup>
+		<Task>
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+					MessageImportance messageImportance = MessageImportance.Normal;
+					
+					if(!string.IsNullOrEmpty(this.LogImportance))
+					{
+						try
+						{
+							messageImportance = (MessageImportance)Enum.Parse(typeof(MessageImportance), this.LogImportance, true);
+						}
+						catch (ArgumentException)
+						{
+							throw new FormatException(string.Format("\"{0}\" is an invalid value for the \"LogImportance\" parameter. Valid values are: High, Normal and Low.", this.LogImportance));
+						}
+					}
+						
+					string messagePrefix = !string.IsNullOrEmpty(this.TargetName) ? "Target '" + this.TargetName + "': " : string.Empty;
+					
+					string messageFormat = Directory.Exists(this.DirectoryPath) ? "Removing directory '{0}'." : "The directory '{0}' does not exist.";
+						
+					this.Log.LogMessage(messageImportance, "{0}", new object[] { messagePrefix + string.Format(messageFormat, this.DirectoryPath) });
+					
+					if(Directory.Exists(this.DirectoryPath))
+						Directory.Delete(this.DirectoryPath, true);
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+</Project>
