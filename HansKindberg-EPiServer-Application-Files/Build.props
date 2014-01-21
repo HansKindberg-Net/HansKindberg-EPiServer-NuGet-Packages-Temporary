@@ -2,9 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Project="..\SolutionBuild.props" />
 	<PropertyGroup>
-		<EPiServerApplicationFilesSearchPattern>$(EPiServerCmsVersionDirectory)Application\**\*.*</EPiServerApplicationFilesSearchPattern>
-		<EPiServerApplicationFilesTarget>Application</EPiServerApplicationFilesTarget>
-		<ConfigurationFilesSearchPattern>Configuration\**\*.*</ConfigurationFilesSearchPattern>
-		<ConfigurationFilesTarget>Configuration</ConfigurationFilesTarget>
+		<ConfigurationFilesSearchPattern Condition="$(ConfigurationFilesSearchPattern) == ''">Configuration\**\*.*</ConfigurationFilesSearchPattern>
+		<ConfigurationFilesTarget Condition="$(ConfigurationFilesTarget) == ''">Configuration</ConfigurationFilesTarget>
+		<EPiServerApplicationFilesSearchPattern Condition="$(EPiServerApplicationFilesSearchPattern) == ''">$(EPiServerCmsVersionDirectory)Application\**\*.*</EPiServerApplicationFilesSearchPattern>
+		<EPiServerApplicationFilesTarget Condition="$(EPiServerApplicationFilesTarget) == ''">Application</EPiServerApplicationFilesTarget>
 	</PropertyGroup>
 </Project>

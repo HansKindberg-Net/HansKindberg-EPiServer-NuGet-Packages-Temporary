@@ -43,63 +43,77 @@
 		Name="CreatePackage"
 		Condition="Exists($(EPiServerCmsVersionDirectory))"
 	>
-		<GetAssemblyIdentity
-			AssemblyFiles="$(TargetPath)"
-		>
-			<Output
-				TaskParameter="Assemblies"
-				ItemName="AssemblyIdentity"
-			/>
-		</GetAssemblyIdentity>
-		<PropertyGroup>
-			<PackageDirectory Condition="$(PackageDirectory) == ''">$(SolutionDir)packages\%(AssemblyIdentity.Name).%(AssemblyIdentity.Version)\</PackageDirectory>
-		</PropertyGroup>
-		<ItemGroup Condition="Exists($(PackageDirectory))">
-			<CurrentPackageFile Include="$(PackageDirectory)**\*.*" />
+		<Message
+			Condition="Exists($(NuGetPackagesDirectory))"
+			Importance="$(MessageImportance)"
+			Text="Clearing NuGet-packages directory '$(NuGetPackagesDirectory)'."
+		/>
+		<ItemGroup Condition="Exists($(NuGetPackagesDirectory))">
+			<CurrentPackageFile Include="$(NuGetPackagesDirectory)**\*.*" />
 		</ItemGroup>
 		<Delete
-			Condition="Exists($(PackageDirectory))"
+			Condition="Exists($(NuGetPackagesDirectory))"
 			Files="@(CurrentPackageFile)"
 		/>
 		<DeleteTree
-			Condition="Exists($(PackageDirectory))"
-			Directories="$(PackageDirectory)**"
+			Condition="Exists($(NuGetPackagesDirectory))"
+			Directories="$(NuGetPackagesDirectory)**"
 			Recursive="true"
 		/>
+		<Message
+			Condition="!Exists($(NuGetPackagesDirectory))"
+			Importance="$(MessageImportance)"
+			Text="Creating NuGet-packages directory '$(NuGetPackagesDirectory)'."
+		/>
 		<MakeDir
-			Condition="!Exists($(PackageDirectory))"
-			Directories="$(PackageDirectory)"
+			Condition="!Exists($(NuGetPackagesDirectory))"
+			Directories="$(NuGetPackagesDirectory)"
 		/>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Copying package to '$(PackageDirectory)'."
+			Text="Copying package to '$(NuGetPackagesDirectory)'."
 		/>
 		<ItemGroup>
-			<ApplicationFile Include="$(EPiServerCmsVersionDirectory)Application\**\*.*" />
+			<ApplicationFile Include="$(EPiServerApplicationFilesSearchPattern)" />
 		</ItemGroup>
 		<Copy
-			DestinationFiles="@(ApplicationFile->'$(PackageDirectory)Application\%(RecursiveDir)%(Filename)%(Extension)')"
+			DestinationFiles="@(ApplicationFile->'$(NuGetPackagesDirectory)$(EPiServerApplicationFilesTarget)\%(RecursiveDir)%(Filename)%(Extension)')"
 			SourceFiles="@(ApplicationFile)"
 		/>
 		<ItemGroup>
-			<ConfigurationFile Include="$(ProjectDir)Configuration\**\*.*" />
+			<ConfigurationFile Include="$(ConfigurationFilesSearchPattern)" />
 		</ItemGroup>
 		<Copy
-			DestinationFiles="@(ConfigurationFile->'$(PackageDirectory)Configuration\%(RecursiveDir)%(Filename)%(Extension)')"
+			DestinationFiles="@(ConfigurationFile->'$(NuGetPackagesDirectory)$(ConfigurationFilesTarget)\%(RecursiveDir)%(Filename)%(Extension)')"
 			SourceFiles="@(ConfigurationFile)"
 		/>
 		<Copy
-			DestinationFolder="$(PackageDirectory)"
-			SourceFiles="$(ProjectDir)ReadMe.txt"
+			DestinationFolder="$(NuGetPackagesDirectory)"
+			SourceFiles="$(ReadMeFile)"
 		/>
+		<PropertyGroup>
+			<Properties>Author=$(Author)</Properties>
+			<Properties>$(Properties);ConfigurationFilesSearchPattern=$(ConfigurationFilesSearchPattern)</Properties>
+			<Properties>$(Properties);ConfigurationFilesTarget=$(ConfigurationFilesTarget)</Properties>
+			<Properties>$(Properties);EPiServerApplicationFilesSearchPattern=$(EPiServerApplicationFilesSearchPattern)</Properties>
+			<Properties>$(Properties);EPiServerApplicationFilesTarget=$(EPiServerApplicationFilesTarget)</Properties>
+			<Properties>$(Properties);EPiServerVersion=$(EPiServerVersion)</Properties>
+			<Properties>$(Properties);Id=$(Name)</Properties>
+			<Properties>$(Properties);ReadMeFile=$(ReadMeFile)</Properties>
+			<Properties>$(Properties);Version=$(Version)</Properties>
+		</PropertyGroup>
 		<Message
 			Condition="$(Configuration) == 'Release'"
 			Importance="$(MessageImportance)"
-			Text="Creating NuGet package."
+			Text="Creating NuGet package - properties = '$(Properties)'."
 		/>
-		<Exec
+		<NuGetPack
 			Condition="$(Configuration) == 'Release'"
-			Command='"$(SolutionDir).nuget\NuGet.exe" pack $(ProjectPath) -Exclude "$(TargetDir)**\*.*" -OutputDirectory $(TargetDir) -Properties Configuration=$(ConfigurationName);EPiServerVersion=$(EPiServerVersion) -Verbosity $(NuGetVerbosity)'
+			File="$(Name).nuspec"
+			OutputDirectory="$(TargetDir)"
+			Properties="$(Properties)"
+			ToolPath="$(SolutionDir).nuget"
+			Verbosity="$(NuGetVerbosity)"
 		/>
 	</Target>
 </Project>

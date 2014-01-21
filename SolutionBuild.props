@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<Author>Hans Kindberg - open source</Author>
+		<Author Condition="$(Author) == ''">Hans Kindberg - open source</Author>
 		<EPiServerVersion Condition="$(EPiServerVersion) == ''">5.2.375.133</EPiServerVersion>
 		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
-		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Normal</NuGetVerbosity><!-- Normal, Quiet or Detailed -->
-		<ReadMeFile>ReadMe.txt</ReadMeFile>
-		<Version>5.2.1-alpha-0</Version>
+		<Name Condition="$(Name) == ''">$(MSBuildProjectName)</Name>
+		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Quiet</NuGetVerbosity><!-- Normal, Quiet or Detailed -->
+		<ReadMeFile Condition="$(ReadMeFile) == ''">ReadMe.txt</ReadMeFile>
+		<Version Condition="$(Version) == ''">5.2.1-alpha-0</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<EPiServerCmsVersionDirectory Condition="$(EPiServerCmsVersionDirectory) == ''">$(SolutionDir)EPiServer\CMS\$(EPiServerVersion)\</EPiServerCmsVersionDirectory>
 		<MSBuildCommunityTasksLibrary Condition="$(MSBuildCommunityTasksLibrary) == ''">$(SolutionDir)packages\MSBuildTasks.1.4.0.65\tools\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLibrary>
-		<PackageDirectory></PackageDirectory>
+		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)packages\$(Name).$(Version)\</NuGetPackagesDirectory>
 		<VSToolsPath Condition="$(VSToolsPath) == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
 	</PropertyGroup>
 	<UsingTask TaskName="Microsoft.Web.Publishing.Tasks.TransformXml" AssemblyFile="$(VSToolsPath)\Web\Microsoft.Web.Publishing.Tasks.dll" />
