@@ -25,14 +25,12 @@ testresults/
 
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Log/*
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Views/Web.config
-HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Views/Web.Template.config
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/log4net.config
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/log4net.Template.config
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Web.config
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Web.Template.config
 
 WebApplication/Views/Web.config
-WebApplication/Views/Web.Template.config
 WebApplication/log4net.config
 WebApplication/log4net.Template.config
 WebApplication/Web.config
