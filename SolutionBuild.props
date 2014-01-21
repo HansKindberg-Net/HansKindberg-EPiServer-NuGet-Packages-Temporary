@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<Author>Hans Kindberg - open source</Author>
+		<EPiServerVersion Condition="$(EPiServerVersion) == ''">5.2.375.133</EPiServerVersion>
+		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
+		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Normal</NuGetVerbosity><!-- Normal, Quiet or Detailed -->
+		<ReadMeFile>ReadMe.txt</ReadMeFile>
+		<Version>5.2.1-alpha-0</Version>
+	</PropertyGroup>
+	<PropertyGroup>
+		<EPiServerCmsVersionDirectory Condition="$(EPiServerCmsVersionDirectory) == ''">$(SolutionDir)EPiServer\CMS\$(EPiServerVersion)\</EPiServerCmsVersionDirectory>
+		<MSBuildCommunityTasksLibrary Condition="$(MSBuildCommunityTasksLibrary) == ''">$(SolutionDir)packages\MSBuildTasks.1.4.0.65\tools\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLibrary>
+		<PackageDirectory></PackageDirectory>
+		<VSToolsPath Condition="$(VSToolsPath) == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+	</PropertyGroup>
+	<UsingTask TaskName="Microsoft.Web.Publishing.Tasks.TransformXml" AssemblyFile="$(VSToolsPath)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.DeleteTree" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.NuGet.NuGetPack" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />
+	<UsingTask TaskName="MSBuild.Community.Tasks.Xml.XmlQuery" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />
+</Project>

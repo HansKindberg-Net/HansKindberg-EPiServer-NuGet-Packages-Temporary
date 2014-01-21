@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D565FDA7
 	ProjectSection(SolutionItems) = preProject
 		Build\EPiServer-Application-Files.targets = Build\EPiServer-Application-Files.targets
 		Build\EPiServer-Binaries.targets = Build\EPiServer-Binaries.targets
+		SolutionBuild.props = SolutionBuild.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Application-Files.7.0.586.1", "EPiServer-Application-Files.7.0.586.1\EPiServer-Application-Files.7.0.586.1.csproj", "{367B520A-2BF9-45E5-83C8-0195ED978291}"

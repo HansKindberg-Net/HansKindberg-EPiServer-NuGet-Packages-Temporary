@@ -16,8 +16,8 @@
 		<version>$Version$</version>
 	</metadata>
 	<files>
-		<file src="..\EPiServer\CMS\$EPiServerVersion$\Application\**\*.*" target="Application" />
-		<file src="Configuration\**\*.*" target="Configuration" />
-		<file src="ReadMe.txt" />
+		<file src="$EPiServerApplicationFilesSearchPattern$" target="$EPiServerApplicationFilesTarget$" />
+		<file src="$ConfigurationFilesSearchPattern$" target="$ConfigurationFilesTarget$" />
+		<file src="$ReadMeFile$" />
 	</files>
 </package>
