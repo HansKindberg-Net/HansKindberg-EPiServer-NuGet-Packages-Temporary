@@ -5,5 +5,16 @@
 		<BuildFilesTarget Condition="$(BuildFilesTarget) == ''">build</BuildFilesTarget>
 		<BuildPropertiesFile Condition="$(BuildPropertiesFile) == ''">Build\$(Name).props</BuildPropertiesFile>
 		<BuildTargetsFile Condition="$(BuildTargetsFile) == ''">Build\$(Name).targets</BuildTargetsFile>
+		<HansKindbergXmlTransformationBuildFilesVersion Condition="$(HansKindbergXmlTransformationBuildFilesVersion) == ''">1.0.0-alpha-0</HansKindbergXmlTransformationBuildFilesVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<HansKindbergXmlTransformationBuildFilesDirectory Condition="$(HansKindbergXmlTransformationBuildFilesDirectory) == ''">$(NuGetPackagesDirectory)HansKindberg-Xml-Transformation-Build-Files.$(HansKindbergXmlTransformationBuildFilesVersion)\</HansKindbergXmlTransformationBuildFilesDirectory>		
+	</PropertyGroup>
+	<PropertyGroup>
+		<HansKindbergXmlTransformationBuildFilePrefixPath Condition="$(HansKindbergXmlTransformationBuildFilePrefixPath) == ''">$(HansKindbergXmlTransformationBuildFilesDirectory)build\HansKindberg-Xml-Transformation-On-Build</HansKindbergXmlTransformationBuildFilePrefixPath>		
+	</PropertyGroup>
+	<PropertyGroup>
+		<HansKindbergXmlTransformationBuildPropertiesFile Condition="$(HansKindbergXmlTransformationBuildPropertiesFile) == ''">$(HansKindbergXmlTransformationBuildFilePrefixPath).props</HansKindbergXmlTransformationBuildPropertiesFile>
+		<HansKindbergXmlTransformationBuildTargetsFile Condition="$(HansKindbergXmlTransformationBuildTargetsFile) == ''">$(HansKindbergXmlTransformationBuildFilePrefixPath).targets</HansKindbergXmlTransformationBuildTargetsFile>
 	</PropertyGroup>
 </Project>

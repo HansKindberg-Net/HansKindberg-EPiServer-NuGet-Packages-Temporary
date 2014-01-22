@@ -26,7 +26,7 @@
 	<ItemGroup Condition="$(PackageBinariesDirectories) == ''" xdt:Transform="Insert">
 		<PackageBinariesDirectories Include="${PackageBinariesDirectories}" />
 	</ItemGroup>
-	<ItemGroup Condition="$(ReferencedBinariesDirectories) == ''" xdt:Transform="Insert">
-		<ReferencedBinariesDirectories Include="${ReferencedBinariesDirectories}" />
+	<ItemGroup Condition="$(DependencyBinariesDirectories) == ''" xdt:Transform="Insert">
+		<DependencyBinariesDirectories Include="${DependencyBinariesDirectories}" />
 	</ItemGroup>
 </Project>

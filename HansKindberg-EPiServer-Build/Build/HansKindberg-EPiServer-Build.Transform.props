@@ -2,59 +2,29 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
 	<PropertyGroup xdt:Transform="Insert">
 		<!--
-			**************************************************************************
+			***************************************************************************************
 			
-			Previous elements are from HansKindberg-Xml-Transformation.props
+			Previous elements are from HansKindberg-Xml-Transformation-On-Build.props
 			
 			Next elements are from HansKindberg-EPiServer-Build.Transform.props
 			
-			**************************************************************************
+			***************************************************************************************
 		-->
 	</PropertyGroup>
-
-
-
-
-
-<!--
-	<PropertyGroup>
-		<Author Condition="$(Author) == ''">Hans Kindberg - open source</Author>
-		<EPiServerVersion Condition="$(EPiServerVersion) == ''">5.2.375.133</EPiServerVersion>
+	<PropertyGroup xdt:Transform="Insert">
 		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
-		<Name Condition="$(Name) == ''">$(MSBuildProjectName)</Name>
-		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Quiet</NuGetVerbosity>
-		<ReadMeFile Condition="$(ReadMeFile) == ''">ReadMe.txt</ReadMeFile>
-		<Version Condition="$(Version) == ''">5.2.1-alpha-0</Version>
-	</PropertyGroup>
-	<PropertyGroup>
-		<EPiServerCmsVersionDirectory Condition="$(EPiServerCmsVersionDirectory) == ''">$(SolutionDir)EPiServer\CMS\$(EPiServerVersion)\</EPiServerCmsVersionDirectory>
-		<EPiServerFilesExists Condition="$(EPiServerFilesExists) == '' AND !Exists($(EPiServerCmsVersionDirectory))">False</EPiServerFilesExists>
-		<EPiServerFilesExists Condition="$(EPiServerFilesExists) == '' AND Exists($(EPiServerCmsVersionDirectory))">True</EPiServerFilesExists>
-		<MSBuildCommunityTasksLibrary Condition="$(MSBuildCommunityTasksLibrary) == ''">$(SolutionDir)packages\MSBuildTasks.1.4.0.65\tools\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLibrary>
-		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)packages\$(Name).$(Version)\</NuGetPackagesDirectory>
-		<VSToolsPath Condition="$(VSToolsPath) == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-	</PropertyGroup>
-	-->
-	
-	
-	
-	
-	
-	
-	
-	<PropertyGroup xdt:Transform="Insert">
-		<ApplicationFilesPackageName Condition="$(ApplicationFilesPackageName) == ''">${ApplicationFilesPackageName}</ApplicationFilesPackageName>
-		<ApplicationFilesPackageVersion Condition="$(ApplicationFilesPackageVersion) == ''">${ApplicationFilesPackageVersion}</ApplicationFilesPackageVersion>
-		<BinariesPackageName Condition="$(BinariesPackageName) == ''">${BinariesPackageName}</BinariesPackageName>
-		<BinariesPackageVersion Condition="$(BinariesPackageVersion) == ''">${BinariesPackageVersion}</BinariesPackageVersion>
-		<MessageImportance Condition="$(MessageImportance) == ''">${MessageImportance}</MessageImportance>
+		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)packages\</NuGetPackagesDirectory>
+		<PackageNamePrefix Condition="$(PackageNamePrefix) == ''">HansKindberg-EPiServer-</PackageNamePrefix>
+		<Version Condition="$(Version) == ''">${Version}</Version>
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
-		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)${NuGetPackagesDirectoryName}\</NuGetPackagesDirectory>
-		<ApplicationFilesPackageDirectory Condition="$(ApplicationFilesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(ApplicationFilesPackageName).$(ApplicationFilesPackageVersion)\</ApplicationFilesPackageDirectory>
-		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(BinariesPackageName).$(BinariesPackageVersion)\</BinariesPackageDirectory>
+		<ApplicationFilesPackageDirectory Condition="$(ApplicationFilesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(PackageNamePrefix)Application-Files.$(Version)\</ApplicationFilesPackageDirectory>
+		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(PackageNamePrefix)Binaries.$(Version)\</BinariesPackageDirectory>
+	</PropertyGroup>
+	<PropertyGroup xdt:Transform="Insert">
 		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(ApplicationFilesPackageDirectory)Configuration\</ConfigurationDirectory>
-	</PropertyGroup>
+		<EPiServerBinariesDirectory Condition="$(EPiServerBinariesDirectory) == ''">$(BinariesPackageDirectory)lib\net20\</EPiServerBinariesDirectory>
+	</PropertyGroup>	
 	<ItemGroup Condition="@(ConfigurationTemplate) == ''" xdt:Transform="Insert">
 		<ConfigurationTemplate Include="$(ConfigurationDirectory)log4net.Template.config">
 			<Destination>log4net.Template.config</Destination>
@@ -65,10 +35,8 @@
 			<Transform>Web.Common.config</Transform>
 		</ConfigurationTemplate>
 	</ItemGroup>
-	<ItemGroup Condition="$(PackageBinariesDirectories) == ''" xdt:Transform="Insert">
-		<PackageBinariesDirectories Include="${PackageBinariesDirectories}" />
-	</ItemGroup>
-	<ItemGroup Condition="$(ReferencedBinariesDirectories) == ''" xdt:Transform="Insert">
-		<ReferencedBinariesDirectories Include="${ReferencedBinariesDirectories}" />
+	<ItemGroup Condition="$(DependencyBinariesDirectories) == ''" xdt:Transform="Insert">
+		<DependencyBinariesDirectories Include="$(NuGetPackagesDirectory)log4net.1.2.10\lib\2.0\" />
+		<DependencyBinariesDirectories Include="$(NuGetPackagesDirectory)Microsoft.Web.Services3.3.0.0.0\lib\net20\" />
 	</ItemGroup>
 </Project>

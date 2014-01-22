@@ -17,7 +17,7 @@
 	/>
 	<Target
 		Name="CoreCopyEPiServerBinariesToBin"
-		Condition="@(EPiServerBinariesToCopyToBin) != '' AND Exists('bin')"
+		Condition="@(EPiServerBinariesToCopyToBin) != '' AND Exists($(TargetDir))"
 		DependsOnTargets="$(CoreCopyEPiServerBinariesToBinDependsOn)"
 	>
 		<Message

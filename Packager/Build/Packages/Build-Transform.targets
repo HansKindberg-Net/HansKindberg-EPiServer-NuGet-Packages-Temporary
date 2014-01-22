@@ -12,31 +12,31 @@
 		-->
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
-		<CopyBinariesToBinDependsOn>
-			BeforeCopyBinariesToBin;
-			CoreCopyBinariesToBin;
-			AfterCopyBinariesToBin
-		</CopyBinariesToBinDependsOn>
-		<CoreCopyBinariesToBinDependsOn />
+		<CopyBinariesToTargetDirectoryDependsOn>
+			BeforeCopyBinariesToTargetDirectory;
+			CoreCopyBinariesToTargetDirectory;
+			AfterCopyBinariesToTargetDirectory
+		</CopyBinariesToTargetDirectoryDependsOn>
+		<CoreCopyBinariesToTargetDirectoryDependsOn />
 	</PropertyGroup>
-	<Target Name="AfterCopyBinariesToBin" xdt:Transform="Insert" />
-	<Target Name="BeforeCopyBinariesToBin" xdt:Transform="Insert" />
+	<Target Name="AfterCopyBinariesToTargetDirectory" xdt:Transform="Insert" />
+	<Target Name="BeforeCopyBinariesToTargetDirectory" xdt:Transform="Insert" />
 	<Target
-		Name="CopyBinariesToBin"
+		Name="CopyBinariesToTargetDirectory"
 		AfterTargets="AfterBuild"
-		DependsOnTargets="$(CopyBinariesToBinDependsOn)"
+		DependsOnTargets="$(CopyBinariesToTargetDirectoryDependsOn)"
 		xdt:Transform="Insert"
 	/>
 	<Target
-		Name="CoreCopyBinariesToBin"
-		Condition="Exists('bin') AND (@(PackageBinariesDirectories) != '' OR @(ReferencedBinariesDirectories) != '')"
-		DependsOnTargets="$(CoreCopyBinariesToBinDependsOn)"
+		Name="CoreCopyBinariesToTargetDirectory"
+		Condition="Exists($(TargetDir)) AND (@(PackageBinariesDirectories) != '' OR @(DependencyBinariesDirectories) != '')"
+		DependsOnTargets="$(CoreCopyBinariesToTargetDirectoryDependsOn)"
 		xdt:Transform="Insert"
 	>
 		<Message
 			Condition="%(PackageBinariesDirectories) != ''"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToBin': Copying EPiServer-binaries to bin - '%(PackageBinariesDirectories)'."
+			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying EPiServer-binaries to bin - '%(PackageBinariesDirectories)'."
 		/>
 		<Copy
 			DestinationFiles="@($(BinariesPackageDirectory)%(PackageBinariesDirectories)->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
@@ -44,14 +44,14 @@
 			SourceFiles="@($(BinariesPackageDirectory)%(PackageBinariesDirectories))"
 		/>
 		<Message
-			Condition="%(ReferencedBinariesDirectories) != ''"
+			Condition="%(DependencyBinariesDirectories) != ''"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToBin': Copying referenced binaries to bin - '%(ReferencedBinariesDirectories)'."
+			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying referenced binaries to bin - '%(DependencyBinariesDirectories)'."
 		/>
 		<Copy
-			DestinationFiles="@($(NuGetPackageDirectory)%(ReferencedBinariesDirectories)->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
+			DestinationFiles="@($(NuGetPackageDirectory)%(DependencyBinariesDirectories)->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
 			SkipUnchangedFiles="true"
-			SourceFiles="@($(NuGetPackageDirectory)%(ReferencedBinariesDirectories))"
+			SourceFiles="@($(NuGetPackageDirectory)%(DependencyBinariesDirectories))"
 		/>
 	</Target>
 	<Target Name="AfterBackupCurrentHansKindbergXmlTransform" xdt:Transform="Insert">

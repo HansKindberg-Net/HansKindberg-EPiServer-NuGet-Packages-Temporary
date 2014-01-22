@@ -87,37 +87,37 @@
 			<BinariesPackageVersion>5.2.1.0</BinariesPackageVersion>
 			<PackageBinariesDirectories>lib\net20\**\*.dll</PackageBinariesDirectories>
 			<EPiServerVersion>5.2.375.133</EPiServerVersion>
-			<ReferencedBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesDirectories>
+			<DependencyBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</DependencyBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="5.2.2.0">
 			<ApplicationFilesPackageVersion>5.2.2.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>5.2.2.0</BinariesPackageVersion>
 			<EPiServerVersion>5.2.375.236</EPiServerVersion>
-			<ReferencedBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesDirectories>
+			<DependencyBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</DependencyBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="6.0.0.0">
 			<ApplicationFilesPackageVersion>6.0.0.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>6.0.0.0</BinariesPackageVersion>
 			<EPiServerVersion>6.0.530.0</EPiServerVersion>
-			<ReferencedBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesDirectories>
+			<DependencyBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</DependencyBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="6.1.0.0">
 			<ApplicationFilesPackageVersion>6.1.0.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>6.1.0.0</BinariesPackageVersion>
 			<EPiServerVersion>6.1.379.0</EPiServerVersion>
-			<ReferencedBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</ReferencedBinariesDirectories>
+			<DependencyBinariesDirectories>log4net.1.2.10\lib\2.0\**\*.dll;Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.dll</DependencyBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="7.0.0.0">
 			<ApplicationFilesPackageVersion>7.0.0.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>7.0.0.0</BinariesPackageVersion>
 			<EPiServerVersion>7.0.586.1</EPiServerVersion>
-			<ReferencedBinariesDirectories></ReferencedBinariesDirectories>
+			<DependencyBinariesDirectories></DependencyBinariesDirectories>
 		</BuildPackageVersion>
 		<BuildPackageVersion Include="7.5.0.0">
 			<ApplicationFilesPackageVersion>7.5.0.0</ApplicationFilesPackageVersion>
 			<BinariesPackageVersion>7.5.0.0</BinariesPackageVersion>
 			<EPiServerVersion>7.5.394.2</EPiServerVersion>
-			<ReferencedBinariesDirectories></ReferencedBinariesDirectories>
+			<DependencyBinariesDirectories></DependencyBinariesDirectories>
 		</BuildPackageVersion>
 	</ItemGroup>
 	<PropertyGroup>

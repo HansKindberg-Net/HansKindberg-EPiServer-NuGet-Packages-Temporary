@@ -32,6 +32,7 @@ HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Web.Template.config
 
 HansKindberg-EPiServer-Build/Build/HansKindberg-EPiServer-Build.props
 HansKindberg-EPiServer-Build/Build/HansKindberg-EPiServer-Build.targets
+HansKindberg-EPiServer-Build/Build/HansKindberg-EPiServer-Build.Template.props
 
 WebApplication/Views/Web.config
 WebApplication/log4net.config

@@ -2,57 +2,70 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Project="..\Build\SolutionBuild.targets" />
 	<Target Name="AfterBuildPackage">
+		<ItemGroup>
+			<TemporaryFile Include="$(MSBuildProjectDirectory)\Build\HansKindberg-EPiServer-Build.props" />
+			<TemporaryFile Include="$(MSBuildProjectDirectory)\Build\HansKindberg-EPiServer-Build.targets" />
+			<TemporaryFile Include="$(MSBuildProjectDirectory)\Build\HansKindberg-EPiServer-Build.Template.props" />
+		</ItemGroup>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'AfterBuildPackage': Deleting temporary file '%(TemporaryFile.Identity)'."
+		/>
+		<Delete
+			Files="%(TemporaryFile.Identity)"
+		/>
 	</Target>
 	<Target Name="BeforeBuildPackage">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Transforming 'Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props' with 'Build\HansKindberg-EPiServer-Build.Transform.props' to 'Build\HansKindberg-EPiServer-Build.props'."
+			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergXmlTransformationBuildPropertiesFile)' with 'Build\HansKindberg-EPiServer-Build.Transform.props' to 'Build\HansKindberg-EPiServer-Build.Template.props'."
 		/>
 		<TransformXml
-			Destination="Build\HansKindberg-EPiServer-Build.props"
-			Source="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props"
+			Destination="Build\HansKindberg-EPiServer-Build.Template.props"
+			Source="$(HansKindbergXmlTransformationBuildPropertiesFile)"
 			Transform="Build\HansKindberg-EPiServer-Build.Transform.props"
 		/>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Transforming 'Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets' with 'Build\HansKindberg-EPiServer-Build.Transform.targets' to 'Build\HansKindberg-EPiServer-Build.targets'."
+			Text="Target 'BeforeBuildPackage': Replacing tokens from 'Build\HansKindberg-EPiServer-Build.Template.props' to 'Build\HansKindberg-EPiServer-Build.props'."
+		/>
+		<ItemGroup>
+			<Token Include="Version">
+				<ReplacementValue>$(Version)</ReplacementValue>
+			</Token>
+		</ItemGroup>
+		<TemplateFile
+			OutputFilename="HansKindberg-EPiServer-Build.props"
+			Template="Build\HansKindberg-EPiServer-Build.Template.props"
+			Tokens="@(Token)"
+		/>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergXmlTransformationBuildTargetsFile)' with 'Build\HansKindberg-EPiServer-Build.Transform.targets' to 'Build\HansKindberg-EPiServer-Build.targets'."
 		/>
 		<TransformXml
 			Destination="Build\HansKindberg-EPiServer-Build.targets"
-			Source="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets"
+			Source="$(HansKindbergXmlTransformationBuildTargetsFile)"
 			Transform="Build\HansKindberg-EPiServer-Build.Transform.targets"
 		/>
 	</Target>
-	
-	
-	
-	
-	
-	<Target Name="CopyPackageContentToNuGetPackagesDirectory">
+	<Target Name="CopyPackageContentToPackageDirectory">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'CopyPackageContentToNuGetPackagesDirectory': Copying package '$(Name).$(Version)' content to '$(NuGetPackagesDirectory)'."
-		/>
-		<!--
-		<ItemGroup>
-			<ApplicationFile Include="$(EPiServerApplicationFilesSearchPattern)" />
-		</ItemGroup>
-		<Copy
-			DestinationFiles="@(ApplicationFile->'$(NuGetPackagesDirectory)$(EPiServerApplicationFilesTarget)\%(RecursiveDir)%(Filename)%(Extension)')"
-			SourceFiles="@(ApplicationFile)"
-		/>
-		<ItemGroup>
-			<ConfigurationFile Include="$(ConfigurationFilesSearchPattern)" />
-		</ItemGroup>
-		<Copy
-			DestinationFiles="@(ConfigurationFile->'$(NuGetPackagesDirectory)$(ConfigurationFilesTarget)\%(RecursiveDir)%(Filename)%(Extension)')"
-			SourceFiles="@(ConfigurationFile)"
+			Text="Target 'CopyPackageContentToPackageDirectory': Copying package '$(Name).$(Version)' content to '$(PackageDirectory)'."
 		/>
 		<Copy
-			DestinationFolder="$(NuGetPackagesDirectory)"
+			DestinationFolder="$(PackageDirectory)$(BuildFilesTarget)"
+			SourceFiles="$(BuildPropertiesFile)"
+		/>
+		<Copy
+			DestinationFolder="$(PackageDirectory)$(BuildFilesTarget)"
+			SourceFiles="$(BuildTargetsFile)"
+		/>
+		<Copy
+			DestinationFolder="$(PackageDirectory)"
 			SourceFiles="$(ReadMeFile)"
 		/>
-		-->
 	</Target>
 	<Target Name="CreateNuGetPackage">
 		<!--

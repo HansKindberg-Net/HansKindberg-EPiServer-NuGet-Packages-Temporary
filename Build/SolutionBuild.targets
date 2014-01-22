@@ -39,8 +39,8 @@
 	<PropertyGroup>
 		<BuildPackageDependsOn>
 			BeforeBuildPackage;
-			PrepareCopyPackageContentToNuGetPackagesDirectory;
-			CopyPackageContentToNuGetPackagesDirectory;
+			PrepareCopyPackageContentToPackageDirectory;
+			CopyPackageContentToPackageDirectory;
 			CoreCreateNuGetPackage;
 			AfterBuildPackage
 		</BuildPackageDependsOn>
@@ -60,7 +60,7 @@
 			TargetName="ClearTargetDirectory"
 		/>
 	</Target>
-	<Target Name="CopyPackageContentToNuGetPackagesDirectory" />
+	<Target Name="CopyPackageContentToPackageDirectory" />
 	<PropertyGroup>
 		<CoreCreateNuGetPackageDependsOn>
 			PrepareCreateNuGetPackage;
@@ -73,21 +73,21 @@
 		DependsOnTargets="$(CoreCreateNuGetPackageDependsOn)"
 	/>
 	<Target Name="CreateNuGetPackage" />
-	<Target Name="PrepareCopyPackageContentToNuGetPackagesDirectory">
+	<Target Name="PrepareCopyPackageContentToPackageDirectory">
 		<ClearDirectory
-			Condition="Exists($(NuGetPackagesDirectory))"
-			DirectoryPath="$(NuGetPackagesDirectory)"
+			Condition="Exists($(PackageDirectory))"
+			DirectoryPath="$(PackageDirectory)"
 			LogImportance="$(MessageImportance)"
-			TargetName="PrepareCopyPackageContentToNuGetPackagesDirectory"
+			TargetName="PrepareCopyPackageContentToPackageDirectory"
 		/>
 		<Message
-			Condition="!Exists($(NuGetPackagesDirectory))"
+			Condition="!Exists($(PackageDirectory))"
 			Importance="$(MessageImportance)"
-			Text="Target 'PrepareCopyPackageContentToNuGetPackagesDirectory': Creating NuGet-packages directory '$(NuGetPackagesDirectory)'."
+			Text="Target 'PrepareCopyPackageContentToPackageDirectory': Creating NuGet-packages directory '$(PackageDirectory)'."
 		/>
 		<MakeDir
-			Condition="!Exists($(NuGetPackagesDirectory))"
-			Directories="$(NuGetPackagesDirectory)"
+			Condition="!Exists($(PackageDirectory))"
+			Directories="$(PackageDirectory)"
 		/>
 	</Target>
 	<Target Name="PrepareCreateNuGetPackage" />

@@ -321,9 +321,9 @@
 		/>
 		<ReplaceToken
 			DestinationFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
-			Replacement="%(BuildPackageVersion.ReferencedBinariesDirectories)"
+			Replacement="%(BuildPackageVersion.DependencyBinariesDirectories)"
 			SourceFilePath="$(TemporaryDirectory)Build-Transform.%(BuildPackageVersion.Identity).props"
-			Token="${ReferencedBinariesDirectories}"
+			Token="${DependencyBinariesDirectories}"
 		/>
 		<Message
 			Importance="$(MessageImportance)"

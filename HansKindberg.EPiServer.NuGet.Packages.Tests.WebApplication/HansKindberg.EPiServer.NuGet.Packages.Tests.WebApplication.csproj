@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <EPiServerVersion>1.2.3.4</EPiServerVersion>
-  </PropertyGroup>
-  <Import Project="..\packages\EPiServer-Application-Files.1.2.3.4\build\EPiServer-Application-Files.props" Condition="Exists('..\packages\EPiServer-Application-Files.1.2.3.4\build\EPiServer-Application-Files.props')" />
-  <Import Project="..\packages\HansKindberg-Xml-Transformation.1.0.3.0\build\HansKindberg-Xml-Transformation.props" Condition="Exists('..\packages\HansKindberg-Xml-Transformation.1.0.3.0\build\HansKindberg-Xml-Transformation.props')" />
-  <Import Project="..\packages\EPiServer-Binaries.1.2.3.4\build\EPiServer-Binaries.props" Condition="Exists('..\packages\EPiServer-Binaries.1.2.3.4\build\EPiServer-Binaries.props')" />
+  <Import Project="..\packages\HansKindberg-EPiServer-Build.5.2.1-alpha-0\build\HansKindberg-EPiServer-Build.props" Condition="Exists('..\packages\HansKindberg-EPiServer-Build.5.2.1-alpha-0\build\HansKindberg-EPiServer-Build.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -48,9 +43,6 @@
   <ItemGroup>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Services3">
-      <HintPath>..\packages\Microsoft.Web.Services3.3.0.0.0\lib\net20\Microsoft.Web.Services3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -125,9 +117,6 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
@@ -137,36 +126,9 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="DeployTestPackageFiles" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
-    <Message Importance="high" Text="Target 'DeployTestPackageFiles'" />
-    <ItemGroup>
-      <PackageFiles Include="$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4\**\*.*;$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4\**\*.*" />
-    </ItemGroup>
-    <Message Condition="@(PackageFiles) != ''" Importance="high" Text="Target 'DeployTestPackageFiles': Deleting files '@(PackageFiles)'" />
-    <Delete Condition="@(PackageFiles) != ''" Files="@(PackageFiles)" />
-    <Message Condition="Exists('$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4')" Importance="high" Text="Target 'DeployTestPackageFiles': Removing directory '$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4'" />
-    <RemoveDir Condition="Exists('$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4')" Directories="$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4" />
-    <Message Condition="Exists('$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4')" Importance="high" Text="Target 'DeployTestPackageFiles': Removing directory '$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4'" />
-    <RemoveDir Condition="Exists('$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4')" Directories="$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4" />
-    <ItemGroup>
-      <EPiServerApplicationFilesBuild Include="$(SolutionDir)Build\EPiServer-Application-Files.targets;$(SolutionDir)EPiServer-Application-Files.5.2.375.133\build\**\*.*" />
-      <EPiServerApplicationFilesConfiguration Include="$(SolutionDir)EPiServer-Application-Files.5.2.375.133\Configuration\**\*.*" />
-    </ItemGroup>
-    <Message Importance="high" Text="Target 'DeployTestPackageFiles': Copying '@(EPiServerApplicationFilesBuild)' to '$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4\build'" />
-    <Copy DestinationFolder="$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4\build" SourceFiles="@(EPiServerApplicationFilesBuild)" />
-    <Message Importance="high" Text="Target 'DeployTestPackageFiles': Copying '@(EPiServerApplicationFilesConfiguration)' to '$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4\Configuration'" />
-    <Copy DestinationFolder="$(SolutionDir)packages\EPiServer-Application-Files.1.2.3.4\Configuration" SourceFiles="@(EPiServerApplicationFilesConfiguration)" />
-    <ItemGroup>
-      <EPiServerBinariesBuild Include="$(SolutionDir)Build\EPiServer-Binaries.targets;$(SolutionDir)EPiServer-Binaries.5.2.375.133\build\**\*.*" />
-      <EPiServerBinaries Include="$(SolutionDir)EPiServer\CMS\5.2.375.133\bin\E*.dll" />
-    </ItemGroup>
-    <Message Importance="high" Text="Target 'DeployTestPackageFiles': Copying '@(EPiServerBinariesBuild)' to '$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4\build'" />
-    <Copy DestinationFolder="$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4\build" SourceFiles="@(EPiServerBinariesBuild)" />
-    <Message Importance="high" Text="Target 'DeployTestPackageFiles': Copying '@(EPiServerBinaries)' to '$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4\lib\net20'" />
-    <Copy DestinationFolder="$(SolutionDir)packages\EPiServer-Binaries.1.2.3.4\lib\net20" SourceFiles="@(EPiServerBinaries)" />
-  </Target>
-  <Import Project="..\packages\EPiServer-Binaries.1.2.3.4\build\EPiServer-Binaries.targets" Condition="Exists('..\packages\EPiServer-Binaries.1.2.3.4\build\EPiServer-Binaries.targets')" />
-  <Import Project="..\packages\HansKindberg-Xml-Transformation.1.0.3.0\build\HansKindberg-Xml-Transformation.targets" Condition="Exists('..\packages\HansKindberg-Xml-Transformation.1.0.3.0\build\HansKindberg-Xml-Transformation.targets')" />
-  <Import Project="..\packages\EPiServer-Application-Files.1.2.3.4\build\EPiServer-Application-Files.targets" Condition="Exists('..\packages\EPiServer-Application-Files.1.2.3.4\build\EPiServer-Application-Files.targets')" />
+  <Import Project="..\packages\HansKindberg-EPiServer-Build.5.2.1-alpha-0\build\HansKindberg-EPiServer-Build.targets" Condition="Exists('..\packages\HansKindberg-EPiServer-Build.5.2.1-alpha-0\build\HansKindberg-EPiServer-Build.targets')" />
 </Project>

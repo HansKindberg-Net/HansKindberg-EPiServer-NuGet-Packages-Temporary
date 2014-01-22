@@ -52,8 +52,6 @@
     <None Include=".nuspec\HansKindberg-EPiServer-NuGet-Packages.nuspec" />
     <None Include=".nuspec\References\Binaries-5-References-Transform.nuspec" />
     <None Include=".nuspec\References\Binaries-6-References-Transform.nuspec" />
-    <None Include="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.props" />
-    <None Include="Build\HansKindberg-Xml-Transformation\HansKindberg-Xml-Transformation.targets" />
     <None Include="Build\Packager.props">
       <SubType>Designer</SubType>
     </None>
