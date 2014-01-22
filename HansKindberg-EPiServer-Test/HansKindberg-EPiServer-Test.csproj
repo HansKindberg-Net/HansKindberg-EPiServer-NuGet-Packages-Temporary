@@ -5,11 +5,11 @@
 	<PropertyGroup>
 		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
 		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProjectGuid>{F203E168-33BA-4637-B33A-AEBC2011273F}</ProjectGuid>
+		<ProjectGuid>{3CC079E9-EBB7-4800-AE63-3B2B9916E675}</ProjectGuid>
 		<OutputType>Library</OutputType>
 		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>HansKindberg.EPiServer.Binaries</RootNamespace>
-		<AssemblyName>HansKindberg-EPiServer-Binaries</AssemblyName>
+		<RootNamespace>HansKindberg_EPiServer_Test</RootNamespace>
+		<AssemblyName>HansKindberg-EPiServer-Test</AssemblyName>
 		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
 		<FileAlignment>512</FileAlignment>
 		<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -34,7 +34,7 @@
 	<ItemGroup>
 		<None Include="Build.props" />
 		<None Include="Build.targets" />
-		<None Include="HansKindberg-EPiServer-Binaries.Template.nuspec" />
+		<None Include="HansKindberg-EPiServer-Test.nuspec" />
 		<None Include="packages.config" />
 		<None Include="ReadMe.txt" />
 	</ItemGroup>

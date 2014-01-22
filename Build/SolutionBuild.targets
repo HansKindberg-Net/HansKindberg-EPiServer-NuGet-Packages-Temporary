@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="ClearDirectory.targets" />
+	<PropertyGroup>
+		<AfterBuildDependsOn>
+			BuildPackage
+		</AfterBuildDependsOn>
+	</PropertyGroup>
+	<Target
+		Name="AfterBuild"
+		DependsOnTargets="$(AfterBuildDependsOn)"
+	>
+		<Message
+			Condition="!$(EPiServerFilesExists)"
+			Importance="$(MessageImportance)"
+			Text="Target 'AfterBuild': The package was not built. There are no local EPiServer files for version '$(EPiServerVersion)'."
+		/>
+		<Message
+			Condition="Exists($(TargetPath))"
+			Importance="$(MessageImportance)"
+			Text="Target 'AfterBuild': Deleting file '$(TargetPath)'."
+		/>
+		<Delete
+			Condition="Exists($(TargetPath))"
+			Files="$(TargetPath)"
+		/>
+	</Target>
+	<Target Name="AfterBuildPackage" />
+	<PropertyGroup>
+		<BeforeBuildDependsOn>
+			ClearTargetDirectory
+		</BeforeBuildDependsOn>
+	</PropertyGroup>
+	<Target
+		Name="BeforeBuild"
+		DependsOnTargets="$(BeforeBuildDependsOn)"
+	/>
+	<Target Name="BeforeBuildPackage" />
+	<PropertyGroup>
+		<BuildPackageDependsOn>
+			BeforeBuildPackage;
+			PrepareCopyPackageContentToNuGetPackagesDirectory;
+			CopyPackageContentToNuGetPackagesDirectory;
+			CreateNuGetPackageCore;
+			AfterBuildPackage
+		</BuildPackageDependsOn>
+	</PropertyGroup>
+	<Target
+		Name="BuildPackage"
+		Condition="$(EPiServerFilesExists)"
+		DependsOnTargets="$(BuildPackageDependsOn)"
+	/>
+	<Target
+		Name="ClearTargetDirectory"
+		DependsOnTargets="$(ClearTargetDirectoryDependsOn)"
+	>
+		<ClearDirectory
+			DirectoryPath="$(TargetDir)"
+			LogImportance="$(MessageImportance)"
+			TargetName="ClearTargetDirectory"
+		/>
+	</Target>
+	<Target Name="CopyPackageContentToNuGetPackagesDirectory" />
+	<Target Name="CreateNuGetPackage" />
+	<PropertyGroup>
+		<CreateNuGetPackageCoreDependsOn>
+			PrepareCreateNuGetPackage;
+			CreateNuGetPackage
+		</CreateNuGetPackageCoreDependsOn>
+	</PropertyGroup>
+	<Target
+		Name="CreateNuGetPackageCore"
+		Condition="$(Configuration) == 'Release'"
+		DependsOnTargets="$(CreateNuGetPackageCoreDependsOn)"
+	/>
+	<Target Name="PrepareCopyPackageContentToNuGetPackagesDirectory">
+		<ClearDirectory
+			Condition="Exists($(NuGetPackagesDirectory))"
+			DirectoryPath="$(NuGetPackagesDirectory)"
+			LogImportance="$(MessageImportance)"
+			TargetName="PrepareCopyPackageContentToNuGetPackagesDirectory"
+		/>
+		<Message
+			Condition="!Exists($(NuGetPackagesDirectory))"
+			Importance="$(MessageImportance)"
+			Text="Target 'PrepareCopyPackageContentToNuGetPackagesDirectory': Creating NuGet-packages directory '$(NuGetPackagesDirectory)'."
+		/>
+		<MakeDir
+			Condition="!Exists($(NuGetPackagesDirectory))"
+			Directories="$(NuGetPackagesDirectory)"
+		/>
+	</Target>
+	<Target Name="PrepareCreateNuGetPackage" />
+</Project>

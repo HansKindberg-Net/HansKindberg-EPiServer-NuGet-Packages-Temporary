@@ -31,9 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Binaries.6.1.379.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D565FDA7-987E-48BB-B26D-77567C09D8F6}"
 	ProjectSection(SolutionItems) = preProject
+		Build\ClearDirectory.targets = Build\ClearDirectory.targets
 		Build\EPiServer-Application-Files.targets = Build\EPiServer-Application-Files.targets
 		Build\EPiServer-Binaries.targets = Build\EPiServer-Binaries.targets
-		SolutionBuild.props = SolutionBuild.props
+		Build\SolutionBuild.props = Build\SolutionBuild.props
+		Build\SolutionBuild.targets = Build\SolutionBuild.targets
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer-Application-Files.7.0.586.1", "EPiServer-Application-Files.7.0.586.1\EPiServer-Application-Files.7.0.586.1.csproj", "{367B520A-2BF9-45E5-83C8-0195ED978291}"
@@ -116,6 +118,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{6BA6ED
 		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg-EPiServer-Test", "HansKindberg-EPiServer-Test\HansKindberg-EPiServer-Test.csproj", "{3CC079E9-EBB7-4800-AE63-3B2B9916E675}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +172,10 @@ Global
 		{41444539-AAED-43FA-B527-8490D9A48233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41444539-AAED-43FA-B527-8490D9A48233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41444539-AAED-43FA-B527-8490D9A48233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC079E9-EBB7-4800-AE63-3B2B9916E675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC079E9-EBB7-4800-AE63-3B2B9916E675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC079E9-EBB7-4800-AE63-3B2B9916E675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC079E9-EBB7-4800-AE63-3B2B9916E675}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

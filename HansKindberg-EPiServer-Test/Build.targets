@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="..\Build\SolutionBuild.targets" />
+	<Target Name="CopyPackageContentToNuGetPackagesDirectory">
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'CopyPackageContentToNuGetPackagesDirectory': Executing."
+		/>
+	</Target>
+	<Target Name="CreateNuGetPackage">
+		<Message
+			Condition="$(Configuration) == 'Debug'"
+			Importance="$(MessageImportance)"
+			Text="Target 'CreateNuGetPackage': Executing - THIS SHOULD NOT HAPPEN."
+		/>
+		<Message
+			Condition="$(Configuration) == 'Release'"
+			Importance="$(MessageImportance)"
+			Text="Target 'CreateNuGetPackage': Executing."
+		/>
+	</Target>
+	<Target Name="PrepareCreateNuGetPackage">
+		<Message
+			Condition="$(Configuration) == 'Debug'"
+			Importance="$(MessageImportance)"
+			Text="Target 'PrepareCreateNuGetPackage': Executing - THIS SHOULD NOT HAPPEN."
+		/>
+		<Message
+			Condition="$(Configuration) == 'Release'"
+			Importance="$(MessageImportance)"
+			Text="Target 'PrepareCreateNuGetPackage': Executing."
+		/>
+	</Target>
+</Project>

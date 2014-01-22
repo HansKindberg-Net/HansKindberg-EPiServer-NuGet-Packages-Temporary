@@ -7,18 +7,11 @@
 			Text="Target 'CopyPackageContentToNuGetPackagesDirectory': Copying package '$(Name).$(Version)' content to '$(NuGetPackagesDirectory)'."
 		/>
 		<ItemGroup>
-			<ApplicationFile Include="$(EPiServerApplicationFilesSearchPattern)" />
+			<BinaryFile Include="$(EPiServerBinariesSearchPattern)" Exclude="$(EPiServerBinariesExcludePattern)" />
 		</ItemGroup>
 		<Copy
-			DestinationFiles="@(ApplicationFile->'$(NuGetPackagesDirectory)$(EPiServerApplicationFilesTarget)\%(RecursiveDir)%(Filename)%(Extension)')"
-			SourceFiles="@(ApplicationFile)"
-		/>
-		<ItemGroup>
-			<ConfigurationFile Include="$(ConfigurationFilesSearchPattern)" />
-		</ItemGroup>
-		<Copy
-			DestinationFiles="@(ConfigurationFile->'$(NuGetPackagesDirectory)$(ConfigurationFilesTarget)\%(RecursiveDir)%(Filename)%(Extension)')"
-			SourceFiles="@(ConfigurationFile)"
+			DestinationFiles="@(BinaryFile->'$(NuGetPackagesDirectory)$(EPiServerBinariesTarget)\%(RecursiveDir)%(Filename)%(Extension)')"
+			SourceFiles="@(BinaryFile)"
 		/>
 		<Copy
 			DestinationFolder="$(NuGetPackagesDirectory)"
@@ -26,12 +19,21 @@
 		/>
 	</Target>
 	<Target Name="CreateNuGetPackage">
+		<ItemGroup>
+			<Token Include="EPiServerBinariesExcludePattern">
+				<ReplacementValue>$(EPiServerBinariesExcludePattern)</ReplacementValue>
+			</Token>
+		</ItemGroup>
+		<!-- We need to do this instead of passing the value in the properties collection because the value contains ";". -->
+		<TemplateFile
+			OutputFilename="$(Name).nuspec"
+			Template="$(Name).Template.nuspec"
+			Tokens="@(Token)"
+		/>
 		<PropertyGroup>
 			<Properties>Author="$(Author)"</Properties>
-			<Properties>$(Properties);ConfigurationFilesSearchPattern="$(ConfigurationFilesSearchPattern)"</Properties>
-			<Properties>$(Properties);ConfigurationFilesTarget="$(ConfigurationFilesTarget)"</Properties>
-			<Properties>$(Properties);EPiServerApplicationFilesSearchPattern="$(EPiServerApplicationFilesSearchPattern)"</Properties>
-			<Properties>$(Properties);EPiServerApplicationFilesTarget="$(EPiServerApplicationFilesTarget)"</Properties>
+			<Properties>$(Properties);EPiServerBinariesSearchPattern="$(EPiServerBinariesSearchPattern)"</Properties>
+			<Properties>$(Properties);EPiServerBinariesTarget="$(EPiServerBinariesTarget)"</Properties>
 			<Properties>$(Properties);EPiServerVersion="$(EPiServerVersion)"</Properties>
 			<Properties>$(Properties);Id="$(Name)"</Properties>
 			<Properties>$(Properties);ReadMeFile="$(ReadMeFile)"</Properties>
@@ -43,6 +45,9 @@
 		/>
 		<Exec
 			Command='$(SolutionDir).nuget\NuGet.exe pack "$(Name).nuspec" -OutputDirectory $(TargetDir) -Properties $(Properties) -Verbosity "$(NuGetVerbosity)"'
+		/>
+		<Delete
+			Files="$(Name).nuspec"
 		/>
 	</Target>
 </Project>
