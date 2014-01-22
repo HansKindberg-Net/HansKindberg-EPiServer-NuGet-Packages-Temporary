@@ -33,6 +33,8 @@
   <ItemGroup>
     <None Include="Build.props" />
     <None Include="Build.targets" />
+    <None Include="Build\HansKindberg-EPiServer-Build.Transform.props" />
+    <None Include="Build\HansKindberg-EPiServer-Build.Transform.targets" />
     <None Include="HansKindberg-EPiServer-Build.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

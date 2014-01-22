@@ -3,21 +3,19 @@
 	<metadata>
 		<authors>$Author$</authors>
 		<dependencies>
-			<dependency id="HansKindberg-EPiServer-Binaries" version="[$Version$]" />
+			<dependency id="HansKindberg-EPiServer-Application-Files" version="[$Version$]" />
 		</dependencies>
-		<description>The EPiServer $EPiServerVersion$ application files.</description>
+		<description>A package with build-targets for EPiServer $EPiServerVersion$ containing config-transform and copying of binaries to bin.</description>
 		<id>$Id$</id>
-		<licenseUrl>http://world.episerver.com/PageFiles/99654/EPiServer EULA.txt</licenseUrl>
-		<owners>EPiServer AB</owners>
+		<owners>$Author$</owners>
 		<projectUrl>https://github.com/HansKindberg-Net/HansKindberg-EPiServer-NuGet-Packages</projectUrl>
-		<requireLicenseAcceptance>true</requireLicenseAcceptance>
 		<tags>EPiServer CMS $EPiServerVersion$</tags>
 		<title>$Id$</title>
 		<version>$Version$</version>
 	</metadata>
 	<files>
-		<file src="$EPiServerApplicationFilesSearchPattern$" target="$EPiServerApplicationFilesTarget$" />
-		<file src="$ConfigurationFilesSearchPattern$" target="$ConfigurationFilesTarget$" />
+		<file src="$BuildPropertiesFile$" target="$BuildFilesTarget$" />
+		<file src="$BuildTargetsFile$" target="$BuildFilesTarget$" />
 		<file src="$ReadMeFile$" />
 	</files>
 </package>

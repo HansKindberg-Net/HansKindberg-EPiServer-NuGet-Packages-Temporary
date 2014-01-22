@@ -1,78 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Target Name="BeforeBuild">
+	<Import Project="..\Build\SolutionBuild.targets" />
+	<Target Name="CopyPackageContentToNuGetPackagesDirectory">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Clearing target directory ('$(TargetDir)')."
+			Text="Target 'CopyPackageContentToNuGetPackagesDirectory': Copying package '$(Name).$(Version)' content to '$(NuGetPackagesDirectory)'."
 		/>
-		<ItemGroup>
-			<File Include="$(TargetDir)**\*.*" />
-		</ItemGroup>
-		<Delete Files="@(File)" />
-		<DeleteTree
-			Condition="Exists($(TargetDir))"
-			Directories="$(TargetDir)**"
-			Recursive="true"
-		/>
-	</Target>
-	<PropertyGroup>
-		<AfterBuildDependsOn>
-			CreatePackage
-		</AfterBuildDependsOn>
-	</PropertyGroup>
-	<Target
-		Name="AfterBuild"
-		DependsOnTargets="$(AfterBuildDependsOn)"
-	>
-		<Message
-			Condition="!Exists($(EPiServerCmsVersionDirectory))"
-			Importance="$(MessageImportance)"
-			Text="The package was not built. The directory '$(EPiServerCmsVersionDirectory)' does not exist."
-		/>
-		<Message
-			Condition="Exists($(TargetPath))"
-			Importance="$(MessageImportance)"
-			Text="Deleting '$(TargetPath)'"
-		/>
-		<Delete
-			Condition="Exists($(TargetPath))"
-			Files="$(TargetPath)"
-		/>
-	</Target>
-	<Target
-		Name="CreatePackage"
-		Condition="Exists($(EPiServerCmsVersionDirectory))"
-	>
-		<Message
-			Condition="Exists($(NuGetPackagesDirectory))"
-			Importance="$(MessageImportance)"
-			Text="Clearing NuGet-packages directory '$(NuGetPackagesDirectory)'."
-		/>
-		<ItemGroup Condition="Exists($(NuGetPackagesDirectory))">
-			<CurrentPackageFile Include="$(NuGetPackagesDirectory)**\*.*" />
-		</ItemGroup>
-		<Delete
-			Condition="Exists($(NuGetPackagesDirectory))"
-			Files="@(CurrentPackageFile)"
-		/>
-		<DeleteTree
-			Condition="Exists($(NuGetPackagesDirectory))"
-			Directories="$(NuGetPackagesDirectory)**"
-			Recursive="true"
-		/>
-		<Message
-			Condition="!Exists($(NuGetPackagesDirectory))"
-			Importance="$(MessageImportance)"
-			Text="Creating NuGet-packages directory '$(NuGetPackagesDirectory)'."
-		/>
-		<MakeDir
-			Condition="!Exists($(NuGetPackagesDirectory))"
-			Directories="$(NuGetPackagesDirectory)"
-		/>
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Copying package to '$(NuGetPackagesDirectory)'."
-		/>
+		<!--
 		<ItemGroup>
 			<ApplicationFile Include="$(EPiServerApplicationFilesSearchPattern)" />
 		</ItemGroup>
@@ -91,29 +25,28 @@
 			DestinationFolder="$(NuGetPackagesDirectory)"
 			SourceFiles="$(ReadMeFile)"
 		/>
+		-->
+	</Target>
+	<Target Name="CreateNuGetPackage">
+		<!--
 		<PropertyGroup>
-			<Properties>Author=$(Author)</Properties>
-			<Properties>$(Properties);ConfigurationFilesSearchPattern=$(ConfigurationFilesSearchPattern)</Properties>
-			<Properties>$(Properties);ConfigurationFilesTarget=$(ConfigurationFilesTarget)</Properties>
-			<Properties>$(Properties);EPiServerApplicationFilesSearchPattern=$(EPiServerApplicationFilesSearchPattern)</Properties>
-			<Properties>$(Properties);EPiServerApplicationFilesTarget=$(EPiServerApplicationFilesTarget)</Properties>
-			<Properties>$(Properties);EPiServerVersion=$(EPiServerVersion)</Properties>
-			<Properties>$(Properties);Id=$(Name)</Properties>
-			<Properties>$(Properties);ReadMeFile=$(ReadMeFile)</Properties>
-			<Properties>$(Properties);Version=$(Version)</Properties>
+			<Properties>Author="$(Author)"</Properties>
+			<Properties>$(Properties);ConfigurationFilesSearchPattern="$(ConfigurationFilesSearchPattern)"</Properties>
+			<Properties>$(Properties);ConfigurationFilesTarget="$(ConfigurationFilesTarget)"</Properties>
+			<Properties>$(Properties);EPiServerApplicationFilesSearchPattern="$(EPiServerApplicationFilesSearchPattern)"</Properties>
+			<Properties>$(Properties);EPiServerApplicationFilesTarget="$(EPiServerApplicationFilesTarget)"</Properties>
+			<Properties>$(Properties);EPiServerVersion="$(EPiServerVersion)"</Properties>
+			<Properties>$(Properties);Id="$(Name)"</Properties>
+			<Properties>$(Properties);ReadMeFile="$(ReadMeFile)"</Properties>
+			<Properties>$(Properties);Version="$(Version)"</Properties>
 		</PropertyGroup>
 		<Message
-			Condition="$(Configuration) == 'Release'"
 			Importance="$(MessageImportance)"
-			Text="Creating NuGet package - properties = '$(Properties)'."
+			Text="Target 'CreateNuGetPackage': Creating NuGet package '$(Name).$(Version)' - properties = '$(Properties)'."
 		/>
-		<NuGetPack
-			Condition="$(Configuration) == 'Release'"
-			File="$(Name).nuspec"
-			OutputDirectory="$(TargetDir)"
-			Properties="$(Properties)"
-			ToolPath="$(SolutionDir).nuget"
-			Verbosity="$(NuGetVerbosity)"
+		<Exec
+			Command='$(SolutionDir).nuget\NuGet.exe pack "$(Name).nuspec" -OutputDirectory $(TargetDir) -Properties $(Properties) -Verbosity "$(NuGetVerbosity)"'
 		/>
+		-->
 	</Target>
 </Project>
