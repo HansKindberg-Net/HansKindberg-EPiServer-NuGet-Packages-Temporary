@@ -17,7 +17,7 @@
 		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)packages\$(Name).$(Version)\</NuGetPackagesDirectory>
 		<VSToolsPath Condition="$(VSToolsPath) == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
 	</PropertyGroup>
-	<!--<UsingTask TaskName="Microsoft.Web.Publishing.Tasks.TransformXml" AssemblyFile="$(VSToolsPath)\Web\Microsoft.Web.Publishing.Tasks.dll" />-->
+	<UsingTask TaskName="Microsoft.Web.Publishing.Tasks.TransformXml" AssemblyFile="$(VSToolsPath)\Web\Microsoft.Web.Publishing.Tasks.dll" />
 	<!--<UsingTask TaskName="MSBuild.Community.Tasks.DeleteTree" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />-->
 	<!--<UsingTask TaskName="MSBuild.Community.Tasks.NuGet.NuGetPack" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />-->
 	<UsingTask TaskName="MSBuild.Community.Tasks.TemplateFile" AssemblyFile="$(MSBuildCommunityTasksLibrary)" />

@@ -41,7 +41,7 @@
 			BeforeBuildPackage;
 			PrepareCopyPackageContentToNuGetPackagesDirectory;
 			CopyPackageContentToNuGetPackagesDirectory;
-			CreateNuGetPackageCore;
+			CoreCreateNuGetPackage;
 			AfterBuildPackage
 		</BuildPackageDependsOn>
 	</PropertyGroup>
@@ -61,18 +61,18 @@
 		/>
 	</Target>
 	<Target Name="CopyPackageContentToNuGetPackagesDirectory" />
-	<Target Name="CreateNuGetPackage" />
 	<PropertyGroup>
-		<CreateNuGetPackageCoreDependsOn>
+		<CoreCreateNuGetPackageDependsOn>
 			PrepareCreateNuGetPackage;
 			CreateNuGetPackage
-		</CreateNuGetPackageCoreDependsOn>
+		</CoreCreateNuGetPackageDependsOn>
 	</PropertyGroup>
 	<Target
-		Name="CreateNuGetPackageCore"
+		Name="CoreCreateNuGetPackage"
 		Condition="$(Configuration) == 'Release'"
-		DependsOnTargets="$(CreateNuGetPackageCoreDependsOn)"
+		DependsOnTargets="$(CoreCreateNuGetPackageDependsOn)"
 	/>
+	<Target Name="CreateNuGetPackage" />
 	<Target Name="PrepareCopyPackageContentToNuGetPackagesDirectory">
 		<ClearDirectory
 			Condition="Exists($(NuGetPackagesDirectory))"
