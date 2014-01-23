@@ -24,9 +24,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{E35D87DB-FD15-42CA-99A6-9F8EF288E204}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication", "HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication\HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication.csproj", "{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}"
-	ProjectSection(ProjectDependencies) = postProject
-		{41444539-AAED-43FA-B527-8490D9A48233} = {41444539-AAED-43FA-B527-8490D9A48233}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{817DBF5C-4F0D-4555-87FC-ABF8EF7E46C7}"
 	ProjectSection(SolutionItems) = preProject

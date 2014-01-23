@@ -50,13 +50,13 @@
 			Text="Target 'AfterBackupCurrentHansKindbergXmlTransform'"
 		/>
 		<Message
-			Condition="Exists($(HansKindbergXmlTransformBackupPath)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Condition="Exists($(HansKindbergXmlTransformBackupDirectory)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
 			Importance="$(MessageImportance)"
-			Text="Target 'AfterBackupCurrentHansKindbergXmlTransform': Backing up '%(HansKindbergXmlTransformSource.Identity)' to '$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)'."
+			Text="Target 'AfterBackupCurrentHansKindbergXmlTransform': Backing up '%(HansKindbergXmlTransformSource.Identity)' to '$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)'."
 		/>
 		<Copy
-			Condition="Exists($(HansKindbergXmlTransformBackupPath)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
-			DestinationFiles="$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)"
+			Condition="Exists($(HansKindbergXmlTransformBackupDirectory)) AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			DestinationFiles="$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)"
 			SourceFiles="%(HansKindbergXmlTransformSource.Identity)"
 		/>
 	</Target>
@@ -66,22 +66,22 @@
 			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform'"
 		/>
 		<Message
-			Condition="Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)')"
+			Condition="Exists('$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)')"
 			Importance="$(MessageImportance)"
-			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform': Restoring '$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)' to '%(HansKindbergXmlTransformSource.Identity)'."
+			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform': Restoring '$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)' to '%(HansKindbergXmlTransformSource.Identity)'."
 		/>
 		<Copy
-			Condition="Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)')"
+			Condition="Exists('$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)')"
 			DestinationFiles="%(HansKindbergXmlTransformSource.Identity)"
-			SourceFiles="$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)"
+			SourceFiles="$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)"
 		/>
 		<Message
-			Condition="!Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Condition="!Exists('$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
 			Importance="$(MessageImportance)"
 			Text="Target 'AfterRestorePreviousHansKindbergXmlTransform': Deleting '%(HansKindbergXmlTransformSource.Identity)'."
 		/>
 		<Delete
-			Condition="!Exists('$(HansKindbergXmlTransformBackupPath)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
+			Condition="!Exists('$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
 			Files="%(HansKindbergXmlTransformSource.Identity)"
 		/>
 	</Target>

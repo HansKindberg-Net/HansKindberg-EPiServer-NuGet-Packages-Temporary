@@ -11,6 +11,10 @@
 		DependsOnTargets="$(AfterBuildDependsOn)"
 	>
 		<Message
+			Importance="$(MessageImportance)"
+			Text="========== Target 'AfterBuild' executed for project '$(MSBuildProjectName)'. =========="
+		/>
+		<Message
 			Condition="!$(EPiServerFilesExists)"
 			Importance="$(MessageImportance)"
 			Text="Target 'AfterBuild': The package was not built. There are no local EPiServer files for version '$(EPiServerVersion)'."
@@ -26,18 +30,46 @@
 		/>
 	</Target>
 	<Target Name="AfterBuildPackage" />
-	<!--
+	<PropertyGroup>
+		<AfterCleanDependsOn>
+			RemovePreviousPackageDirectory;
+			DeletePreviouslyBuiltPackage
+		</AfterCleanDependsOn>
+	</PropertyGroup>
+	<Target
+		Name="AfterClean"
+		DependsOnTargets="$(AfterCleanDependsOn)"
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="========== Target 'AfterClean' executed for project '$(MSBuildProjectName)'. =========="
+		/>
+	</Target>
 	<PropertyGroup>
 		<BeforeBuildDependsOn>
-			ClearTargetDirectory
+			RemovePreviousPackageDirectory;
+			DeletePreviouslyBuiltPackage
 		</BeforeBuildDependsOn>
 	</PropertyGroup>
 	<Target
 		Name="BeforeBuild"
 		DependsOnTargets="$(BeforeBuildDependsOn)"
-	/>
-	-->
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="========== Target 'BeforeBuild' executed for project '$(MSBuildProjectName)'. =========="
+		/>
+	</Target>
 	<Target Name="BeforeBuildPackage" />
+	<Target
+		Name="BeforeClean"
+		DependsOnTargets="$(BeforeCleanDependsOn)"
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="========== Target 'BeforeClean' executed for project '$(MSBuildProjectName)'. =========="
+		/>
+	</Target>
 	<PropertyGroup>
 		<BuildPackageDependsOn>
 			BeforeBuildPackage;
@@ -52,18 +84,6 @@
 		Condition="$(EPiServerFilesExists)"
 		DependsOnTargets="$(BuildPackageDependsOn)"
 	/>
-	<!--
-	<Target
-		Name="ClearTargetDirectory"
-		DependsOnTargets="$(ClearTargetDirectoryDependsOn)"
-	>
-		<ClearDirectory
-			DirectoryPath="$(TargetDir)"
-			LogImportance="$(MessageImportance)"
-			TargetName="ClearTargetDirectory"
-		/>
-	</Target>
-	-->
 	<Target Name="CopyPackageContentToPackageDirectory" />
 	<PropertyGroup>
 		<CoreCreateNuGetPackageDependsOn>
@@ -77,13 +97,44 @@
 		DependsOnTargets="$(CoreCreateNuGetPackageDependsOn)"
 	/>
 	<Target Name="CreateNuGetPackage" />
-	<Target Name="PrepareCopyPackageContentToPackageDirectory">
+	<Target
+		Name="DeletePreviouslyBuiltPackage"
+		DependsOnTargets="$(DeletePreviouslyBuiltPackageDependsOn)"
+	>
+		<PropertyGroup>
+			<ExistingPackage Condition="'$(ExistingPackage)' == ''">$(TargetDir)$(Name).$(Version).nupkg</ExistingPackage>
+		</PropertyGroup>
+		<Message
+			Condition="Exists($(ExistingPackage))"
+			Importance="$(MessageImportance)"
+			Text="Target 'DeletePreviouslyBuiltPackage': Deleting '$(ExistingPackage)'."
+		/>
+		<Delete
+			Condition="Exists($(ExistingPackage))"
+			Files="$(ExistingPackage)"
+		/>
+	</Target>
+	<Target
+		Name="RemovePreviousPackageDirectory"
+		DependsOnTargets="$(RemovePreviousPackageDirectoryDependsOn)"
+	>
 		<ClearDirectory
 			Condition="Exists($(PackageDirectory))"
 			DirectoryPath="$(PackageDirectory)"
 			LogImportance="$(MessageImportance)"
-			TargetName="PrepareCopyPackageContentToPackageDirectory"
+			TargetName="RemovePreviousPackageDirectory"
 		/>
+		<Message
+			Condition="Exists($(PackageDirectory))"
+			Importance="$(MessageImportance)"
+			Text="Target 'RemovePreviousPackageDirectory': Removing '$(PackageDirectory)'."
+		/>
+		<RemoveDir
+			Condition="Exists($(PackageDirectory))"
+			Directories="$(PackageDirectory)"
+		/>
+	</Target>
+	<Target Name="PrepareCopyPackageContentToPackageDirectory">
 		<Message
 			Condition="!Exists($(PackageDirectory))"
 			Importance="$(MessageImportance)"
@@ -94,18 +145,5 @@
 			Directories="$(PackageDirectory)"
 		/>
 	</Target>
-	<Target Name="PrepareCreateNuGetPackage">
-		<PropertyGroup>
-			<ExistingPackage Condition="'$(ExistingPackage)' == ''">$(TargetDir)$(Name).$(Version).nupkg</ExistingPackage>
-		</PropertyGroup>
-		<Message
-			Condition="Exists($(ExistingPackage))"
-			Importance="$(MessageImportance)"
-			Text="Target 'PrepareCreateNuGetPackage': Deleting '$(ExistingPackage)'."
-		/>
-		<Delete
-			Condition="Exists($(ExistingPackage))"
-			Files="$(ExistingPackage)"
-		/>
-	</Target>
+	<Target Name="PrepareCreateNuGetPackage" />
 </Project>

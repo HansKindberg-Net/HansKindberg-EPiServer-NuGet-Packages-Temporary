@@ -7,7 +7,7 @@
 		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
 		<Name Condition="$(Name) == ''">$(MSBuildProjectName)</Name>
 		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)packages\</NuGetPackagesDirectory>
-		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Quiet</NuGetVerbosity><!-- Normal, Quiet or Detailed -->
+		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Normal</NuGetVerbosity><!-- Normal, Quiet or Detailed -->
 		<ReadMeFile Condition="$(ReadMeFile) == ''">ReadMe.txt</ReadMeFile>
 	</PropertyGroup>
 	<PropertyGroup>
