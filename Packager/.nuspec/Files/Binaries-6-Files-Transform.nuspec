@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
-	<files xdt:Transform="Replace">
-		<file src="$EPiServerDirectory$CMS\$EPiServerVersion$\bin\**\*.*" exclude="$EPiServerDirectory$CMS\$EPiServerVersion$\bin\log4net.dll;$EPiServerDirectory$CMS\$EPiServerVersion$\bin\Microsoft.Web.Services3.dll" target="lib\net20" />
-		<file src="$EPiServerDirectory$Framework\$EPiServerFrameworkVersion$\bin\**\*.*" target="lib\net20" />
-		<file src="$ProjectDirectory$ReadMe\Binaries.ReadMe.txt" target="ReadMe.txt" />
-	</files>
-</package>

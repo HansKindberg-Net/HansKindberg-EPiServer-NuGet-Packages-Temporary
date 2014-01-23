@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
-	<metadata>
-		<description xdt:Transform="Replace">All the EPiServer $EPiServerVersion$ binaries/assemblies.</description>
-		<releaseNotes xdt:Transform="Remove" />
-		<summary xdt:Transform="Remove" />
-	</metadata>
-</package>

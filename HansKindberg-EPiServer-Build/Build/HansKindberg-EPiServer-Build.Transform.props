@@ -13,17 +13,22 @@
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
 		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
-		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)packages\</NuGetPackagesDirectory>
+		<NuGetPackagesDirectoryName Condition="$(NuGetPackagesDirectoryName) == ''">packages</NuGetPackagesDirectoryName>
 		<PackageNamePrefix Condition="$(PackageNamePrefix) == ''">HansKindberg-EPiServer-</PackageNamePrefix>
 		<Version Condition="$(Version) == ''">${Version}</Version>
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
-		<ApplicationFilesPackageDirectory Condition="$(ApplicationFilesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(PackageNamePrefix)Application-Files.$(Version)\</ApplicationFilesPackageDirectory>
-		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(PackageNamePrefix)Binaries.$(Version)\</BinariesPackageDirectory>
+		<ApplicationFilesPackageName Condition="$(ApplicationFilesPackageName) == ''">$(PackageNamePrefix)Application-Files.$(Version)</ApplicationFilesPackageName>
+		<BinariesPackageName Condition="$(BinariesPackageName) == ''">$(PackageNamePrefix)Binaries.$(Version)</BinariesPackageName>
+		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)$(NuGetPackagesDirectoryName)\</NuGetPackagesDirectory>
+		<NuGetPackagesDirectorySolutionRelativePath Condition="$(NuGetPackagesDirectorySolutionRelativePath) == ''">(Solution)$(NuGetPackagesDirectoryName)\</NuGetPackagesDirectorySolutionRelativePath>
+	</PropertyGroup>
+	<PropertyGroup xdt:Transform="Insert">
+		<ApplicationFilesPackageDirectory Condition="$(ApplicationFilesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(ApplicationFilesPackageName)\</ApplicationFilesPackageDirectory>
+		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(BinariesPackageName)\</BinariesPackageDirectory>
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
 		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(ApplicationFilesPackageDirectory)Configuration\</ConfigurationDirectory>
-		<EPiServerBinariesDirectory Condition="$(EPiServerBinariesDirectory) == ''">$(BinariesPackageDirectory)lib\net20\</EPiServerBinariesDirectory>
 	</PropertyGroup>	
 	<ItemGroup Condition="@(ConfigurationTemplate) == ''" xdt:Transform="Insert">
 		<ConfigurationTemplate Include="$(ConfigurationDirectory)log4net.Template.config">
@@ -35,8 +40,15 @@
 			<Transform>Web.Common.config</Transform>
 		</ConfigurationTemplate>
 	</ItemGroup>
-	<ItemGroup Condition="$(DependencyBinariesDirectories) == ''" xdt:Transform="Insert">
-		<DependencyBinariesDirectories Include="$(NuGetPackagesDirectory)log4net.1.2.10\lib\2.0\" />
-		<DependencyBinariesDirectories Include="$(NuGetPackagesDirectory)Microsoft.Web.Services3.3.0.0.0\lib\net20\" />
+	<ItemGroup Condition="@(BinaryToCopyToTargetDirectory) == ''" xdt:Transform="Insert">
+		<BinaryToCopyToTargetDirectory Include="$(BinariesPackageDirectory)lib\net20\**\*.*">
+			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)$(BinariesPackageName)\lib\net20\</SolutionRelativePath>
+		</BinaryToCopyToTargetDirectory>
+		<BinaryToCopyToTargetDirectory Include="$(NuGetPackagesDirectory)log4net.1.2.10\lib\2.0\**\*.*">
+			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)log4net.1.2.10\lib\2.0\</SolutionRelativePath>
+		</BinaryToCopyToTargetDirectory>
+		<BinaryToCopyToTargetDirectory Include="$(NuGetPackagesDirectory)Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.*">
+			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)Microsoft.Web.Services3.3.0.0.0\lib\net20\</SolutionRelativePath>
+		</BinaryToCopyToTargetDirectory>
 	</ItemGroup>
 </Project>

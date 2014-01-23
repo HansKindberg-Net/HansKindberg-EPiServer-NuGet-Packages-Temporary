@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="Solution.Build.props" />
 	<PropertyGroup>
 		<Author Condition="$(Author) == ''">Hans Kindberg - open source</Author>
 		<EPiServerVersion Condition="$(EPiServerVersion) == ''">5.2.375.133</EPiServerVersion>
@@ -8,7 +9,6 @@
 		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)packages\</NuGetPackagesDirectory>
 		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Quiet</NuGetVerbosity><!-- Normal, Quiet or Detailed -->
 		<ReadMeFile Condition="$(ReadMeFile) == ''">ReadMe.txt</ReadMeFile>
-		<Version Condition="$(Version) == ''">5.2.1-alpha-0</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<EPiServerCmsVersionDirectory Condition="$(EPiServerCmsVersionDirectory) == ''">$(SolutionDir)EPiServer\CMS\$(EPiServerVersion)\</EPiServerCmsVersionDirectory>

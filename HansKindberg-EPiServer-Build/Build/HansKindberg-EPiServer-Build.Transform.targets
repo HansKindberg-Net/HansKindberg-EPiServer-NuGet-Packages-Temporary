@@ -29,60 +29,20 @@
 	/>
 	<Target
 		Name="CoreCopyBinariesToTargetDirectory"
-		Condition="Exists($(TargetDir)) AND ($(EPiServerBinariesDirectory) != '' OR @(DependencyBinariesDirectories) != '')"
+		Condition="Exists($(OutDir)) AND @(BinaryToCopyToTargetDirectory) != ''"
 		DependsOnTargets="$(CoreCopyBinariesToTargetDirectoryDependsOn)"
 		xdt:Transform="Insert"
 	>
-		<ItemGroup>
-			<EPiServerBinary Include="$(EPiServerBinariesDirectory)**\*.*" />
-		</ItemGroup>
 		<Message
-			Condition="!Exists('$(TargetDir)%(EPiServerBinary.RecursiveDir)%(EPiServerBinary.Filename)%(EPiServerBinary.Extension)')"
+			Condition="!Exists('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)') OR $([System.DateTime]::Parse('%(ModifiedTime)').Ticks) > $([System.IO.File]::GetLastWriteTime('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)').Ticks)"
 			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying '%(EPiServerBinary.RecursiveDir)%(EPiServerBinary.Filename)%(EPiServerBinary.Extension)' to '$(TargetDir)'."
+			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying '%(BinaryToCopyToTargetDirectory.SolutionRelativePath)%(RecursiveDir)%(Filename)%(Extension)' to '$(OutDir)%(RecursiveDir)%(Filename)%(Extension)'."
 		/>
 		<Copy
-			Condition="!Exists('$(TargetDir)%(EPiServerBinary.RecursiveDir)%(EPiServerBinary.Filename)%(EPiServerBinary.Extension)')"
-			DestinationFiles="$(TargetDir)%(EPiServerBinary.RecursiveDir)%(EPiServerBinary.Filename)%(EPiServerBinary.Extension)"
-			SourceFiles="%(EPiServerBinary.Identity)"
+			Condition="!Exists('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)') OR $([System.DateTime]::Parse('%(ModifiedTime)').Ticks) > $([System.IO.File]::GetLastWriteTime('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)').Ticks)"
+			DestinationFiles="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)"
+            SourceFiles="%(BinaryToCopyToTargetDirectory.FullPath)"
 		/>
-		<ItemGroup>
-			<DependencyBinary Include="%(DependencyBinariesDirectories.Identity)**\*.*" />
-		</ItemGroup>
-		<Message
-			Condition="!Exists('$(TargetDir)%(DependencyBinary.RecursiveDir)%(DependencyBinary.Filename)%(DependencyBinary.Extension)')"
-			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying '%(DependencyBinary.RecursiveDir)%(DependencyBinary.Filename)%(DependencyBinary.Extension)' to '$(TargetDir)'."
-		/>
-		<Copy
-			Condition="!Exists('$(TargetDir)%(DependencyBinary.RecursiveDir)%(DependencyBinary.Filename)%(DependencyBinary.Extension)')"
-			DestinationFiles="$(TargetDir)%(DependencyBinary.RecursiveDir)%(DependencyBinary.Filename)%(DependencyBinary.Extension)"
-			SourceFiles="%(DependencyBinary.Identity)"
-		/>
-		
-		
-		
-		<!--
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying '$(TargetDir)%(DependencyBinary.RecursiveDir)%(DependencyBinary.Filename)%(DependencyBinary.Extension)' to '$(TargetDir)'."
-		/>
-		-->
-
-
-
-		<!--
-		<Message
-			Condition="%(DependencyBinariesDirectories) != ''"
-			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying dependency binaries to bin - '%(DependencyBinariesDirectories)'."
-		/>
-		<Copy
-			DestinationFiles="@($(NuGetPackageDirectory)%(DependencyBinariesDirectories)->'bin\%(RecursiveDir)%(Filename)%(Extension)')"
-			SkipUnchangedFiles="true"
-			SourceFiles="@($(NuGetPackageDirectory)%(DependencyBinariesDirectories))"
-		/>
-		-->
 	</Target>
 	<Target Name="AfterBackupCurrentHansKindbergXmlTransform" xdt:Transform="Insert">
 		<Message

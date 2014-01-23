@@ -32,17 +32,17 @@
 					if(Directory.Exists(this.DirectoryPath))
 					{
 						this.Log.LogMessage(messageImportance, "{0}", new object[] { messagePrefix + "Clearing directory '" + this.DirectoryPath + "'." });
-						
-						foreach(string directoryPath in Directory.GetDirectories(this.DirectoryPath))
-						{
-							this.Log.LogMessage(messageImportance, "{0}", new object[] { messagePrefix + "Deleting directory '" + directoryPath + "'." });
-							Directory.Delete(directoryPath, true);
-						}
-					
+
 						foreach(string filePath in Directory.GetFiles(this.DirectoryPath))
 						{
 							this.Log.LogMessage(messageImportance, "{0}", new object[] { messagePrefix + "Deleting file '" + filePath + "'." });
 							File.Delete(filePath);
+						}
+
+						foreach(string directoryPath in Directory.GetDirectories(this.DirectoryPath))
+						{
+							this.Log.LogMessage(messageImportance, "{0}", new object[] { messagePrefix + "Deleting directory '" + directoryPath + "'." });
+							Directory.Delete(directoryPath, true);
 						}
 					}
 					else

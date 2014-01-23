@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="..\Build\SolutionBuild.targets" />
+	<Import Project="..\Build\HansKindberg-EPiServer-Package.Build.targets" />
 	<Target Name="AfterBuildPackage">
 		<ItemGroup>
 			<TemporaryFile Include="$(MSBuildProjectDirectory)\Build\HansKindberg-EPiServer-Build.props" />
@@ -68,13 +68,11 @@
 		/>
 	</Target>
 	<Target Name="CreateNuGetPackage">
-		<!--
 		<PropertyGroup>
 			<Properties>Author="$(Author)"</Properties>
-			<Properties>$(Properties);ConfigurationFilesSearchPattern="$(ConfigurationFilesSearchPattern)"</Properties>
-			<Properties>$(Properties);ConfigurationFilesTarget="$(ConfigurationFilesTarget)"</Properties>
-			<Properties>$(Properties);EPiServerApplicationFilesSearchPattern="$(EPiServerApplicationFilesSearchPattern)"</Properties>
-			<Properties>$(Properties);EPiServerApplicationFilesTarget="$(EPiServerApplicationFilesTarget)"</Properties>
+			<Properties>$(Properties);BuildFilesTarget="$(BuildFilesTarget)"</Properties>
+			<Properties>$(Properties);BuildPropertiesFile="$(BuildPropertiesFile)"</Properties>
+			<Properties>$(Properties);BuildTargetsFile="$(BuildTargetsFile)"</Properties>
 			<Properties>$(Properties);EPiServerVersion="$(EPiServerVersion)"</Properties>
 			<Properties>$(Properties);Id="$(Name)"</Properties>
 			<Properties>$(Properties);ReadMeFile="$(ReadMeFile)"</Properties>
@@ -87,9 +85,5 @@
 		<Exec
 			Command='$(SolutionDir).nuget\NuGet.exe pack "$(Name).nuspec" -OutputDirectory $(TargetDir) -Properties $(Properties) -Verbosity "$(NuGetVerbosity)"'
 		/>
-		-->
 	</Target>
-
-
-
 </Project>

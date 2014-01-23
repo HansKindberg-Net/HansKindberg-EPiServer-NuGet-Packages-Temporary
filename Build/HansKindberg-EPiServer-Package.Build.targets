@@ -26,6 +26,7 @@
 		/>
 	</Target>
 	<Target Name="AfterBuildPackage" />
+	<!--
 	<PropertyGroup>
 		<BeforeBuildDependsOn>
 			ClearTargetDirectory
@@ -35,6 +36,7 @@
 		Name="BeforeBuild"
 		DependsOnTargets="$(BeforeBuildDependsOn)"
 	/>
+	-->
 	<Target Name="BeforeBuildPackage" />
 	<PropertyGroup>
 		<BuildPackageDependsOn>
@@ -50,6 +52,7 @@
 		Condition="$(EPiServerFilesExists)"
 		DependsOnTargets="$(BuildPackageDependsOn)"
 	/>
+	<!--
 	<Target
 		Name="ClearTargetDirectory"
 		DependsOnTargets="$(ClearTargetDirectoryDependsOn)"
@@ -60,6 +63,7 @@
 			TargetName="ClearTargetDirectory"
 		/>
 	</Target>
+	-->
 	<Target Name="CopyPackageContentToPackageDirectory" />
 	<PropertyGroup>
 		<CoreCreateNuGetPackageDependsOn>
@@ -90,5 +94,18 @@
 			Directories="$(PackageDirectory)"
 		/>
 	</Target>
-	<Target Name="PrepareCreateNuGetPackage" />
+	<Target Name="PrepareCreateNuGetPackage">
+		<PropertyGroup>
+			<ExistingPackage Condition="'$(ExistingPackage)' == ''">$(TargetDir)$(Name).$(Version).nupkg</ExistingPackage>
+		</PropertyGroup>
+		<Message
+			Condition="Exists($(ExistingPackage))"
+			Importance="$(MessageImportance)"
+			Text="Target 'PrepareCreateNuGetPackage': Deleting '$(ExistingPackage)'."
+		/>
+		<Delete
+			Condition="Exists($(ExistingPackage))"
+			Files="$(ExistingPackage)"
+		/>
+	</Target>
 </Project>

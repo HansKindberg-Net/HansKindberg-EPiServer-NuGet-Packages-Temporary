@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
-	<metadata>
-		<authors xdt:Transform="Replace">EPiServer AB</authors>
-		<licenseUrl xdt:Transform="InsertAfter(/*[local-name()='package']/*[local-name()='metadata']/*[local-name()='id'])">http://world.episerver.com/PageFiles/99654/EPiServer EULA.txt</licenseUrl>
-		<owners xdt:Transform="Replace">EPiServer AB</owners>
-		<requireLicenseAcceptance xdt:Transform="Replace">true</requireLicenseAcceptance>
-	</metadata>
-</package>
