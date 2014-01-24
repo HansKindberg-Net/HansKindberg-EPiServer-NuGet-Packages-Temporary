@@ -1,10 +1,37 @@
 # HansKindberg-EPiServer-NuGet-Packages
-Description here
+This repository contains a Visual Studio solution for building NuGet-packages for EPiServer.
+- **HansKindberg-EPiServer-Binaries** (all the EPiServer binaries)
+- **HansKindberg-Application-Files** (all the application-files, Admin, Edit etc.)
+- **HansKindberg-Build** (build scripts/targets for building EPiServer solutions/projects)
+
+To build the packages you need the EPiServer files, normally installed under %ProgramFiles%\EPiServer. Basically you copy that directory to the root of this solution when you want to build the packages.
+
+## Important
+**EPiServer** is a product requiring a license. Its important to not publish these packages in public. Instead keep the packages in your own NuGet-sources.
+
+## Version mappings
+Write about the branches
+
+- **HansKindberg-EPiServer-*** packages **5.2.1.*** mappes to **EPiServer CMS 5 R2 SP1** (**5.2.375.133**)
+- **HansKindberg-EPiServer-*** packages **5.2.2.*** mappes to **EPiServer CMS 5 R2 SP2** (**5.2.375.236**)
+- **HansKindberg-EPiServer-*** packages **6.0.0.*** mappes to **EPiServer CMS 6.0** (**6.0.530.0**)
+- **HansKindberg-EPiServer-*** packages **6.1.0.*** mappes to **EPiServer CMS 6 R2** (**6.1.379.0**)
+- **HansKindberg-EPiServer-*** packages **7.0.0.*** mappes to **EPiServer CMS 7** (**7.0.586.1**)
+
+How should we do with 7.1
+
+- **HansKindberg-EPiServer-*** packages **7.5.0.*** mappes to **EPiServer CMS 7.5** (**7.5.394.2**)
+
+
+
+
+
+
 
 ## 1 Package-projects
 Each project in this solution is a **Class Library**. The target framework for each project is **.NET Framework 4.5**. Even if the target framework does not matter keep the same framework when adding more projects.
 When adding a new package project:
-* Change the output-path from bin\Debug to ..\bin\Debug and from bin\Release to ..\bin\Release.
+* Change the output-path from bin\Debug to ..\Package-output\Debug and from bin\Release to ..\Package-output\Release.
 * Add the following lines to the post-build event:
 <pre>
 DEL "$(TargetPath)"
