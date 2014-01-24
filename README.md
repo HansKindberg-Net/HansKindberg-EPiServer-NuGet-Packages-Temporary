@@ -4,12 +4,10 @@ This repository contains a Visual Studio solution for building NuGet-packages fo
 - **HansKindberg-Application-Files** (all the application-files, Admin, Edit etc.)
 - **HansKindberg-Build** (build scripts/targets for building EPiServer solutions/projects)
 
-To build the packages you need the EPiServer files, normally installed under %ProgramFiles%\EPiServer. Basically you copy that directory to the root of this solution when you want to build the packages.
-
-## Important
+## 1 Important
 **EPiServer** is a product requiring a license. Its important to not publish these packages in public. Instead keep the packages in your own NuGet-sources.
 
-## Version mappings
+## 2 Version mappings
 Write about the branches
 
 - **HansKindberg-EPiServer-*** packages **5.2.1.*** mappes to **EPiServer CMS 5 R2 SP1** (**5.2.375.133**)
@@ -17,18 +15,19 @@ Write about the branches
 - **HansKindberg-EPiServer-*** packages **6.0.0.*** mappes to **EPiServer CMS 6.0** (**6.0.530.0**)
 - **HansKindberg-EPiServer-*** packages **6.1.0.*** mappes to **EPiServer CMS 6 R2** (**6.1.379.0**)
 - **HansKindberg-EPiServer-*** packages **7.0.0.*** mappes to **EPiServer CMS 7** (**7.0.586.1**)
-
-How should we do with 7.1
-
+- **how should we do with 7.1**
 - **HansKindberg-EPiServer-*** packages **7.5.0.*** mappes to **EPiServer CMS 7.5** (**7.5.394.2**)
 
+## 3 Build
+To build the packages you need the EPiServer files, normally installed under %PROGRAMFILES%\EPiServer. Basically you copy that directory to the root of this solution when you want to build the packages.
+To be able to build the packages you have to copy %PROGRAMFILES%\EPiServer to the solution root.
+When building all the package content is copied to the **packages** directory under the solution root. The **packages** directory is the default NuGet-packages directory. The packages are
+only built when building a release. This is to reduce build time when building for the test application **HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication**.
 
 
 
 
-
-
-## 1 Package-projects
+## 4 Package-projects
 Each project in this solution is a **Class Library**. The target framework for each project is **.NET Framework 4.5**. Even if the target framework does not matter keep the same framework when adding more projects.
 When adding a new package project:
 * Change the output-path from bin\Debug to ..\Package-output\Debug and from bin\Release to ..\Package-output\Release.
@@ -38,8 +37,6 @@ DEL "$(TargetPath)"
 "$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -Properties Configuration=$(ConfigurationName) -Version "X.X.X.X"
 </pre>
 * Change **Properties** (project) -> **Build** -> **Advanced...** -> **Debug Info:** to **none** for all configurations **Debug/Release**. This is to avoid [Project-name].pdb files in the output directory.
-
-To be able to build the packages you have to copy %PROGRAMFILES%\EPiServer to the solution root.
 
 Reminder: Maybe we should delete the Debug configuration.
 
