@@ -20,27 +20,59 @@ Write about the branches
 
 ## 3 Build
 To build the packages you need the EPiServer files, normally installed under %PROGRAMFILES%\EPiServer. Basically you copy that directory to the root of this solution when you want to build the packages.
-To be able to build the packages you have to copy %PROGRAMFILES%\EPiServer to the solution root.
 When building all the package content is copied to the **packages** directory under the solution root. The **packages** directory is the default NuGet-packages directory. The packages are
 only built when building a release. This is to reduce build time when building for the test application **HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication**.
 
-
-
-
 ## 4 Package-projects
-Each project in this solution is a **Class Library**. The target framework for each project is **.NET Framework 4.5**. Even if the target framework does not matter keep the same framework when adding more projects.
+Each package-project in this solution is a **Class Library**. The target framework for each project is **.NET Framework 4.5**. Even if the target framework does not matter keep the same framework when adding more projects.
 When adding a new package project:
 * Change the output-path from bin\Debug to ..\Package-output\Debug and from bin\Release to ..\Package-output\Release.
-* Add the following lines to the post-build event:
-<pre>
-DEL "$(TargetPath)"
-"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -Properties Configuration=$(ConfigurationName) -Version "X.X.X.X"
-</pre>
 * Change **Properties** (project) -> **Build** -> **Advanced...** -> **Debug Info:** to **none** for all configurations **Debug/Release**. This is to avoid [Project-name].pdb files in the output directory.
 
-Reminder: Maybe we should delete the Debug configuration.
+## 5 Packages
+### 5.1 HansKindberg-EPiServer-Binaries
+This package contains all the assemblies/dll's needed to run an EPiServer web-application. As far as possible all dependant assemblies are added as NuGet-dependencies.
 
-## 2 Configuration
+### 5.2 HansKindberg-EPiServer-Application-Files
+This package contains all the EPiServer application-files (admin, edit etc.) and *.config templates. The package
+does not add any content to the project. The content in the package can be copied to the project, by using
+pre- and post-build events, or mapped to, by using virtual path providers.
+
+#### 5.2.1 Application
+The folder contains the EPiServer application files that normally is installed
+under %PROGRAMFILES%\EPiServer\CMS\x.x.x.x\Application.
+
+#### 5.2.2 Configuration
+The folder contains templates:
+- log4net.Template.config
+- Web.Template.config
+The templates contains the default-settings for an EPiServer-site installation.
+See HansKindberg-EPiServer-Build for more information.
+
+### 5.3 HansKindberg-EPiServer-Build
+This package contains build-targets.
+This package has a dependency to HansKindberg-EPiServer-Application-Files and through that also to HansKindberg-EPiServer-Binaries.
+
+Regarding HansKindberg-EPiServer-Application-Files:
+The package contains build scripts/targets that transforms the config-files.
+1.
+- package\EPiServer-Application-Files.x.x.x.x\Configuration\log4net.Template.config with log4net.Common.config (transforms) to log4net.Template.config
+- package\EPiServer-Application-Files.x.x.x.x\Configuration\Web.Template.config with Web.Common.config (transforms) to Web.Template.config
+2.
+- log4net.Template.config with log4net.$(Configuration).config (transforms) to log4net.config
+- Web.Template.config with Web.$(Configuration).config (transforms) to Web.config
+Exclude
+- *.config
+- *.Template.config
+from source-control.
+
+Regarding HansKindberg-EPiServer-Binaries:
+This package contains build scripts/targets that copies all the binaries to the bin folder on build.
+
+
+
+
+ 2 Configuration
 Do not include the *.config in source-control.
 Include *.Template.config and *.$(Configuration).config in source-control.
 
