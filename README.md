@@ -46,6 +46,7 @@ under %PROGRAMFILES%\EPiServer\CMS\x.x.x.x\Application.
 The folder contains templates:
 - log4net.Template.config
 - Web.Template.config
+
 The templates contains the default-settings for an EPiServer-site installation.
 See HansKindberg-EPiServer-Build for more information.
 
