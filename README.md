@@ -55,14 +55,15 @@ This package contains build-targets. This package has a dependency to HansKindbe
 
 #### 5.3.1 Regarding HansKindberg-EPiServer-Application-Files:
 The package contains build scripts/targets that transforms the config-files.
+
 1.
-	- package\EPiServer-Application-Files.x.x.x.x\Configuration\Web.Template.config with Web.Common.config (transforms) to Web.Template.config
-	- package\EPiServer-Application-Files.x.x.x.x\Configuration\log4net.Template.config with log4net.Common.config (transforms) to log4net.Template.config
+    - package\EPiServer-Application-Files.x.x.x.x\Configuration\Web.Template.config with Web.Common.config (transforms) to Web.Template.config
+    - package\EPiServer-Application-Files.x.x.x.x\Configuration\log4net.Template.config with log4net.Common.config (transforms) to log4net.Template.config
 2.
-	- log4net.Template.config with log4net.$(Configuration).config (transforms) to log4net.config
-	- Web.Template.config with Web.$(Configuration).config (transforms) to Web.config
-	- Views\Web.Template.config with Views\Web.$(Configuration).config (transforms) to Views\Web.config
-	- Any Custom.Template.config with Custom.$(Configuration).config (transforms) to Custom.config
+    - log4net.Template.config with log4net.$(Configuration).config (transforms) to log4net.config
+    - Web.Template.config with Web.$(Configuration).config (transforms) to Web.config
+    - Views\Web.Template.config with Views\Web.$(Configuration).config (transforms) to Views\Web.config
+    - Any Custom.Template.config with Custom.$(Configuration).config (transforms) to Custom.config
 
 ##### 5.3.1.1 Web.config
 
