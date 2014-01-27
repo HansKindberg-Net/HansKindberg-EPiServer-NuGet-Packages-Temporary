@@ -50,33 +50,20 @@ The templates contains the default-settings for an EPiServer-site installation.
 See HansKindberg-EPiServer-Build for more information.
 
 ### 5.3 HansKindberg-EPiServer-Build
-This package contains build-targets.
-This package has a dependency to HansKindberg-EPiServer-Application-Files and through that also to HansKindberg-EPiServer-Binaries.
+This package contains build-targets. This package has a dependency to HansKindberg-EPiServer-Application-Files and through that also to HansKindberg-EPiServer-Binaries.
 
-Regarding HansKindberg-EPiServer-Application-Files:
+#### 5.3.1 Regarding HansKindberg-EPiServer-Application-Files:
 The package contains build scripts/targets that transforms the config-files.
 1.
-- package\EPiServer-Application-Files.x.x.x.x\Configuration\log4net.Template.config with log4net.Common.config (transforms) to log4net.Template.config
 - package\EPiServer-Application-Files.x.x.x.x\Configuration\Web.Template.config with Web.Common.config (transforms) to Web.Template.config
+- package\EPiServer-Application-Files.x.x.x.x\Configuration\log4net.Template.config with log4net.Common.config (transforms) to log4net.Template.config
 2.
 - log4net.Template.config with log4net.$(Configuration).config (transforms) to log4net.config
 - Web.Template.config with Web.$(Configuration).config (transforms) to Web.config
-Exclude
-- *.config
-- *.Template.config
-from source-control.
+- Views\Web.Template.config with Views\Web.$(Configuration).config (transforms) to Views\Web.config
+- Any Custom.Template.config with Custom.$(Configuration).config (transforms) to Custom.config
 
-Regarding HansKindberg-EPiServer-Binaries:
-This package contains build scripts/targets that copies all the binaries to the bin folder on build.
-
-
-
-
- 2 Configuration
-Do not include the *.config in source-control.
-Include *.Template.config and *.$(Configuration).config in source-control.
-
-### 2.1 Web.config
+##### 5.3.1.1 Web.config
 
 	<Content Include="Web.config" />
 	<None Include="Web.Common.config">
@@ -92,20 +79,9 @@ Include *.Template.config and *.$(Configuration).config in source-control.
 		<DependentUpon>Web.config</DependentUpon>
 	</None>
 
-### 2.2 Views\Web.config
+**Do not include the Web.config and Web.Template.config in source-control.**
 
-	<Content Include="Views\Web.config" />
-	<None Include="Views\Web.Debug.config">
-		<DependentUpon>Views\Web.Template.config</DependentUpon>
-	</None>
-	<None Include="Views\Web.Release.config">
-		<DependentUpon>Views\Web.Template.config</DependentUpon>
-	</None>
-	<None Include="Views\Web.Template.config">
-		<DependentUpon>Views\Web.config</DependentUpon>
-	</None>
-
-### 2.3 log4net.config
+##### 5.3.1.2 log4net.config
 
 	<Content Include="log4net.config" />
 	<None Include="log4net.Common.config">
@@ -121,7 +97,24 @@ Include *.Template.config and *.$(Configuration).config in source-control.
 		<DependentUpon>log4net.config</DependentUpon>
 	</None>
 
-## 3 log4net and log4net.config
+**Do not include the log4net.config and log4net.Template.config in source-control.**
+
+##### 5.3.1.3 Views\Web.config
+
+	<Content Include="Views\Web.config" />
+	<None Include="Views\Web.Debug.config">
+		<DependentUpon>Web.Template.config</DependentUpon>
+	</None>
+	<None Include="Views\Web.Release.config">
+		<DependentUpon>Web.Template.config</DependentUpon>
+	</None>
+	<None Include="Views\Web.Template.config">
+		<DependentUpon>Web.config</DependentUpon>
+	</None>
+
+**Do not include the Views\Web.config in source-control.**
+
+##### 5.3.1.4 log4net and log4net.config
 The EPiServer.dll configures log4net:
 
 	[assembly: log4net.Config.XmlConfigurator(ConfigFile="episerverlog.config", Watch=true)]
@@ -143,7 +136,6 @@ So you have to do it in your Global.asax.cs:
 			static Global()
 			{
 				// Check if log4net is configured, if not configure it with "log4net.config".
-				// I think you should do it here, in the static constructor. 
 				if(!log4net.LogManager.GetRepository().Configured)
 					log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "log4net.config"));
 			}
@@ -162,5 +154,6 @@ So you have to do it in your Global.asax.cs:
 		}
 	}
 
-
-
+#### 5.3.2 Regarding HansKindberg-EPiServer-Binaries
+This package contains build scripts/targets that copies all the binaries to the output-directory (bin) on build, even the NuGet-dependant assemblies/dll's. It only copies a dll if
+it not already exist or if it is newer.
