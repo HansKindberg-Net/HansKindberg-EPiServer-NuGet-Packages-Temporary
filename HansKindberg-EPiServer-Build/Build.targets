@@ -30,7 +30,7 @@
 			Text="Target 'BeforeBuildPackage': Replacing tokens from 'Build\HansKindberg-EPiServer-Build.Template.props' to 'Build\HansKindberg-EPiServer-Build.props'."
 		/>
 		<ItemGroup>
-			<Token Include="Version">
+			<Token Include="PackageVersion">
 				<ReplacementValue>$(Version)</ReplacementValue>
 			</Token>
 		</ItemGroup>

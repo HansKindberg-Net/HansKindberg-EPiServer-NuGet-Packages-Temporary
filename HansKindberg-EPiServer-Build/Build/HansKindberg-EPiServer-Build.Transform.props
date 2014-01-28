@@ -15,11 +15,11 @@
 		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
 		<NuGetPackagesDirectoryName Condition="$(NuGetPackagesDirectoryName) == ''">packages</NuGetPackagesDirectoryName>
 		<PackageNamePrefix Condition="$(PackageNamePrefix) == ''">HansKindberg-EPiServer-</PackageNamePrefix>
-		<Version Condition="$(Version) == ''">${Version}</Version>
+		<PackageVersion Condition="$(PackageVersion) == ''">${PackageVersion}</PackageVersion>
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
-		<ApplicationFilesPackageName Condition="$(ApplicationFilesPackageName) == ''">$(PackageNamePrefix)Application-Files.$(Version)</ApplicationFilesPackageName>
-		<BinariesPackageName Condition="$(BinariesPackageName) == ''">$(PackageNamePrefix)Binaries.$(Version)</BinariesPackageName>
+		<ApplicationFilesPackageName Condition="$(ApplicationFilesPackageName) == ''">$(PackageNamePrefix)Application-Files.$(PackageVersion)</ApplicationFilesPackageName>
+		<BinariesPackageName Condition="$(BinariesPackageName) == ''">$(PackageNamePrefix)Binaries.$(PackageVersion)</BinariesPackageName>
 		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)$(NuGetPackagesDirectoryName)\</NuGetPackagesDirectory>
 		<NuGetPackagesDirectorySolutionRelativePath Condition="$(NuGetPackagesDirectorySolutionRelativePath) == ''">(Solution)$(NuGetPackagesDirectoryName)\</NuGetPackagesDirectorySolutionRelativePath>
 	</PropertyGroup>
