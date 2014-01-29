@@ -59,7 +59,7 @@ Set:
 - /location[@path == 'UI'] @path to "EPiServer"
 - /location[@path == 'UI/Admin'] @path to "EPiServer/Admin"
 
-Add a location element wiht path set to "." around the root system.web and root system.webServer.
+Add a location element with path set to "." around the root system.web and root system.webServer.
 
 	<location path=".">
 		<system.web>
