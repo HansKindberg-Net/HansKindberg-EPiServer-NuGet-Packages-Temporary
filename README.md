@@ -19,7 +19,7 @@ Write about the branches
 - **HansKindberg-EPiServer-*** packages **7.5.0.*** mappes to **EPiServer CMS 7.5** (**7.5.394.2**)
 
 ## 3 Build
-To build the packages you need the EPiServer files, normally installed under %PROGRAMFILES%\EPiServer. Basically you copy that directory to the root of this solution when you want to build the packages.
+To build the packages you need the EPiServer files, normally installed under %PROGRAMFILES(X86)%\EPiServer. Basically you copy that directory to the root of this solution when you want to build the packages.
 When building all the package content is copied to the **packages** directory under the solution root. The **packages** directory is the default NuGet-packages directory. The packages are
 only built when building a release. This is to reduce build time when building for the test application **HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication**.
 
@@ -28,6 +28,47 @@ Each package-project in this solution is a **Class Library**. The target framewo
 When adding a new package project:
 * Change the output-path from bin\Debug to ..\Package-output\Debug and from bin\Release to ..\Package-output\Release.
 * Change **Properties** (project) -> **Build** -> **Advanced...** -> **Debug Info:** to **none** for all configurations **Debug/Release**. This is to avoid [Project-name].pdb files in the output directory.
+
+### 4.1 Configuration-templates
+#### 4.1.1 log4net.Template.config
+Copy the content from **EPiServer\CMS\5.2.375.133\Application\EPiServerLog.config** to **/Configuration/log4net.Template.config**.
+#### 4.1.2 Web.Template.config
+Merge the content from **EPiServer\CMS\5.2.375.133\Application\web.config.6** and **EPiServer\CMS\5.2.375.133\Application\web.config.7** (system.web/httpHandlers, system.webServer/handlers, system.web/httpModules, system.webServer/modules) to **/Configuration/Web.Template.config**. Then add /runtime/assemblybinding elements by copying it from an installed site (eg. Install site without database).
+
+Search and replace (whole word and case-sensitive):
+- replace **admin** with **Admin**
+- replace **True** with **true**
+- replace **util** with **Util**
+
+Search and replace:
+- replace **$rootpath$\EPiServer.UI\** with **%ProgramFiles(X86)%\EPiServer\CMS\x.x.x.x\Application\**
+
+Clear:
+- /coonnectionStrings[@connectionString]
+- /episerver/sites/site[@description and @siteId]
+- /episerver/sites/site/siteSettings[@pageFolderVirtualPathProvider, @pageStartId, @siteDisplayName and @siteUrl]
+
+Change:
+- /episerver/sites/site/siteSettings[@subscriptionHandler] from "EPiServer.Personalization.SubscriptionMail,EPiServer" to "EPiServer.Personalization.SubscriptionMail, EPiServer" (add whitespace)
+
+Set:
+- /episerver/sites/site/siteSettings[@uiUrl] to "~/EPiServer/"
+- /episerver/sites/site/siteSettings[@utilUrl] to "~/Util/"
+- /episerver/virtualPath/providers/[@name == 'UI'] @virtualPath to "~/EPiServer/"
+- /episerver/virtualPath/providers/[@name == 'WebServiceFiles'] @physicalPath to "%ProgramFiles(X86)%\EPiServer\CMS\x.x.x.x\Application\WebServices"
+- /location[@path == 'UI'] @path to "EPiServer"
+- /location[@path == 'UI/Admin'] @path to "EPiServer/Admin"
+
+Add a location element wiht path set to "." around the root system.web and root system.webServer.
+
+	<location path=".">
+		<system.web>
+			...
+		</system.web>
+		<system.webServer>
+			...
+		</system.webServer>
+	</location>
 
 ## 5 Packages
 ### 5.1 HansKindberg-EPiServer-Binaries
@@ -40,7 +81,7 @@ pre- and post-build events, or mapped to, by using virtual path providers.
 
 #### 5.2.1 Application
 The folder contains the EPiServer application files that normally is installed
-under %PROGRAMFILES%\EPiServer\CMS\x.x.x.x\Application.
+under %PROGRAMFILES(X86)%\EPiServer\CMS\x.x.x.x\Application.
 
 #### 5.2.2 Configuration
 The folder contains templates:
