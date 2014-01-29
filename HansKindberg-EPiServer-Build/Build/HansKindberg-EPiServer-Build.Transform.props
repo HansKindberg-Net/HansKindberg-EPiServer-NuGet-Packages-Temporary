@@ -12,6 +12,7 @@
 		-->
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
+		<LanguageDirectory Condition="$(LanguageDirectory) == ''">Lang\</LanguageDirectory>
 		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
 		<NuGetPackagesDirectoryName Condition="$(NuGetPackagesDirectoryName) == ''">packages</NuGetPackagesDirectoryName>
 		<PackageNamePrefix Condition="$(PackageNamePrefix) == ''">HansKindberg-EPiServer-</PackageNamePrefix>
@@ -29,6 +30,7 @@
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
 		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(ApplicationFilesPackageDirectory)Configuration\</ConfigurationDirectory>
+		<PackageLanguageDirectory Condition="$(PackageLanguageDirectory) == ''">$(ApplicationFilesPackageDirectory)Application\$(LanguageDirectory)</PackageLanguageDirectory>
 	</PropertyGroup>	
 	<ItemGroup Condition="@(ConfigurationTemplate) == ''" xdt:Transform="Insert">
 		<ConfigurationTemplate Include="$(ConfigurationDirectory)log4net.Template.config">
@@ -50,5 +52,10 @@
 		<BinaryToCopyToTargetDirectory Include="$(NuGetPackagesDirectory)Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.*">
 			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)Microsoft.Web.Services3.3.0.0.0\lib\net20\</SolutionRelativePath>
 		</BinaryToCopyToTargetDirectory>
+	</ItemGroup>
+	<ItemGroup Condition="@(LanguageFile) == ''" xdt:Transform="Insert">
+		<LanguageFile Include="$(PackageLanguageDirectory)**\*.*">
+			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)$(ApplicationFilesPackageName)\Application\$(LanguageDirectory)</SolutionRelativePath>
+		</LanguageFile>
 	</ItemGroup>
 </Project>

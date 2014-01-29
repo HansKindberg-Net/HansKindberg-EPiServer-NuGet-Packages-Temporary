@@ -14,6 +14,7 @@ testresults/
 *.suo
 *.user
 .nuget/NuGet.exe
+HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Lang/
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Log/*
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/Views/Web.config
 HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication/log4net.config

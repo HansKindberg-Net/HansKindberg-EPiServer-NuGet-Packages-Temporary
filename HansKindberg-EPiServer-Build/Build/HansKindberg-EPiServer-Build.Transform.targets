@@ -11,39 +11,6 @@
 			***************************************************************************************
 		-->
 	</PropertyGroup>
-	<PropertyGroup xdt:Transform="Insert">
-		<CopyBinariesToTargetDirectoryDependsOn>
-			BeforeCopyBinariesToTargetDirectory;
-			CoreCopyBinariesToTargetDirectory;
-			AfterCopyBinariesToTargetDirectory
-		</CopyBinariesToTargetDirectoryDependsOn>
-		<CoreCopyBinariesToTargetDirectoryDependsOn />
-	</PropertyGroup>
-	<Target Name="AfterCopyBinariesToTargetDirectory" xdt:Transform="Insert" />
-	<Target Name="BeforeCopyBinariesToTargetDirectory" xdt:Transform="Insert" />
-	<Target
-		Name="CopyBinariesToTargetDirectory"
-		AfterTargets="AfterBuild"
-		DependsOnTargets="$(CopyBinariesToTargetDirectoryDependsOn)"
-		xdt:Transform="Insert"
-	/>
-	<Target
-		Name="CoreCopyBinariesToTargetDirectory"
-		Condition="Exists($(OutDir)) AND @(BinaryToCopyToTargetDirectory) != ''"
-		DependsOnTargets="$(CoreCopyBinariesToTargetDirectoryDependsOn)"
-		xdt:Transform="Insert"
-	>
-		<Message
-			Condition="!Exists('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)') OR $([System.DateTime]::Parse('%(ModifiedTime)').Ticks) > $([System.IO.File]::GetLastWriteTime('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)').Ticks)"
-			Importance="$(MessageImportance)"
-			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying '%(BinaryToCopyToTargetDirectory.SolutionRelativePath)%(RecursiveDir)%(Filename)%(Extension)' to '$(OutDir)%(RecursiveDir)%(Filename)%(Extension)'."
-		/>
-		<Copy
-			Condition="!Exists('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)') OR $([System.DateTime]::Parse('%(ModifiedTime)').Ticks) > $([System.IO.File]::GetLastWriteTime('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)').Ticks)"
-			DestinationFiles="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)"
-            SourceFiles="%(BinaryToCopyToTargetDirectory.FullPath)"
-		/>
-	</Target>
 	<Target Name="AfterBackupCurrentHansKindbergXmlTransform" xdt:Transform="Insert">
 		<Message
 			Importance="$(MessageImportance)"
@@ -83,6 +50,72 @@
 		<Delete
 			Condition="!Exists('$(HansKindbergXmlTransformBackupDirectory)%(HansKindbergXmlTransformSource.Identity)') AND Exists(%(HansKindbergXmlTransformSource.Identity))"
 			Files="%(HansKindbergXmlTransformSource.Identity)"
+		/>
+	</Target>
+	<PropertyGroup xdt:Transform="Insert">
+		<CopyBinariesToTargetDirectoryDependsOn>
+			BeforeCopyBinariesToTargetDirectory;
+			CoreCopyBinariesToTargetDirectory;
+			AfterCopyBinariesToTargetDirectory
+		</CopyBinariesToTargetDirectoryDependsOn>
+		<CoreCopyBinariesToTargetDirectoryDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCopyBinariesToTargetDirectory" xdt:Transform="Insert" />
+	<Target Name="BeforeCopyBinariesToTargetDirectory" xdt:Transform="Insert" />
+	<Target
+		Name="CopyBinariesToTargetDirectory"
+		AfterTargets="AfterBuild"
+		DependsOnTargets="$(CopyBinariesToTargetDirectoryDependsOn)"
+		xdt:Transform="Insert"
+	/>
+	<Target
+		Name="CoreCopyBinariesToTargetDirectory"
+		Condition="Exists($(OutDir)) AND @(BinaryToCopyToTargetDirectory) != ''"
+		DependsOnTargets="$(CoreCopyBinariesToTargetDirectoryDependsOn)"
+		xdt:Transform="Insert"
+	>
+		<Message
+			Condition="!Exists('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)') OR $([System.DateTime]::Parse('%(ModifiedTime)').Ticks) > $([System.IO.File]::GetLastWriteTime('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)').Ticks)"
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCopyBinariesToTargetDirectory': Copying '%(BinaryToCopyToTargetDirectory.SolutionRelativePath)%(RecursiveDir)%(Filename)%(Extension)' to '$(OutDir)%(RecursiveDir)%(Filename)%(Extension)'."
+		/>
+		<Copy
+			Condition="!Exists('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)') OR $([System.DateTime]::Parse('%(ModifiedTime)').Ticks) > $([System.IO.File]::GetLastWriteTime('$(OutDir)%(RecursiveDir)%(Filename)%(Extension)').Ticks)"
+			DestinationFiles="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)"
+            SourceFiles="%(BinaryToCopyToTargetDirectory.FullPath)"
+		/>
+	</Target>
+	<PropertyGroup xdt:Transform="Insert">
+		<CopyLanguageFilesToLanguageDirectoryDependsOn>
+			BeforeCopyLanguageFilesToLanguageDirectory;
+			CoreCopyLanguageFilesToLanguageDirectory;
+			AfterCopyLanguageFilesToLanguageDirectory
+		</CopyLanguageFilesToLanguageDirectoryDependsOn>
+		<CoreCopyLanguageFilesToLanguageDirectoryDependsOn />
+	</PropertyGroup>
+	<Target Name="AfterCopyLanguageFilesToLanguageDirectory" xdt:Transform="Insert" />
+	<Target Name="BeforeCopyLanguageFilesToLanguageDirectory" xdt:Transform="Insert" />
+	<Target
+		Name="CopyLanguageFilesToLanguageDirectory"
+		AfterTargets="AfterBuild"
+		DependsOnTargets="$(CopyLanguageFilesToLanguageDirectoryDependsOn)"
+		xdt:Transform="Insert"
+	/>
+	<Target
+		Name="CoreCopyLanguageFilesToLanguageDirectory"
+		Condition="@(LanguageFile) != ''"
+		DependsOnTargets="$(CoreCopyLanguageFilesToLanguageDirectoryDependsOn)"
+		xdt:Transform="Insert"
+	>
+		<Message
+			Condition="!Exists('$(LanguageDirectory)%(RecursiveDir)%(Filename)%(Extension)') OR $([System.DateTime]::Parse('%(ModifiedTime)').Ticks) > $([System.IO.File]::GetLastWriteTime('$(LanguageDirectory)%(RecursiveDir)%(Filename)%(Extension)').Ticks)"
+			Importance="$(MessageImportance)"
+			Text="Target 'CoreCopyLanguageFilesToLanguageDirectory': Copying '%(LanguageFile.SolutionRelativePath)%(RecursiveDir)%(Filename)%(Extension)' to '$(LanguageDirectory)%(RecursiveDir)%(Filename)%(Extension)'."
+		/>
+		<Copy
+			Condition="!Exists('$(LanguageDirectory)%(RecursiveDir)%(Filename)%(Extension)') OR $([System.DateTime]::Parse('%(ModifiedTime)').Ticks) > $([System.IO.File]::GetLastWriteTime('$(LanguageDirectory)%(RecursiveDir)%(Filename)%(Extension)').Ticks)"
+			DestinationFiles="$(LanguageDirectory)%(RecursiveDir)%(Filename)%(Extension)"
+            SourceFiles="%(LanguageFile.FullPath)"
 		/>
 	</Target>
 	<PropertyGroup xdt:Transform="Insert">
