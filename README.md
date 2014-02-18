@@ -31,33 +31,20 @@ When adding a new package project:
 
 ### 4.1 Configuration-templates
 #### 4.1.1 log4net.Template.config
-Copy the content from **EPiServer\CMS\5.2.375.133\Application\EPiServerLog.config** to **/Configuration/log4net.Template.config**.
+Copy the content from **EPiServer\CMS\7.5.394.2\Application\EPiServerLog.config** to **/Configuration/log4net.Template.config**.
+
 #### 4.1.2 Web.Template.config
-Merge the content from **EPiServer\CMS\5.2.375.133\Application\web.config.6** and **EPiServer\CMS\5.2.375.133\Application\web.config.7** (system.web/httpHandlers, system.webServer/handlers, system.web/httpModules, system.webServer/modules) to **/Configuration/Web.Template.config**. Then add /runtime/assemblybinding elements by copying it from an installed site (eg. Install site without database).
+Install a site, **Install site and SQL Server database**, and set the relative path to the EPiServer User Interface to **/EPiServer/**. Then merge **connectionStrings.config**, **episerver.config**, **EPiServerFramework.config** and **Web.config** from the site root directory to **/Configuration/Web.Template.config**.
 
 Search and replace (whole word and case-sensitive):
 - replace **admin** with **Admin**
+- replace **/modules/** with **/Modules/**
+- replace **modulesbin** with **ModulesBin**
 - replace **True** with **true**
 - replace **util** with **Util**
 
-Search and replace:
-- replace **$rootpath$\EPiServer.UI\** with **%ProgramFiles(X86)%\EPiServer\CMS\x.x.x.x\Application\**
-
 Clear:
 - /coonnectionStrings[@connectionString]
-- /episerver/sites/site[@description and @siteId]
-- /episerver/sites/site/siteSettings[@pageFolderVirtualPathProvider, @pageStartId, @siteDisplayName and @siteUrl]
-
-Change:
-- /episerver/sites/site/siteSettings[@subscriptionHandler] from "EPiServer.Personalization.SubscriptionMail,EPiServer" to "EPiServer.Personalization.SubscriptionMail, EPiServer" (add whitespace)
-
-Set:
-- /episerver/sites/site/siteSettings[@uiUrl] to "~/EPiServer/"
-- /episerver/sites/site/siteSettings[@utilUrl] to "~/Util/"
-- /episerver/virtualPath/providers/[@name == 'UI'] @virtualPath to "~/EPiServer/"
-- /episerver/virtualPath/providers/[@name == 'WebServiceFiles'] @physicalPath to "%ProgramFiles(X86)%\EPiServer\CMS\x.x.x.x\Application\WebServices"
-- /location[@path == 'UI'] @path to "EPiServer"
-- /location[@path == 'UI/Admin'] @path to "EPiServer/Admin"
 
 Add a location element with path set to "." around the root system.web and root system.webServer.
 
