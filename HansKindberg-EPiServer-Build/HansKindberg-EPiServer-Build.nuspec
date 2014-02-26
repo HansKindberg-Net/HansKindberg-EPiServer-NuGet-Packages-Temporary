@@ -2,10 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<authors>$Author$</authors>
-		<dependencies>
-			<dependency id="HansKindberg-EPiServer-Application-Files" version="[$Version$]" />
-		</dependencies>
-		<description>A package with build-targets for EPiServer $EPiServerVersion$ containing config-transform and copying of binaries to bin.</description>
+		<description>A package with build-targets for EPiServer $EPiServerVersion$ containing config-transform and copying of files to the target-directory.</description>
 		<id>$Id$</id>
 		<owners>$Author$</owners>
 		<projectUrl>https://github.com/HansKindberg-Net/HansKindberg-EPiServer-NuGet-Packages</projectUrl>
@@ -16,6 +13,7 @@
 	<files>
 		<file src="$BuildPropertiesFile$" target="$BuildFilesTarget$" />
 		<file src="$BuildTargetsFile$" target="$BuildFilesTarget$" />
+		<file src="$ConfigurationFiles$" target="$ConfigurationTarget$" />
 		<file src="$ReadMeFile$" />
 	</files>
 </package>

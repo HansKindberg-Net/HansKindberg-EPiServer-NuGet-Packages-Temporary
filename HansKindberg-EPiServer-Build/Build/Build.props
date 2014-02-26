@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="..\..\Build\Package-Build.props" />
+	<PropertyGroup>
+		<BuildFilesTarget Condition="$(BuildFilesTarget) == ''">build</BuildFilesTarget>
+		<BuildPropertiesFile Condition="$(BuildPropertiesFile) == ''">Build\$(Name).props</BuildPropertiesFile>
+		<BuildTargetsFile Condition="$(BuildTargetsFile) == ''">Build\$(Name).targets</BuildTargetsFile>
+		<ConfigurationFiles Condition="$(ConfigurationFiles) == ''">$(MSBuildProjectDirectory)\Configuration\**\*.*</ConfigurationFiles>
+		<ConfigurationTarget Condition="$(ConfigurationTarget) == ''">Configuration</ConfigurationTarget>
+		<HansKindbergBuildFilesVersion Condition="$(HansKindbergBuildFilesVersion) == ''">1.0.0-alpha-0</HansKindbergBuildFilesVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<HansKindbergBuildFilesDirectory Condition="$(HansKindbergBuildFilesDirectory) == ''">$(NuGetPackagesDirectory)HansKindberg-Build-Files.$(HansKindbergBuildFilesVersion)\</HansKindbergBuildFilesDirectory>
+	</PropertyGroup>
+	<PropertyGroup>
+		<HansKindbergBuildFilePrefixPath Condition="$(HansKindbergBuildFilePrefixPath) == ''">$(HansKindbergBuildFilesDirectory)build\HansKindberg-On-Build</HansKindbergBuildFilePrefixPath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<HansKindbergBuildPropertiesFile Condition="$(HansKindbergBuildPropertiesFile) == ''">$(HansKindbergBuildFilePrefixPath).props</HansKindbergBuildPropertiesFile>
+		<HansKindbergBuildTargetsFile Condition="$(HansKindbergBuildTargetsFile) == ''">$(HansKindbergBuildFilePrefixPath).targets</HansKindbergBuildTargetsFile>
+	</PropertyGroup>
+	<ItemGroup Condition="@(ConfigurationFile) == ''">
+		<ConfigurationFile Include="$(ConfigurationFiles)" />
+	</ItemGroup>
+</Project>

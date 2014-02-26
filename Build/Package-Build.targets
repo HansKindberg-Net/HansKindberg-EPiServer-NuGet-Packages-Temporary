@@ -15,11 +15,6 @@
 			Text="========== Target 'AfterBuild' executed for project '$(MSBuildProjectName)'. =========="
 		/>
 		<Message
-			Condition="!$(EPiServerFilesExists)"
-			Importance="$(MessageImportance)"
-			Text="Target 'AfterBuild': The package was not built. There are no local EPiServer files for version '$(EPiServerVersion)'."
-		/>
-		<Message
 			Condition="Exists($(TargetPath))"
 			Importance="$(MessageImportance)"
 			Text="Target 'AfterBuild': Deleting file '$(TargetPath)'."
@@ -81,7 +76,6 @@
 	</PropertyGroup>
 	<Target
 		Name="BuildPackage"
-		Condition="$(EPiServerFilesExists)"
 		DependsOnTargets="$(BuildPackageDependsOn)"
 	/>
 	<Target Name="CopyPackageContentToPackageDirectory" />

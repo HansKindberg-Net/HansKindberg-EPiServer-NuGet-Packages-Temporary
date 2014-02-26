@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1CE6538A-F69C-4E28-AD4B-7D70B5CA77C0}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.config = .nuget\NuGet.config
@@ -16,31 +18,24 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D565FDA7-987E-48BB-B26D-77567C09D8F6}"
 	ProjectSection(SolutionItems) = preProject
 		Build\ClearDirectory.targets = Build\ClearDirectory.targets
-		Build\HansKindberg-EPiServer-Package.Build.props = Build\HansKindberg-EPiServer-Package.Build.props
-		Build\HansKindberg-EPiServer-Package.Build.targets = Build\HansKindberg-EPiServer-Package.Build.targets
-		Build\Solution.Build.props = Build\Solution.Build.props
+		Build\Package-Build.props = Build\Package-Build.props
+		Build\Package-Build.targets = Build\Package-Build.targets
+		Build\Solution-Build.props = Build\Solution-Build.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{E35D87DB-FD15-42CA-99A6-9F8EF288E204}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication", "HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication\HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication.csproj", "{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}"
+	ProjectSection(ProjectDependencies) = postProject
+		{41444539-AAED-43FA-B527-8490D9A48233} = {41444539-AAED-43FA-B527-8490D9A48233}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{817DBF5C-4F0D-4555-87FC-ABF8EF7E46C7}"
 	ProjectSection(SolutionItems) = preProject
 		Deploy\Deploy-ReadMe.txt = Deploy\Deploy-ReadMe.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg-EPiServer-Application-Files", "HansKindberg-EPiServer-Application-Files\HansKindberg-EPiServer-Application-Files.csproj", "{0DBECFB8-9E9E-436D-8B35-F05141BBC8A7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F203E168-33BA-4637-B33A-AEBC2011273F} = {F203E168-33BA-4637-B33A-AEBC2011273F}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg-EPiServer-Binaries", "HansKindberg-EPiServer-Binaries\HansKindberg-EPiServer-Binaries.csproj", "{F203E168-33BA-4637-B33A-AEBC2011273F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg-EPiServer-Build", "HansKindberg-EPiServer-Build\HansKindberg-EPiServer-Build.csproj", "{41444539-AAED-43FA-B527-8490D9A48233}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0DBECFB8-9E9E-436D-8B35-F05141BBC8A7} = {0DBECFB8-9E9E-436D-8B35-F05141BBC8A7}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,14 +49,6 @@ Global
 		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B457FFE-9D5D-4BCD-BEE8-04A5483AD163}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0DBECFB8-9E9E-436D-8B35-F05141BBC8A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0DBECFB8-9E9E-436D-8B35-F05141BBC8A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0DBECFB8-9E9E-436D-8B35-F05141BBC8A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0DBECFB8-9E9E-436D-8B35-F05141BBC8A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F203E168-33BA-4637-B33A-AEBC2011273F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F203E168-33BA-4637-B33A-AEBC2011273F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F203E168-33BA-4637-B33A-AEBC2011273F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F203E168-33BA-4637-B33A-AEBC2011273F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{41444539-AAED-43FA-B527-8490D9A48233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41444539-AAED-43FA-B527-8490D9A48233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41444539-AAED-43FA-B527-8490D9A48233}.Release|Any CPU.ActiveCfg = Release|Any CPU

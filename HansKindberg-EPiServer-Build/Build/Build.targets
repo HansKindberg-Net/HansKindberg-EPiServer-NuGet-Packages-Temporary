@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="..\Build\HansKindberg-EPiServer-Package.Build.targets" />
+	<Import Project="..\..\Build\Package-Build.targets" />
 	<Target Name="AfterBuildPackage">
 		<ItemGroup>
 			<TemporaryFile Include="$(MSBuildProjectDirectory)\Build\HansKindberg-EPiServer-Build.props" />
@@ -18,11 +18,11 @@
 	<Target Name="BeforeBuildPackage">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergXmlTransformationBuildPropertiesFile)' with 'Build\HansKindberg-EPiServer-Build.Transform.props' to 'Build\HansKindberg-EPiServer-Build.Template.props'."
+			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergBuildPropertiesFile)' with 'Build\HansKindberg-EPiServer-Build.Transform.props' to 'Build\HansKindberg-EPiServer-Build.Template.props'."
 		/>
 		<TransformXml
 			Destination="Build\HansKindberg-EPiServer-Build.Template.props"
-			Source="$(HansKindbergXmlTransformationBuildPropertiesFile)"
+			Source="$(HansKindbergBuildPropertiesFile)"
 			Transform="Build\HansKindberg-EPiServer-Build.Transform.props"
 		/>
 		<Message
@@ -41,11 +41,11 @@
 		/>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergXmlTransformationBuildTargetsFile)' with 'Build\HansKindberg-EPiServer-Build.Transform.targets' to 'Build\HansKindberg-EPiServer-Build.targets'."
+			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergBuildTargetsFile)' with 'Build\HansKindberg-EPiServer-Build.Transform.targets' to 'Build\HansKindberg-EPiServer-Build.targets'."
 		/>
 		<TransformXml
 			Destination="Build\HansKindberg-EPiServer-Build.targets"
-			Source="$(HansKindbergXmlTransformationBuildTargetsFile)"
+			Source="$(HansKindbergBuildTargetsFile)"
 			Transform="Build\HansKindberg-EPiServer-Build.Transform.targets"
 		/>
 	</Target>
@@ -63,6 +63,10 @@
 			SourceFiles="$(BuildTargetsFile)"
 		/>
 		<Copy
+			DestinationFolder="$(PackageDirectory)$(ConfigurationTarget)"
+			SourceFiles="%(ConfigurationFile.Identity)"
+		/>
+		<Copy
 			DestinationFolder="$(PackageDirectory)"
 			SourceFiles="$(ReadMeFile)"
 		/>
@@ -73,6 +77,8 @@
 			<Properties>$(Properties);BuildFilesTarget="$(BuildFilesTarget)"</Properties>
 			<Properties>$(Properties);BuildPropertiesFile="$(BuildPropertiesFile)"</Properties>
 			<Properties>$(Properties);BuildTargetsFile="$(BuildTargetsFile)"</Properties>
+			<Properties>$(Properties);ConfigurationFiles="$(ConfigurationFiles)"</Properties>
+			<Properties>$(Properties);ConfigurationTarget="$(ConfigurationTarget)"</Properties>
 			<Properties>$(Properties);EPiServerVersion="$(EPiServerVersion)"</Properties>
 			<Properties>$(Properties);Id="$(Name)"</Properties>
 			<Properties>$(Properties);ReadMeFile="$(ReadMeFile)"</Properties>

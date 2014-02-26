@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="Default.aspx.cs" Inherits="HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication.Default" %>
-<%@ Import Namespace="EPiServer.Configuration" %><!DOCTYPE html>
+<%@ Import Namespace="EPiServer.Configuration" %>
+<%@ Import Namespace="EPiServer.Web" %><!DOCTYPE html>
 <html>
 	<head>
 		<title>Default</title>
@@ -15,9 +16,9 @@
 		</asp:Repeater>
 		<h2>EPiServer site-settings</h2>
 		<ul>
-			<li><strong>PageFolderVirtualPathProviderName: </strong><%= Settings.Instance.PageFolderVirtualPathProviderName %></li>
-			<li><strong>SiteDisplayName: </strong><%= Settings.Instance.SiteDisplayName %></li>
-			<li><strong>SiteUrl: </strong><%= Settings.Instance.SiteUrl %></li>			
+			<li><strong>EPiServer.Configuration.Settings.Instance.PageFolderVirtualPathProviderName: </strong><%= Settings.Instance.PageFolderVirtualPathProviderName %></li>
+			<li><strong>EPiServer.Configuration.EPiServerSection.Instance.ApplicationSettings.UIUrl: </strong><%= EPiServerSection.Instance.ApplicationSettings.UIUrl %></li>
+			<li><strong>EPiServer.Web.SiteDefinition.Current.SiteUrl: </strong><%= SiteDefinition.Current.SiteUrl %></li>
 		</ul>
 	</body>
 </html>

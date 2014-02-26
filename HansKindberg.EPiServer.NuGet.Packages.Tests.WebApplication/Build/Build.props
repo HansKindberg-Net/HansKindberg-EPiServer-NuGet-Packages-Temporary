@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<PackagesDirectory Condition="$(PackagesDirectory) == ''">$(SolutionDir)packages\</PackagesDirectory>
+	</PropertyGroup>
+	<ItemGroup>
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)Castle.Core.3.2.2\lib\net45\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)Castle.Windsor.3.2.1\lib\net45\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)EPiServer.CMS.Core.7.5.1003.0\lib\net40\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)EPiServer.Framework.7.5.1003.0\lib\net40\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)log4net.1.2.10\lib\2.0\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)Microsoft.AspNet.Mvc.5.1.1\lib\net45\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)Microsoft.AspNet.Razor.3.1.1\lib\net45\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)Microsoft.AspNet.WebPages.3.1.1\lib\net45\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)Newtonsoft.Json.5.0.8\lib\net45\**\*.dll" />
+		<FileToCopyToTargetDirectory Include="$(PackagesDirectory)structuremap.2.6.4.1\lib\net40\**\*.dll" />
+	</ItemGroup>
+</Project>

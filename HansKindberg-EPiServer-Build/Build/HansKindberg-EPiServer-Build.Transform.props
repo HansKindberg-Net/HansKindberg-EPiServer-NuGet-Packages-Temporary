@@ -4,7 +4,7 @@
 		<!--
 			***************************************************************************************
 			
-			Previous elements are from HansKindberg-Xml-Transformation-On-Build.props
+			Previous elements are from HansKindberg-On-Build.props
 			
 			Next elements are from HansKindberg-EPiServer-Build.Transform.props
 			
@@ -12,50 +12,19 @@
 		-->
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
-		<LanguageDirectory Condition="$(LanguageDirectory) == ''">Lang\</LanguageDirectory>
-		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
-		<NuGetPackagesDirectoryName Condition="$(NuGetPackagesDirectoryName) == ''">packages</NuGetPackagesDirectoryName>
-		<PackageNamePrefix Condition="$(PackageNamePrefix) == ''">HansKindberg-EPiServer-</PackageNamePrefix>
 		<PackageVersion Condition="$(PackageVersion) == ''">${PackageVersion}</PackageVersion>
 	</PropertyGroup>
 	<PropertyGroup xdt:Transform="Insert">
-		<ApplicationFilesPackageName Condition="$(ApplicationFilesPackageName) == ''">$(PackageNamePrefix)Application-Files.$(PackageVersion)</ApplicationFilesPackageName>
-		<BinariesPackageName Condition="$(BinariesPackageName) == ''">$(PackageNamePrefix)Binaries.$(PackageVersion)</BinariesPackageName>
-		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)$(NuGetPackagesDirectoryName)\</NuGetPackagesDirectory>
-		<NuGetPackagesDirectorySolutionRelativePath Condition="$(NuGetPackagesDirectorySolutionRelativePath) == ''">(Solution)$(NuGetPackagesDirectoryName)\</NuGetPackagesDirectorySolutionRelativePath>
-	</PropertyGroup>
-	<PropertyGroup xdt:Transform="Insert">
-		<ApplicationFilesPackageDirectory Condition="$(ApplicationFilesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(ApplicationFilesPackageName)\</ApplicationFilesPackageDirectory>
-		<BinariesPackageDirectory Condition="$(BinariesPackageDirectory) == ''">$(NuGetPackagesDirectory)$(BinariesPackageName)\</BinariesPackageDirectory>
-	</PropertyGroup>
-	<PropertyGroup xdt:Transform="Insert">
-		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(ApplicationFilesPackageDirectory)Configuration\</ConfigurationDirectory>
-		<PackageLanguageDirectory Condition="$(PackageLanguageDirectory) == ''">$(ApplicationFilesPackageDirectory)Application\$(LanguageDirectory)</PackageLanguageDirectory>
+		<ConfigurationDirectory Condition="$(ConfigurationDirectory) == ''">$(SolutionDir)packages\HansKindberg-EPiServer-Build.$(PackageVersion)\Configuration\</ConfigurationDirectory>
 	</PropertyGroup>	
 	<ItemGroup Condition="@(ConfigurationTemplate) == ''" xdt:Transform="Insert">
 		<ConfigurationTemplate Include="$(ConfigurationDirectory)log4net.Template.config">
 			<Destination>log4net.Template.config</Destination>
 			<Transform>log4net.Common.config</Transform>
 		</ConfigurationTemplate>
-		<ConfigurationTemplate Include="$(ConfigurationDirectory)\Web.Template.config">
+		<ConfigurationTemplate Include="$(ConfigurationDirectory)Web.Template.config">
 			<Destination>Web.Template.config</Destination>
 			<Transform>Web.Common.config</Transform>
 		</ConfigurationTemplate>
-	</ItemGroup>
-	<ItemGroup Condition="@(BinaryToCopyToTargetDirectory) == ''" xdt:Transform="Insert">
-		<BinaryToCopyToTargetDirectory Include="$(BinariesPackageDirectory)lib\net20\**\*.*">
-			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)$(BinariesPackageName)\lib\net20\</SolutionRelativePath>
-		</BinaryToCopyToTargetDirectory>
-		<BinaryToCopyToTargetDirectory Include="$(NuGetPackagesDirectory)log4net.1.2.10\lib\2.0\**\*.*">
-			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)log4net.1.2.10\lib\2.0\</SolutionRelativePath>
-		</BinaryToCopyToTargetDirectory>
-		<BinaryToCopyToTargetDirectory Include="$(NuGetPackagesDirectory)Microsoft.Web.Services3.3.0.0.0\lib\net20\**\*.*">
-			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)Microsoft.Web.Services3.3.0.0.0\lib\net20\</SolutionRelativePath>
-		</BinaryToCopyToTargetDirectory>
-	</ItemGroup>
-	<ItemGroup Condition="@(LanguageFile) == ''" xdt:Transform="Insert">
-		<LanguageFile Include="$(PackageLanguageDirectory)**\*.*">
-			<SolutionRelativePath>$(NuGetPackagesDirectorySolutionRelativePath)$(ApplicationFilesPackageName)\Application\$(LanguageDirectory)</SolutionRelativePath>
-		</LanguageFile>
 	</ItemGroup>
 </Project>
