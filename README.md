@@ -1,6 +1,6 @@
 # HansKindberg-EPiServer-NuGet-Packages
-This repository contains a Visual Studio solution for building NuGet-packages for EPiServer.
-- **HansKindberg-EPiServer-Binaries** (all the EPiServer binaries)
+This repository contains a Visual Studio solution for building NuGet-packages for EPiServer. In EPiServer CMS 7.5 you can get the most files for your EPiServer project/solution from [**EPiServer NuGet**](https://nuget.episerver.com/). So now some of the previous packages in this solution is not needed anymore, and thats nice.
+- ~~**HansKindberg-EPiServer-Binaries** (all the EPiServer binaries)~~ - not needed anymore, you get it from [**EPiServer NuGet**](https://nuget.episerver.com/)
 - **HansKindberg-Application-Files** (all the application-files, Admin, Edit etc.)
 - **HansKindberg-Build** (build scripts/targets for building EPiServer solutions/projects)
 
