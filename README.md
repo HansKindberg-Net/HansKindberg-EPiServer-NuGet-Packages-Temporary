@@ -40,7 +40,7 @@ The functionality/base functionality for these build-targets are from [**HansKin
 
 #### 3.1.1 Configuration transformations
 
-The package contains a directory **Configuration** that contains templates:
+The package contains a **Configuration** directory that contains templates:
 - log4net.Template.config
 - Web.Template.config
 

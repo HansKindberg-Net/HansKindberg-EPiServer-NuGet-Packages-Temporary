@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<authors>$Author$</authors>
-		<description>A package with build-targets for EPiServer $EPiServerVersion$ containing config-transform and copying of files to the target-directory.</description>
+		<description>A package with build-targets for EPiServer CMS $EPiServerVersion$ containing configuration-transformations and copying of files to the target-directory.</description>
 		<id>$Id$</id>
 		<owners>$Author$</owners>
 		<projectUrl>https://github.com/HansKindberg-Net/HansKindberg-EPiServer-NuGet-Packages</projectUrl>

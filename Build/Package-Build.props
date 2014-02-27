@@ -6,7 +6,7 @@
 		<EPiServerVersion Condition="$(EPiServerVersion) == ''">7.5</EPiServerVersion>
 		<MessageImportance Condition="$(MessageImportance) == ''">high</MessageImportance>
 		<NuGetPackagesDirectory Condition="$(NuGetPackagesDirectory) == ''">$(SolutionDir)packages\</NuGetPackagesDirectory>
-		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Detailed</NuGetVerbosity><!-- Normal, Quiet or Detailed -->
+		<NuGetVerbosity Condition="$(NuGetVerbosity) == ''">Normal</NuGetVerbosity><!-- Normal, Quiet or Detailed -->
 	</PropertyGroup>
 	<PropertyGroup>
 		<MSBuildCommunityTasksLibrary Condition="$(MSBuildCommunityTasksLibrary) == ''">$(SolutionDir)packages\MSBuildTasks.1.4.0.65\tools\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLibrary>
