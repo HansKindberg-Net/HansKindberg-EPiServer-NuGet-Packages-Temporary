@@ -11,9 +11,9 @@
 		<version>$Version$</version>
 	</metadata>
 	<files>
-		<file src="$BuildPropertiesFile$" target="$BuildFilesTarget$" />
-		<file src="$BuildTargetsFile$" target="$BuildFilesTarget$" />
-		<file src="$ConfigurationFiles$" target="$ConfigurationTarget$" />
-		<file src="$ReadMeFile$" />
+		<file src="Build\$Id$.props" target="build" />
+		<file src="Build\$Id$.targets" target="build" />
+		<file src="Configuration\**\*.*" target="Configuration" />
+		<file src="ReadMe.txt" />
 	</files>
 </package>

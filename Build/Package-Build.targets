@@ -68,9 +68,9 @@
 	<PropertyGroup>
 		<BuildPackageDependsOn>
 			BeforeBuildPackage;
-			PrepareCopyPackageContentToPackageDirectory;
-			CopyPackageContentToPackageDirectory;
 			CoreCreateNuGetPackage;
+			PrepareDeployPackageContentToPackageDirectory;
+			DeployPackageContentToPackageDirectory;
 			AfterBuildPackage
 		</BuildPackageDependsOn>
 	</PropertyGroup>
@@ -78,7 +78,6 @@
 		Name="BuildPackage"
 		DependsOnTargets="$(BuildPackageDependsOn)"
 	/>
-	<Target Name="CopyPackageContentToPackageDirectory" />
 	<PropertyGroup>
 		<CoreCreateNuGetPackageDependsOn>
 			PrepareCreateNuGetPackage;
@@ -96,7 +95,7 @@
 		DependsOnTargets="$(DeletePreviouslyBuiltPackageDependsOn)"
 	>
 		<PropertyGroup>
-			<ExistingPackage Condition="'$(ExistingPackage)' == ''">$(TargetDir)$(Name).$(Version).nupkg</ExistingPackage>
+			<ExistingPackage Condition="'$(ExistingPackage)' == ''">$(TargetDir)$(MSBuildProjectName).$(Version).nupkg</ExistingPackage>
 		</PropertyGroup>
 		<Message
 			Condition="Exists($(ExistingPackage))"
@@ -108,6 +107,7 @@
 			Files="$(ExistingPackage)"
 		/>
 	</Target>
+	<Target Name="DeployPackageContentToPackageDirectory" />
 	<Target
 		Name="RemovePreviousPackageDirectory"
 		DependsOnTargets="$(RemovePreviousPackageDirectoryDependsOn)"
@@ -128,16 +128,6 @@
 			Directories="$(PackageDirectory)"
 		/>
 	</Target>
-	<Target Name="PrepareCopyPackageContentToPackageDirectory">
-		<Message
-			Condition="!Exists($(PackageDirectory))"
-			Importance="$(MessageImportance)"
-			Text="Target 'PrepareCopyPackageContentToPackageDirectory': Creating NuGet-packages directory '$(PackageDirectory)'."
-		/>
-		<MakeDir
-			Condition="!Exists($(PackageDirectory))"
-			Directories="$(PackageDirectory)"
-		/>
-	</Target>
 	<Target Name="PrepareCreateNuGetPackage" />
+	<Target Name="PrepareDeployPackageContentToPackageDirectory" />
 </Project>

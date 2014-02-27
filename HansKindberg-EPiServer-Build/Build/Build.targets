@@ -3,9 +3,9 @@
 	<Import Project="..\..\Build\Package-Build.targets" />
 	<Target Name="AfterBuildPackage">
 		<ItemGroup>
-			<TemporaryFile Include="$(MSBuildProjectDirectory)\Build\HansKindberg-EPiServer-Build.props" />
-			<TemporaryFile Include="$(MSBuildProjectDirectory)\Build\HansKindberg-EPiServer-Build.targets" />
-			<TemporaryFile Include="$(MSBuildProjectDirectory)\Build\HansKindberg-EPiServer-Build.Template.props" />
+			<TemporaryFile Include="$(PropertiesFileFullPath)" />
+			<TemporaryFile Include="$(PropertiesTemplateFileFullPath)" />
+			<TemporaryFile Include="$(TargetsFileFullPath)" />
 		</ItemGroup>
 		<Message
 			Importance="$(MessageImportance)"
@@ -18,16 +18,16 @@
 	<Target Name="BeforeBuildPackage">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergBuildPropertiesFile)' with 'Build\HansKindberg-EPiServer-Build.Transform.props' to 'Build\HansKindberg-EPiServer-Build.Template.props'."
+			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergBuildPropertiesFile)' with '$(PropertiesTransformFileRelativePath)' to '$(PropertiesTemplateFileRelativePath)'."
 		/>
 		<TransformXml
-			Destination="Build\HansKindberg-EPiServer-Build.Template.props"
+			Destination="$(PropertiesTemplateFileRelativePath)"
 			Source="$(HansKindbergBuildPropertiesFile)"
-			Transform="Build\HansKindberg-EPiServer-Build.Transform.props"
+			Transform="$(PropertiesTransformFileRelativePath)"
 		/>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Replacing tokens from 'Build\HansKindberg-EPiServer-Build.Template.props' to 'Build\HansKindberg-EPiServer-Build.props'."
+			Text="Target 'BeforeBuildPackage': Replacing tokens from '$(PropertiesTemplateFileRelativePath)' to '$(PropertiesFileRelativePath)'."
 		/>
 		<ItemGroup>
 			<Token Include="PackageVersion">
@@ -35,61 +35,42 @@
 			</Token>
 		</ItemGroup>
 		<TemplateFile
-			OutputFilename="HansKindberg-EPiServer-Build.props"
-			Template="Build\HansKindberg-EPiServer-Build.Template.props"
+			OutputFilename="$(PropertiesFileFullPath)"
+			Template="$(PropertiesTemplateFileRelativePath)"
 			Tokens="@(Token)"
 		/>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergBuildTargetsFile)' with 'Build\HansKindberg-EPiServer-Build.Transform.targets' to 'Build\HansKindberg-EPiServer-Build.targets'."
+			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergBuildTargetsFile)' with '$(TargetsTransformFileRelativePath)' to '$(TargetsFileRelativePath)'."
 		/>
 		<TransformXml
-			Destination="Build\HansKindberg-EPiServer-Build.targets"
+			Destination="$(TargetsFileRelativePath)"
 			Source="$(HansKindbergBuildTargetsFile)"
-			Transform="Build\HansKindberg-EPiServer-Build.Transform.targets"
-		/>
-	</Target>
-	<Target Name="CopyPackageContentToPackageDirectory">
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Target 'CopyPackageContentToPackageDirectory': Copying package '$(Name).$(Version)' content to '$(PackageDirectory)'."
-		/>
-		<Copy
-			DestinationFolder="$(PackageDirectory)$(BuildFilesTarget)"
-			SourceFiles="$(BuildPropertiesFile)"
-		/>
-		<Copy
-			DestinationFolder="$(PackageDirectory)$(BuildFilesTarget)"
-			SourceFiles="$(BuildTargetsFile)"
-		/>
-		<Copy
-			DestinationFolder="$(PackageDirectory)$(ConfigurationTarget)"
-			SourceFiles="%(ConfigurationFile.Identity)"
-		/>
-		<Copy
-			DestinationFolder="$(PackageDirectory)"
-			SourceFiles="$(ReadMeFile)"
+			Transform="$(TargetsTransformFileRelativePath)"
 		/>
 	</Target>
 	<Target Name="CreateNuGetPackage">
 		<PropertyGroup>
 			<Properties>Author="$(Author)"</Properties>
-			<Properties>$(Properties);BuildFilesTarget="$(BuildFilesTarget)"</Properties>
-			<Properties>$(Properties);BuildPropertiesFile="$(BuildPropertiesFile)"</Properties>
-			<Properties>$(Properties);BuildTargetsFile="$(BuildTargetsFile)"</Properties>
-			<Properties>$(Properties);ConfigurationFiles="$(ConfigurationFiles)"</Properties>
-			<Properties>$(Properties);ConfigurationTarget="$(ConfigurationTarget)"</Properties>
 			<Properties>$(Properties);EPiServerVersion="$(EPiServerVersion)"</Properties>
-			<Properties>$(Properties);Id="$(Name)"</Properties>
-			<Properties>$(Properties);ReadMeFile="$(ReadMeFile)"</Properties>
+			<Properties>$(Properties);Id="$(MSBuildProjectName)"</Properties>
 			<Properties>$(Properties);Version="$(Version)"</Properties>
 		</PropertyGroup>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'CreateNuGetPackage': Creating NuGet package '$(Name).$(Version)' - properties = '$(Properties)'."
+			Text="Target 'CreateNuGetPackage': Creating NuGet package '$(MSBuildProjectName).$(Version)' - properties = '$(Properties)'."
 		/>
 		<Exec
-			Command='$(SolutionDir).nuget\NuGet.exe pack "$(Name).nuspec" -OutputDirectory $(TargetDir) -Properties $(Properties) -Verbosity "$(NuGetVerbosity)"'
+			Command='$(SolutionDir).nuget\NuGet.exe pack "$(MSBuildProjectName).nuspec" -OutputDirectory $(TargetDir) -Properties $(Properties) -Verbosity "$(NuGetVerbosity)"'
+		/>
+	</Target>
+	<Target Name="DeployPackageContentToPackageDirectory">
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'DeployPackageContentToPackageDirectory': Installing package '$(MSBuildProjectName).$(Version)' in '$(NuGetPackagesDirectory)'."
+		/>
+		<Exec
+			Command='$(SolutionDir).nuget\NuGet.exe install $(MSBuildProjectName) -NoCache -OutputDirectory $(NuGetPackagesDirectory) -Prerelease -Source $(TargetDir) -Verbosity "$(NuGetVerbosity)" -Version "$(Version)"'
 		/>
 	</Target>
 </Project>
