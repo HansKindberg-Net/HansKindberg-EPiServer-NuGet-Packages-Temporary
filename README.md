@@ -64,6 +64,7 @@ Search and replace (whole word and case-sensitive):
 
 Clear:
 - /coonnectionStrings[@connectionString]
+- /episerver.search/namedIndexingServices/services/add[@baseUri]
 
 Add a location element with path set to "." around the root system.web and root system.webServer.
 
