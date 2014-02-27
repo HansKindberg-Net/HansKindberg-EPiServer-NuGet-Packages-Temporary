@@ -1,10 +1,22 @@
 # HansKindberg-EPiServer-NuGet-Packages
 This repository contains a Visual Studio solution for building NuGet-packages for EPiServer. In EPiServer CMS 7.5 you can get the most files for your EPiServer project/solution from [**EPiServer NuGet**](https://nuget.episerver.com/). So now some of the previous packages in this solution is not needed anymore, and thats nice.
-- ~~**HansKindberg-EPiServer-Binaries** (all the EPiServer binaries)~~ - not needed anymore, you get it from [**EPiServer NuGet**](https://nuget.episerver.com/)
-- **HansKindberg-Application-Files** (all the application-files, Admin, Edit etc.)
-- **HansKindberg-Build** (build scripts/targets for building EPiServer solutions/projects)
+- ~~**HansKindberg-EPiServer-Binaries** (all the EPiServer binaries)~~ - *not needed anymore, you get it from [**EPiServer NuGet**](https://nuget.episerver.com/)*
+- ~~**HansKindberg-EPiServer-Application-Files** (all the application-files, Admin, Edit etc.)~~ - *not needed anymore, you get it from [**EPiServer NuGet**](https://nuget.episerver.com/)*
+- **HansKindberg-EPiServer-Build** (build scripts/targets for building EPiServer solutions/projects)
+
+The most important packages (my opinion) from [**EPiServer NuGet**](https://nuget.episerver.com/)
+
+- EPiServer.CMS.Core
+- EPiServer.CMS.UI
+- EPiServer.Framework
+- EPiServer.Search
 
 ## 1 Important
+This applies to:
+
+- **HansKindberg-EPiServer-Binaries**
+- **HansKindberg-EPiServer-Application-Files**
+
 **EPiServer** is a product requiring a license. Its important to not publish these packages in public. Instead keep the packages in your own NuGet-sources.
 
 ## 2 Version mappings
@@ -19,6 +31,11 @@ Write about the branches
 - **HansKindberg-EPiServer-*** packages **7.5.0.*** mappes to **EPiServer CMS 7.5** (**7.5.394.2**)
 
 ## 3 Build
+This applies to:
+
+- **HansKindberg-EPiServer-Binaries**
+- **HansKindberg-EPiServer-Application-Files**
+
 To build the packages you need the EPiServer files, normally installed under %PROGRAMFILES(X86)%\EPiServer. Basically you copy that directory to the root of this solution when you want to build the packages.
 When building all the package content is copied to the **packages** directory under the solution root. The **packages** directory is the default NuGet-packages directory. The packages are
 only built when building a release. This is to reduce build time when building for the test application **HansKindberg.EPiServer.NuGet.Packages.Tests.WebApplication**.
