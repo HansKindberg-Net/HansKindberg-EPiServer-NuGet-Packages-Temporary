@@ -1,76 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Project="..\..\Build\Package-Build.targets" />
-	<Target Name="AfterBuildPackage">
-		<ItemGroup>
-			<TemporaryFile Include="$(PropertiesFileFullPath)" />
-			<TemporaryFile Include="$(PropertiesTemplateFileFullPath)" />
-			<TemporaryFile Include="$(TargetsFileFullPath)" />
+	<PropertyGroup>
+		<BuildDependsOn>
+			$(BuildDependsOn);
+			DeployPackageContentToPackageDirectory
+		</BuildDependsOn>
+	</PropertyGroup>
+	<PropertyGroup>
+		<CreateNuGetPackageDependsOn>
+			$(CreateNuGetPackageDependsOn);
+			CopyHansKindbergBuildContent
+		</CreateNuGetPackageDependsOn>
+	</PropertyGroup>
+	<Target Name="CollectHansKindbergBuildContent">
+		<ItemGroup Condition="@(HansKindbergBuildContent) == ''">
+			<HansKindbergBuildContent Include="$(HansKindbergBuildContentDirectory)build\**\*.*" />
 		</ItemGroup>
+	</Target>
+	<PropertyGroup>
+		<CopyHansKindbergBuildContentDependsOn>
+			CollectHansKindbergBuildContent
+		</CopyHansKindbergBuildContentDependsOn>
+	</PropertyGroup>
+	<Target Name="CopyHansKindbergBuildContent" DependsOnTargets="$(CopyHansKindbergBuildContentDependsOn)">
+		<Copy
+			DestinationFiles="@(HansKindbergBuildContent->'Build\%(RecursiveDir)%(Filename)%(Extension)')"
+			SourceFiles="@(HansKindbergBuildContent)"
+		/>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'AfterBuildPackage': Deleting temporary file '%(TemporaryFile.Identity)'."
-		/>
-		<Delete
-			Files="%(TemporaryFile.Identity)"
+			Text="Copying '%(HansKindbergBuildContent.Identity)' to 'Build\%(HansKindbergBuildContent.RecursiveDir)%(HansKindbergBuildContent.Filename)%(HansKindbergBuildContent.Extension)'."
 		/>
 	</Target>
-	<Target Name="BeforeBuildPackage">
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergBuildPropertiesFile)' with '$(PropertiesTransformFileRelativePath)' to '$(PropertiesTemplateFileRelativePath)'."
-		/>
-		<TransformXml
-			Destination="$(PropertiesTemplateFileRelativePath)"
-			Source="$(HansKindbergBuildPropertiesFile)"
-			Transform="$(PropertiesTransformFileRelativePath)"
-		/>
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Replacing tokens from '$(PropertiesTemplateFileRelativePath)' to '$(PropertiesFileRelativePath)'."
-		/>
-		<ItemGroup>
-			<Token Include="PackageVersion">
-				<ReplacementValue>$(Version)</ReplacementValue>
-			</Token>
-		</ItemGroup>
-		<TemplateFile
-			OutputFilename="$(PropertiesFileFullPath)"
-			Template="$(PropertiesTemplateFileRelativePath)"
-			Tokens="@(Token)"
-		/>
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Target 'BeforeBuildPackage': Transforming '$(HansKindbergBuildTargetsFile)' with '$(TargetsTransformFileRelativePath)' to '$(TargetsFileRelativePath)'."
-		/>
-		<TransformXml
-			Destination="$(TargetsFileRelativePath)"
-			Source="$(HansKindbergBuildTargetsFile)"
-			Transform="$(TargetsTransformFileRelativePath)"
-		/>
-	</Target>
-	<Target Name="CreateNuGetPackage">
+	<PropertyGroup>
+		<DeployPackageContentToPackageDirectoryDependsOn>
+			CollectAssemblyInformation;
+			CollectHansKindbergBuildContent
+		</DeployPackageContentToPackageDirectoryDependsOn>
+	</PropertyGroup>
+	<Target Name="DeployPackageContentToPackageDirectory" DependsOnTargets="$(DeployPackageContentToPackageDirectoryDependsOn)">
 		<PropertyGroup>
-			<Properties>Author="$(Author)"</Properties>
-			<Properties>$(Properties);EPiServerVersion="$(EPiServerVersion)"</Properties>
-			<Properties>$(Properties);Id="$(MSBuildProjectName)"</Properties>
-			<Properties>$(Properties);Version="$(Version)"</Properties>
+			<_PackageDestinationDirectory Condition="@(_PackageDestinationDirectory) == ''">$(NuGetPackagesDirectory)HansKindberg-EPiServer-Build\</_PackageDestinationDirectory>
 		</PropertyGroup>
+		<ItemGroup Condition="@(_PackageContent) == ''">
+			<_PackageContent Include="build\**\*.*" Exclude="build\Build.props;build\Build.targets" />
+			<_PackageContent Include="Configuration\Web.Template.config" />
+			<_PackageContent Condition="Exists('$(_PackageDestinationDirectory)build\HansKindberg.Build.XmlTransformation.Tasks.dll')" Remove="build\HansKindberg.Build.XmlTransformation.Tasks.dll" />
+			<_PackageContent Condition="Exists('$(_PackageDestinationDirectory)build\Microsoft.Web.XmlTransform.dll')" Remove="build\Microsoft.Web.XmlTransform.dll" />
+			<_PackageContent Condition="Exists('$(_PackageDestinationDirectory)build\System.IO.Abstractions.dll')" Remove="build\System.IO.Abstractions.dll" />
+		</ItemGroup>
+		<Copy
+			DestinationFiles="@(_PackageContent->'$(_PackageDestinationDirectory)%(RelativeDir)%(Filename)%(Extension)')"
+			SourceFiles="@(_PackageContent)"
+		/>
 		<Message
 			Importance="$(MessageImportance)"
-			Text="Target 'CreateNuGetPackage': Creating NuGet package '$(MSBuildProjectName).$(Version)' - properties = '$(Properties)'."
-		/>
-		<Exec
-			Command='$(SolutionDir).nuget\NuGet.exe pack "$(MSBuildProjectName).nuspec" -OutputDirectory $(TargetDir) -Properties $(Properties) -Verbosity "$(NuGetVerbosity)"'
-		/>
-	</Target>
-	<Target Name="DeployPackageContentToPackageDirectory">
-		<Message
-			Importance="$(MessageImportance)"
-			Text="Target 'DeployPackageContentToPackageDirectory': Installing package '$(MSBuildProjectName).$(Version)' in '$(NuGetPackagesDirectory)'."
-		/>
-		<Exec
-			Command='$(SolutionDir).nuget\NuGet.exe install $(MSBuildProjectName) -NoCache -OutputDirectory $(NuGetPackagesDirectory) -Prerelease -Source $(TargetDir) -Verbosity "$(NuGetVerbosity)" -Version "$(Version)"'
+			Text="Copying package content '%(_PackageContent.Identity)' to '$(_PackageDestinationDirectory)%(_PackageContent.RelativeDir)%(_PackageContent.Filename)%(_PackageContent.Extension)'."
 		/>
 	</Target>
 </Project>

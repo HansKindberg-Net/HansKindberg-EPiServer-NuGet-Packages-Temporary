@@ -11,8 +11,7 @@
 		<version>$Version$</version>
 	</metadata>
 	<files>
-		<file src="Build\$Id$.props" target="build" />
-		<file src="Build\$Id$.targets" target="build" />
+		<file src="Build\**\*.*" exclude="Build\Build.props;Build\Build.targets" target="build" />
 		<file src="Configuration\**\*.*" target="Configuration" />
 		<file src="ReadMe.txt" />
 	</files>

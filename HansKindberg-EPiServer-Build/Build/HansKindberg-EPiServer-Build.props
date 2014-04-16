@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="HansKindberg-Build.props" />
+	<ItemGroup>
+		<XmlTransformationMap Include="Web.config">
+			<Source>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\Configuration\Web.Template.config'))</Source>
+		</XmlTransformationMap>
+	</ItemGroup>
+</Project>

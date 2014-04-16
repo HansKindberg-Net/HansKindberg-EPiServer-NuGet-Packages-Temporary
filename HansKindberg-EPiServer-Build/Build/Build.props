@@ -2,26 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Project="..\..\Build\Package-Build.props" />
 	<PropertyGroup>
-		<BuildFileRelativePathPrefix Condition="$(BuildFileRelativePathPrefix) == ''">Build\$(MSBuildProjectName)</BuildFileRelativePathPrefix>
-		<HansKindbergBuildFilesVersion Condition="$(HansKindbergBuildFilesVersion) == ''">1.0.0-alpha-0</HansKindbergBuildFilesVersion>
+		<HansKindbergBuildContentVersion Condition="$(HansKindbergBuildContentVersion) == ''">1.0.0-alpha-0</HansKindbergBuildContentVersion>
 	</PropertyGroup>
 	<PropertyGroup>
-		<BuildFileFullPathPrefix Condition="$(BuildFileFullPathPrefix) == ''">$(MSBuildProjectDirectory)\$(BuildFileRelativePathPrefix)</BuildFileFullPathPrefix>
-		<HansKindbergBuildFilesDirectory Condition="$(HansKindbergBuildFilesDirectory) == ''">$(NuGetPackagesDirectory)HansKindberg-Build-Files.$(HansKindbergBuildFilesVersion)\</HansKindbergBuildFilesDirectory>
-	</PropertyGroup>
-	<PropertyGroup>
-		<HansKindbergBuildFilePrefix Condition="$(HansKindbergBuildFilePrefix) == ''">$(HansKindbergBuildFilesDirectory)build\HansKindberg-On-Build</HansKindbergBuildFilePrefix>
-		<PropertiesFileFullPath Condition="$(PropertiesFileFullPath) == ''">$(BuildFileFullPathPrefix).props</PropertiesFileFullPath>
-		<PropertiesFileRelativePath Condition="$(PropertiesFileRelativePath) == ''">$(BuildFileRelativePathPrefix).props</PropertiesFileRelativePath>
-		<PropertiesTemplateFileFullPath Condition="$(PropertiesTemplateFileFullPath) == ''">$(BuildFileFullPathPrefix).Template.props</PropertiesTemplateFileFullPath>
-		<PropertiesTemplateFileRelativePath Condition="$(PropertiesTemplateFileRelativePath) == ''">$(BuildFileRelativePathPrefix).Template.props</PropertiesTemplateFileRelativePath>
-		<PropertiesTransformFileRelativePath Condition="$(PropertiesTransformFileRelativePath) == ''">$(BuildFileRelativePathPrefix).Transform.props</PropertiesTransformFileRelativePath>
-		<TargetsFileFullPath Condition="$(TargetsFileFullPath) == ''">$(BuildFileFullPathPrefix).targets</TargetsFileFullPath>
-		<TargetsFileRelativePath Condition="$(TargetsFileRelativePath) == ''">$(BuildFileRelativePathPrefix).targets</TargetsFileRelativePath>
-		<TargetsTransformFileRelativePath Condition="$(TargetsTransformFileRelativePath) == ''">$(BuildFileRelativePathPrefix).Transform.targets</TargetsTransformFileRelativePath>
-	</PropertyGroup>
-	<PropertyGroup>
-		<HansKindbergBuildPropertiesFile Condition="$(HansKindbergBuildPropertiesFile) == ''">$(HansKindbergBuildFilePrefix).props</HansKindbergBuildPropertiesFile>
-		<HansKindbergBuildTargetsFile Condition="$(HansKindbergBuildTargetsFile) == ''">$(HansKindbergBuildFilePrefix).targets</HansKindbergBuildTargetsFile>
+		<HansKindbergBuildContentDirectory Condition="$(HansKindbergBuildContentDirectory) == ''">$(NuGetPackagesDirectory)HansKindberg-Build-Content.$(HansKindbergBuildContentVersion)\</HansKindbergBuildContentDirectory>
 	</PropertyGroup>
 </Project>
